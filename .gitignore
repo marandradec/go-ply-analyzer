@@ -1,0 +1,17 @@
+# Python: archivos compilados
+__pycache__/
+*.py[cod]
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# PLY: tablas que genera yacc (Avance 2)
+parsetab.py
+parser.out
+
+# Editor y sistema operativo
+.vscode/
+.DS_Store
+Thumbs.db
