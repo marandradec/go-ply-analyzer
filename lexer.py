@@ -33,7 +33,13 @@ reservadas_andrade = {
 # FIN aporte: ANDRADE
 
 # INICIO aporte: BURGOS
-reservadas_burgos = {}
+reservadas_burgos = {
+	'var': 'VAR',
+    'const': 'CONST',
+    'for': 'FOR',
+    'break': 'BREAK',
+    'return': 'RETURN'
+}
 # FIN aporte: BURGOS
 
 # INICIO aporte: MORA
@@ -54,7 +60,12 @@ tokens_andrade = [
 # FIN aporte: ANDRADE
 
 # INICIO aporte: BURGOS
-tokens_burgos = []
+tokens_burgos = [
+'FLOAT64', 'MATRIZ', 'FLOAT_LITERAL',
+    'EQ', 'NEQ', 'LE', 'GE', 'LT', 'GT',
+    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULO',
+    'SEMICOLON'
+]
 # FIN aporte: BURGOS
 
 # INICIO aporte: MORA
@@ -120,11 +131,39 @@ t_ignore = ' \t\r'
 # FIN aporte: ANDRADE (cadenas)
 
 # INICIO aporte: BURGOS (cadenas)
+t_MATRIZ    = r'\[[0-9]+\]\[[0-9]+\](?:[a-zA-Z_][a-zA-Z0-9_]*)' 
+t_FLOAT64   = r'float64'
+
+t_EQ        = r'=='
+t_NEQ       = r'!='
+t_LE        = r'<='
+t_GE        = r'>='
+t_LT        = r'<'
+t_GT        = r'>'
+t_PLUS      = r'\+'
+t_MINUS     = r'-'
+t_TIMES     = r'\*'
+t_DIVIDE    = r'/'
+t_MODULO    = r'%'
+t_SEMICOLON = r';'
 # FIN aporte: BURGOS (cadenas)
 
 # INICIO aporte: MORA (cadenas)
 # FIN aporte: MORA (cadenas)
 
+# INICIO aporte: BURGOS (funciones)
+
+def t_MALFORMED_NUMBER(t):
+    r'(?:\d+[a-zA-Z_]+)|(?:\d+\.)'
+    print(f"Error léxico: Número mal formado '{t.value}'")
+    t.lexer.skip(len(t.value))
+
+def t_FLOAT_LITERAL(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
+# FIN aporte: BURGOS (funciones)
 
 # CONSTRUCCIÓN DEL LEXER
 lexer = lex.lex()
