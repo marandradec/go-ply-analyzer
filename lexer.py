@@ -50,7 +50,12 @@ reservadas = {**reservadas_andrade, **reservadas_burgos, **reservadas_mora}
 # Aquí van solo los tokens que NO salen del diccionario de arriba (ID, ENTERO, CADENA...).
 
 # INICIO aporte: ANDRADE
-tokens_andrade = []
+tokens_andrade = [
+    'ID', 'ENTERO', 'CADENA', 'ARREGLO',
+    'ASIGNACION', 'DECLARACION_CORTA',
+    'LLAVE_IZQ', 'LLAVE_DER', 'PAREN_IZQ', 'PAREN_DER',
+    'NEWLINE',
+]
 # FIN aporte: ANDRADE
 
 # INICIO aporte: BURGOS
@@ -80,6 +85,15 @@ tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.va
 # --- REGLAS COMO CADENA ---
 
 # INICIO aporte: ANDRADE (cadenas)
+t_ARREGLO = r'\[[0-9]+\](?:int|float64|string|bool)'
+t_DECLARACION_CORTA = r':='
+t_ASIGNACION = r'='
+t_LLAVE_IZQ = r'\{'
+t_LLAVE_DER = r'\}'
+t_PAREN_IZQ = r'\('
+t_PAREN_DER = r'\)'
+
+t_ignore = ' \t\r'
 # FIN aporte: ANDRADE (cadenas)
 
 # INICIO aporte: BURGOS (cadenas)
