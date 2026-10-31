@@ -78,6 +78,17 @@ tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.va
 
 # REGLAS COMO FUNCIÓN
 # INICIO aporte: BURGOS (funciones)
+
+def t_MALFORMED_NUMBER(t):
+    r'(?:\d+[a-zA-Z_]+)|(?:\d+\.)'
+    print(f"Error léxico: Número mal formado '{t.value}'")
+    t.lexer.skip(len(t.value))
+
+def t_FLOAT_LITERAL(t):
+    r'\d+\.\d+'
+    t.value = float(t.value)
+    return t
+
 # FIN aporte: BURGOS (funciones)
 
 # INICIO aporte: MORA (funciones)
@@ -151,19 +162,6 @@ t_SEMICOLON = r';'
 # INICIO aporte: MORA (cadenas)
 # FIN aporte: MORA (cadenas)
 
-# INICIO aporte: BURGOS (funciones)
-
-def t_MALFORMED_NUMBER(t):
-    r'(?:\d+[a-zA-Z_]+)|(?:\d+\.)'
-    print(f"Error léxico: Número mal formado '{t.value}'")
-    t.lexer.skip(len(t.value))
-
-def t_FLOAT_LITERAL(t):
-    r'\d+\.\d+'
-    t.value = float(t.value)
-    return t
-
-# FIN aporte: BURGOS (funciones)
 
 # CONSTRUCCIÓN DEL LEXER
 lexer = lex.lex()
