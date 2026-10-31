@@ -124,3 +124,14 @@ t_ignore = ' \t\r'
 
 # INICIO aporte: MORA (cadenas)
 # FIN aporte: MORA (cadenas)
+
+
+# CONSTRUCCIÓN DEL LEXER
+lexer = lex.lex()
+
+def analizar(codigo):
+    errores_lexicos.clear()
+    lexer.lineno = 1
+    lexer.input(codigo)
+    reconocidos = [(tok.type, tok.value, tok.lineno) for tok in lexer]
+    return reconocidos, list(errores_lexicos)
