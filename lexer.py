@@ -17,10 +17,7 @@ def registrar_error(linea, detalle):
     })
 
 
-# --- PALABRAS RESERVADAS Y TIPOS ---
-# Diccionario: texto que aparece en el código -> nombre del token.
-# Los nombres de este diccionario pasan solos a la lista "tokens" (ver más abajo).
-
+# PALABRAS RESERVADAS Y TIPOS
 # INICIO aporte: ANDRADE
 reservadas_andrade = {
     # Palabras reservadas
@@ -46,9 +43,7 @@ reservadas_mora = {}
 reservadas = {**reservadas_andrade, **reservadas_burgos, **reservadas_mora}
 
 
-# --- LISTA DE TOKENS ---
-# Aquí van solo los tokens que NO salen del diccionario de arriba (ID, ENTERO, CADENA...).
-
+# LISTA DE TOKENS
 # INICIO aporte: ANDRADE
 tokens_andrade = [
     'ID', 'ENTERO', 'CADENA', 'ARREGLO',
@@ -70,8 +65,7 @@ tokens_mora = []
 tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.values()))
 
 
-# --- REGLAS COMO FUNCIÓN ---
-
+# REGLAS COMO FUNCIÓN
 # INICIO aporte: BURGOS (funciones)
 # FIN aporte: BURGOS (funciones)
 
@@ -79,11 +73,23 @@ tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.va
 # FIN aporte: MORA (funciones)
 
 # INICIO aporte: ANDRADE (funciones)
+def t_COMENTARIO_LINEA(t):
+    r'//[^\n]*'
+    pass
+
+def t_COMENTARIO_BLOQUE(t):
+    r'/\*(?:.|\n)*?\*/'
+    t.lexer.lineno += t.value.count('\n')
+
+def t_NEWLINE(t):
+    r'\n+'
+    t.lexer.lineno += len(t.value)
+    t.value = '\\n'
+    return t
 # FIN aporte: ANDRADE (funciones)
 
 
 # --- REGLAS COMO CADENA ---
-
 # INICIO aporte: ANDRADE (cadenas)
 t_ARREGLO = r'\[[0-9]+\](?:int|float64|string|bool)'
 t_DECLARACION_CORTA = r':='
@@ -92,7 +98,6 @@ t_LLAVE_IZQ = r'\{'
 t_LLAVE_DER = r'\}'
 t_PAREN_IZQ = r'\('
 t_PAREN_DER = r'\)'
-
 t_ignore = ' \t\r'
 # FIN aporte: ANDRADE (cadenas)
 
