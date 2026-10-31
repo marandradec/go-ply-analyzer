@@ -86,6 +86,24 @@ def t_NEWLINE(t):
     t.lexer.lineno += len(t.value)
     t.value = '\\n'
     return t
+
+def t_CADENA(t):
+    r'"[^"\n]*"'
+    return t
+
+def t_ERROR_CADENA(t):
+    r'"[^"\n]*'
+    registrar_error(t.lexer.lineno, f"Cadena sin cerrar {t.value}")
+
+def t_ENTERO(t):
+    r'[0-9]+'
+    t.value = int(t.value)
+    return t
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z0-9_]*'
+    t.type = reservadas.get(t.value, 'ID')
+    return t
 # FIN aporte: ANDRADE (funciones)
 
 
