@@ -1,0 +1,37 @@
+ANALISIS LEXICO - JOSE MORA
+Archivo: algoritmos\errores_mora.go
+Fecha: 31-10-2026 23:46:59
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | '\\n'
+Linea 002 | NEWLINE              | '\\n'
+Linea 003 | FUNC                 | 'func'
+Linea 003 | ID                   | 'main'
+Linea 003 | PAREN_IZQ            | '('
+Linea 003 | PAREN_DER            | ')'
+Linea 003 | LLAVE_IZQ            | '{'
+Linea 003 | NEWLINE              | '\\n'
+Linea 004 | ID                   | 'valor'
+Linea 004 | DECLARACION_CORTA    | ':='
+Linea 004 | ENTERO               | 10
+Linea 004 | NEWLINE              | '\\n'
+Linea 005 | ID                   | 'valor'
+Linea 005 | ENTERO               | 5
+Linea 005 | NEWLINE              | '\\n'
+Linea 006 | FMT_PRINTLN          | 'fmt.Println'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | ID                   | 'valor'
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | NEWLINE              | '\\n'
+Linea 007 | LLAVE_DER            | '}'
+
+Total de tokens: 23
+
+ERRORES LEXICOS
+============================================================
+Error léxico en la línea 5. Simbolo no reconocido '@'
+
+Total de errores: 1
