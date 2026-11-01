@@ -43,7 +43,16 @@ reservadas_burgos = {
 # FIN aporte: BURGOS
 
 # INICIO aporte: MORA
-reservadas_mora = {}
+reservadas_mora = {
+    'switch': 'SWITCH',
+    'case': 'CASE',
+    'default': 'DEFAULT',
+
+    # Tipo y literales booleanos
+    'bool': 'T_BOOL',
+    'true': 'BOOL_LITERAL',
+    'false': 'BOOL_LITERAL',
+}
 # FIN aporte: MORA
 
 reservadas = {**reservadas_andrade, **reservadas_burgos, **reservadas_mora}
@@ -69,7 +78,23 @@ tokens_burgos = [
 # FIN aporte: BURGOS
 
 # INICIO aporte: MORA
-tokens_mora = []
+tokens_mora = [
+    'MAPA',
+    'FMT_PRINTLN',
+    'FMT_SCANLN',
+    'AND',
+    'OR',
+    'NOT',
+    'PLUS_ASSIGN',
+    'MINUS_ASSIGN',
+    'INCREMENT',
+    'DECREMENT',
+    'AMPERSAND',
+    'CORCHETE_IZQ',
+    'CORCHETE_DER',
+    'DOSPUNTOS',
+    'COMA',
+]
 # FIN aporte: MORA
 
 # Esta línea junta todo: las tres listas + los nombres del diccionario "reservadas"
@@ -92,6 +117,21 @@ def t_FLOAT_LITERAL(t):
 # FIN aporte: BURGOS (funciones)
 
 # INICIO aporte: MORA (funciones)
+
+def t_MAPA(t):
+    r'map\[(?:int|float64|string|bool)\](?:int|float64|string|bool)(?![a-zA-Z0-9_])'
+    return t
+
+
+def t_FMT_PRINTLN(t):
+    r'fmt\.Println(?![a-zA-Z0-9_])'
+    return t
+
+
+def t_FMT_SCANLN(t):
+    r'fmt\.Scanln(?![a-zA-Z0-9_])'
+    return t
+
 # FIN aporte: MORA (funciones)
 
 # INICIO aporte: ANDRADE (funciones)
@@ -160,8 +200,44 @@ t_SEMICOLON = r';'
 # FIN aporte: BURGOS (cadenas)
 
 # INICIO aporte: MORA (cadenas)
+
+# Operadores logicos
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NOT = r'!'
+
+# Asignaciones compuestas
+t_PLUS_ASSIGN = r'\+='
+t_MINUS_ASSIGN = r'-='
+
+# Incremento y decremento
+t_INCREMENT = r'\+\+'
+t_DECREMENT = r'--'
+
+# Direccion de memoria
+t_AMPERSAND = r'&'
+
+# Delimitadores
+t_CORCHETE_IZQ = r'\['
+t_CORCHETE_DER = r'\]'
+t_DOSPUNTOS = r':'
+t_COMA = r','
+
 # FIN aporte: MORA (cadenas)
 
+# INICIO aporte: MORA (errores lexicos)
+
+def t_error(t):
+    caracter = t.value[0]
+
+    registrar_error(
+        t.lineno,
+        f"Simbolo no reconocido '{caracter}'"
+    )
+
+    t.lexer.skip(1)
+
+# FIN aporte: MORA (errores lexicos)
 
 # CONSTRUCCIÓN DEL LEXER
 lexer = lex.lex()
