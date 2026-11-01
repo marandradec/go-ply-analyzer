@@ -78,8 +78,13 @@ class EditorConLineas(tk.Frame):
         self.texto.delete("1.0", "end")
         self.texto.insert("1.0", codigo)
 
-    def limpiar(self):
-        self.texto.delete("1.0", "end")
+	def limpiar(self):
+		self.editor.limpiar()
+		# Vaciar tabla de Burgos
+		for item in self.tabla_tokens.get_children():
+			self.tabla_tokens.delete(item)
+		self.ruta_actual = None
+		self.estado.set("Estado: listo")
 # ===== FIN aporte: ANDRADE (editor con numeración de líneas) =====
 
 
@@ -129,7 +134,50 @@ class Aplicacion(tk.Tk):
         # ===== INICIO aporte: BURGOS (panel de tokens reconocidos) =====
         self.panel_tokens = tk.LabelFrame(cuerpo, text="Tokens reconocidos")
         self.panel_tokens.grid(row=0, column=1, sticky="nsew", padx=(4, 0), pady=(0, 4))
+        self.panel_tokens.rowconfigure(0, weight=1)
+        self.panel_tokens.columnconfigure(0, weight=1)
+
+        # Configuración de la tabla Treeview
+        columnas = ("Tipo", "Valor", "Línea")
+        self.tabla_tokens = ttk.Treeview(self.panel_tokens, columns=columnas, show="headings")
+        self.tabla_tokens.heading("Tipo", text="Tipo")
+        self.tabla_tokens.heading("Valor", text="Valor")
+        self.tabla_tokens.heading("Línea", text="Línea")
+
+        self.tabla_tokens.column("Tipo", width=110, anchor="w")
+        self.tabla_tokens.column("Valor", width=120, anchor="w")
+        self.tabla_tokens.column("Línea", width=60, anchor="center")
+
+        scroll_tokens = tk.Scrollbar(self.panel_tokens, orient="vertical", command=self.tabla_tokens.yview)
+        self.tabla_tokens.configure(yscrollcommand=scroll_tokens.set)
+
+        self.tabla_tokens.grid(row=0, column=0, sticky="nsew")
+        scroll_tokens.grid(row=0, column=1, sticky="ns")
         # ===== FIN aporte: BURGOS (panel de tokens reconocidos) =====
+        
+    # ===== INICIO aporte: BURGOS (Lógica de análisis e integración de tokens) =====
+    def ejecutar_analisis(self):
+        codigo = self.editor.obtener_codigo()
+        if not codigo.strip():
+            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
+            return
+
+        # Limpiar la tabla antes de un nuevo análisis
+        for item in self.tabla_tokens.get_children():
+            self.tabla_tokens.delete(item)
+
+        # Ejecución del analizador léxico
+        lexer.errores_lexicos = []
+        lexer.lexer.input(codigo)
+
+        while True:
+            tok = lexer.lexer.token()
+            if not tok:
+                break
+            self.tabla_tokens.insert("", "end", values=(tok.type, tok.value, f"Línea {tok.lineno}"))
+
+        self.estado.set("Estado: análisis léxico finalizado")
+    # ===== FIN aporte: BURGOS =====
 
         # ===== INICIO aporte: MORA (panel de mensajes de error) =====
         self.panel_mensajes = tk.LabelFrame(cuerpo, text="Mensajes")
