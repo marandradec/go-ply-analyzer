@@ -2,12 +2,6 @@ package main
 
 import "fmt"
 
-/* Algoritmo de prueba 1 - Integrante: Andrade
-   Cubre: package, import, func, if, else, :=, =, int, string,
-   arreglo, identificadores, enteros, cadenas, llaves, paréntesis,
-   saltos de línea y comentarios de una línea y de varias líneas
-   (los comentarios se descartan y no generan tokens). */
-
 // Función sin parámetros ni valor de retorno
 func saludar() {
 	fmt.Println("Hola Mundo")
