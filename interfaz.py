@@ -16,6 +16,13 @@ from lexer import analizar
 
 FUENTE_CODIGO = ("Consolas", 11)
 
+# Autor de cada archivo de prueba, para nombrar el log sin preguntar
+AUTORES = {
+    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade",
+    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos",
+    "algoritmo3": "JoseMora", "errores_mora": "JoseMora",
+}
+
 
 # ===== INICIO aporte: ANDRADE (editor con numeración de líneas) =====
 class EditorConLineas(tk.Frame):
@@ -95,6 +102,7 @@ class Aplicacion(tk.Tk):
         self.minsize(800, 500)
         self.ruta_actual = None
         self.codigo_analizado = None  # código del último análisis (para guardar el log)
+        self.autor = None  # solo se pide si el archivo no está en AUTORES
 
         self.rowconfigure(1, weight=1)
         self.columnconfigure(0, weight=1)
@@ -109,11 +117,10 @@ class Aplicacion(tk.Tk):
         barra.grid(row=0, column=0, sticky="ew")
 
         self.btn_abrir = tk.Button(barra, text="Abrir archivo .go", command=self.abrir_archivo)
-        self.btn_analizar = tk.Button(barra, text="Analizar", command=self.ejecutar_analisis)
+        self.btn_analizar = tk.Button(barra, text="Analizar léxico", command=self.ejecutar_analisis)
         self.btn_limpiar = tk.Button(barra, text="Limpiar", command=self.limpiar)
-        self.btn_guardar = tk.Button(barra, text="Guardar log", state="disabled", command=self.guardar_log)
 
-        for boton in (self.btn_abrir, self.btn_analizar, self.btn_limpiar, self.btn_guardar):
+        for boton in (self.btn_abrir, self.btn_analizar, self.btn_limpiar):
             boton.pack(side="left", padx=4)
 
     def _crear_cuerpo(self):
@@ -157,7 +164,6 @@ class Aplicacion(tk.Tk):
         self.vaciar_mensajes()        # Mora
         self.ruta_actual = None
         self.codigo_analizado = None
-        self.btn_guardar.config(state="disabled")
         self.estado.set("Estado: listo")
     # ===== FIN aporte: ANDRADE (ventana, botones y editor) =====
 
@@ -201,12 +207,12 @@ class Aplicacion(tk.Tk):
             self.tabla_tokens.insert("", "end", values=(tipo, valor, f"Línea {linea}"))
 
         self.mostrar_mensajes(errores)    # Mora
-        self.btn_guardar.config(state="normal")
         if errores:
             self.estado.set(f"Estado: análisis léxico finalizado · {len(tokens)} tokens · "
                             f"{len(errores)} error(es) léxico(s)")
         else:
             self.estado.set(f"Estado: análisis léxico finalizado · {len(tokens)} tokens · sin errores")
+        self.guardar_log()    # Mora
     # ===== FIN aporte: BURGOS (panel de tokens y ejecución del análisis) =====
 
     # ===== INICIO aporte: MORA (mensajes de error, barra de estado y log) =====
@@ -247,20 +253,21 @@ class Aplicacion(tk.Tk):
 
     def guardar_log(self):
         if self.codigo_analizado is None:
-            messagebox.showwarning("Advertencia", "Primero presiona Analizar.")
-            return
-        autor = simpledialog.askstring(
-            "Guardar log", "Escribe tu NombreApellido, sin espacios ni tildes (ej. MariaAndrade):", parent=self)
-        if autor is None:
-            return
-        autor = autor.strip()
-        if not re.fullmatch(r"[A-Za-z]+", autor):
-            messagebox.showerror("Nombre no válido", "Usa solo letras, por ejemplo MariaAndrade.")
             return
         archivo = os.path.basename(self.ruta_actual) if self.ruta_actual else "editor"
+        autor = AUTORES.get(os.path.splitext(archivo)[0]) or self.autor
+        if not autor:
+            autor = simpledialog.askstring(
+                "Autor del log", "Escribe tu NombreApellido, sin espacios ni tildes (ej. MariaAndrade):", parent=self)
+            if autor is None:
+                return
+            autor = autor.strip()
+            if not re.fullmatch(r"[A-Za-z]+", autor):
+                messagebox.showerror("Nombre no válido", "Usa solo letras, por ejemplo MariaAndrade.")
+                return
+            self.autor = autor
         destino, _, _ = guardar_log(self.codigo_analizado, archivo, autor)
-        self.estado.set(f"Estado: log guardado · {destino.name}")
-        messagebox.showinfo("Log guardado", f"Se guardó el log en:\n{destino}")
+        self.estado.set(f"{self.estado.get().split(' · log ')[0]} · log {destino.name}")
     # ===== FIN aporte: MORA (mensajes de error, barra de estado y log) =====
 
 
