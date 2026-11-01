@@ -1,78 +1,84 @@
-
-from pathlib import Path
-from datetime import datetime
+# -*- coding: utf-8 -*-
+import re
 import sys
+from collections import Counter
+from datetime import datetime
+from pathlib import Path
 
 from lexer import analizar
 
+CARPETA_LOGS = Path(__file__).resolve().parent / "logs"
 
-def ejecutar_prueba(ruta_archivo):
-    ruta = Path(ruta_archivo)
 
-    if not ruta.is_file():
-        print(f"No existe el archivo: {ruta}")
-        return
+def _destino_log(autor, ahora):
+    """Devuelve una ruta libre: si ya existe un log del mismo minuto agrega -2, -3..."""
+    CARPETA_LOGS.mkdir(exist_ok=True)
+    base = f"lexico-{autor}-{ahora:%d-%m-%Y-%Hh%M}"
+    destino = CARPETA_LOGS / f"{base}.txt"
+    n = 2
+    while destino.exists():
+        destino = CARPETA_LOGS / f"{base}-{n}.txt"
+        n += 1
+    return destino
 
-    codigo = ruta.read_text(encoding="utf-8")
-    tokens, errores = analizar(codigo)
 
-    ahora = datetime.now()
-    fecha = ahora.strftime("%d-%m-%Y-%Hh%M")
-    nombre = f"lexico-JoseMora-{fecha}.txt"
+def _valor(tipo, valor):
+    return valor if tipo == "NEWLINE" else repr(valor)
 
-    carpeta_logs = Path("logs")
-    carpeta_logs.mkdir(exist_ok=True)
 
-    # Evitar sobrescribir un log si hay varias pruebas
-    # dentro del mismo minuto.
-    destino = carpeta_logs / nombre
-    if destino.exists():
-        fecha = ahora.strftime("%d-%m-%Y-%Hh%M%S")
-        destino = carpeta_logs / f"lexico-JoseMora-{fecha}.txt"
-
-    contenido = [
-        "ANALISIS LEXICO - JOSE MORA",
-        f"Archivo: {ruta}",
+def construir_log(tokens, errores, archivo, autor, ahora):
+    lineas = [
+        f"ANALISIS LEXICO - {autor}",
+        f"Archivo: {archivo}",
         f"Fecha: {ahora:%d-%m-%Y %H:%M:%S}",
         "",
         "TOKENS RECONOCIDOS",
         "=" * 60,
     ]
-
     for tipo, valor, linea in tokens:
-        contenido.append(
-            f"Linea {linea:03d} | {tipo:20s} | {valor!r}"
-        )
+        lineas.append(f"Linea {linea:03d} | {tipo:20s} | {_valor(tipo, valor)}")
 
-    contenido.extend([
-        "",
-        f"Total de tokens: {len(tokens)}",
-        "",
-        "ERRORES LEXICOS",
-        "=" * 60,
-    ])
+    lineas += ["", f"Total de tokens: {len(tokens)}", "", "RESUMEN POR TIPO DE TOKEN", "=" * 60]
+    for tipo, cantidad in sorted(Counter(t[0] for t in tokens).items()):
+        lineas.append(f"{tipo:20s} | {cantidad}")
 
+    lineas += ["", "ERRORES LEXICOS", "=" * 60]
     if errores:
-        for error in errores:
-            contenido.append(error["mensaje"])
+        lineas += [e["mensaje"] for e in errores]
     else:
-        contenido.append("No se encontraron errores lexicos.")
+        lineas.append("No se encontraron errores lexicos.")
+    lineas += ["", f"Total de errores: {len(errores)}"]
+    return "\n".join(lineas) + "\n"
 
-    contenido.append(f"\nTotal de errores: {len(errores)}")
 
-    destino.write_text(
-        "\n".join(contenido) + "\n",
-        encoding="utf-8"
-    )
+def guardar_log(codigo, archivo, autor):
+    tokens, errores = analizar(codigo)
+    ahora = datetime.now()
+    destino = _destino_log(autor, ahora)
+    destino.write_text(construir_log(tokens, errores, archivo, autor, ahora), encoding="utf-8")
+    return destino, tokens, errores
 
+
+def ejecutar_prueba(ruta_archivo, autor):
+    ruta = Path(ruta_archivo)
+    if not ruta.is_file():
+        print(f"No existe el archivo: {ruta}")
+        return 1
+
+    destino, tokens, errores = guardar_log(ruta.read_text(encoding="utf-8"), ruta.as_posix(), autor)
+
+    print(f"Archivo analizado: {ruta}")
     print(f"Tokens reconocidos: {len(tokens)}")
     print(f"Errores lexicos: {len(errores)}")
+    for error in errores:
+        print(f"  - {error['mensaje']}")
     print(f"Log generado: {destino}")
+    return 0
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Uso: py generar_log.py archivo.go")
+    if len(sys.argv) != 3 or not re.fullmatch(r"[A-Za-z]+", sys.argv[2]):
+        print("Uso: py generar_log.py archivo.go NombreApellido")
+        print("Ejemplo: py generar_log.py algoritmos/algoritmo1.go MariaAndrade")
         sys.exit(1)
-
-    ejecutar_prueba(sys.argv[1])
+    sys.exit(ejecutar_prueba(sys.argv[1], sys.argv[2]))

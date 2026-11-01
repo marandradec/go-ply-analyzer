@@ -39,7 +39,7 @@ reservadas_burgos = {
     'for': 'FOR',
     'break': 'BREAK',
     'return': 'RETURN',
-    'float64': 'FLOAT64',
+    'float64': 'T_FLOAT64',
 }
 # FIN aporte: BURGOS
 
@@ -123,7 +123,7 @@ tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.va
 # INICIO aporte: BURGOS (funciones)
 
 def t_MALFORMED_NUMBER(t):
-    r'(?:[0-9]+[a-zA-Z_]\w*)|(?:[0-9]+\.(?![0-9]))'
+    r'(?:[0-9]+(?:\.[0-9]+)?[a-zA-Z_]\w*)|(?:[0-9]+\.(?![0-9]))'
     registrar_error(t.lexer.lineno, f"Número mal formado {t.value}")
 
 def t_FLOAT_LITERAL(t):

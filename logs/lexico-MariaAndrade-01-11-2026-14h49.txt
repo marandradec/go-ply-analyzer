@@ -1,0 +1,51 @@
+ANALISIS LEXICO - MariaAndrade
+Archivo: errores_andrade.go
+Fecha: 01-11-2026 14:49:00
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | NEWLINE              | \n
+Linea 004 | FUNC                 | 'func'
+Linea 004 | ID                   | 'main'
+Linea 004 | PAREN_IZQ            | '('
+Linea 004 | PAREN_DER            | ')'
+Linea 004 | LLAVE_IZQ            | '{'
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'saludo'
+Linea 005 | DECLARACION_CORTA    | ':='
+Linea 005 | NEWLINE              | \n
+Linea 006 | FMT_PRINTLN          | 'fmt.Println'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | ID                   | 'saludo'
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'despedida'
+Linea 007 | DECLARACION_CORTA    | ':='
+Linea 007 | NEWLINE              | \n
+Linea 008 | LLAVE_DER            | '}'
+Linea 008 | NEWLINE              | \n
+
+Total de tokens: 23
+
+RESUMEN POR TIPO DE TOKEN
+============================================================
+DECLARACION_CORTA    | 2
+FMT_PRINTLN          | 1
+FUNC                 | 1
+ID                   | 5
+LLAVE_DER            | 1
+LLAVE_IZQ            | 1
+NEWLINE              | 7
+PACKAGE              | 1
+PAREN_DER            | 2
+PAREN_IZQ            | 2
+
+ERRORES LEXICOS
+============================================================
+Error léxico en la línea 5. Cadena sin cerrar "Hola Mundo
+Error léxico en la línea 7. Cadena sin cerrar "Adios
+
+Total de errores: 2

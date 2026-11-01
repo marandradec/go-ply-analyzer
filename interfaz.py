@@ -7,10 +7,21 @@ Los paneles de Burgos (tokens) y Mora (mensajes y barra de estado) tienen su
 sección marcada con INICIO/FIN, igual que en lexer.py.
 """
 import os
+import re
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, simpledialog, ttk
+
+from generar_log import guardar_log
+from lexer import analizar
 
 FUENTE_CODIGO = ("Consolas", 11)
+
+# Autor de cada archivo de prueba, para nombrar el log sin preguntar
+AUTORES = {
+    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade",
+    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos",
+    "algoritmo3": "JoseMora", "errores_mora": "JoseMora",
+}
 
 
 # ===== INICIO aporte: ANDRADE (editor con numeración de líneas) =====
@@ -78,13 +89,8 @@ class EditorConLineas(tk.Frame):
         self.texto.delete("1.0", "end")
         self.texto.insert("1.0", codigo)
 
-	def limpiar(self):
-		self.editor.limpiar()
-		# Vaciar tabla de Burgos
-		for item in self.tabla_tokens.get_children():
-			self.tabla_tokens.delete(item)
-		self.ruta_actual = None
-		self.estado.set("Estado: listo")
+    def limpiar(self):
+        self.texto.delete("1.0", "end")
 # ===== FIN aporte: ANDRADE (editor con numeración de líneas) =====
 
 
@@ -95,6 +101,8 @@ class Aplicacion(tk.Tk):
         self.geometry("1100x650")
         self.minsize(800, 500)
         self.ruta_actual = None
+        self.codigo_analizado = None  # código del último análisis (para guardar el log)
+        self.autor = None  # solo se pide si el archivo no está en AUTORES
 
         self.rowconfigure(1, weight=1)
         self.columnconfigure(0, weight=1)
@@ -109,18 +117,17 @@ class Aplicacion(tk.Tk):
         barra.grid(row=0, column=0, sticky="ew")
 
         self.btn_abrir = tk.Button(barra, text="Abrir archivo .go", command=self.abrir_archivo)
-        self.btn_analizar = tk.Button(barra, text="Analizar", state="disabled")  # se conecta en el siguiente paso
+        self.btn_analizar = tk.Button(barra, text="Analizar léxico", command=self.ejecutar_analisis)
         self.btn_limpiar = tk.Button(barra, text="Limpiar", command=self.limpiar)
-        self.btn_guardar = tk.Button(barra, text="Guardar log", state="disabled")  # se conecta más adelante
 
-        for boton in (self.btn_abrir, self.btn_analizar, self.btn_limpiar, self.btn_guardar):
+        for boton in (self.btn_abrir, self.btn_analizar, self.btn_limpiar):
             boton.pack(side="left", padx=4)
 
     def _crear_cuerpo(self):
         cuerpo = tk.Frame(self, padx=8)
         cuerpo.grid(row=1, column=0, sticky="nsew")
         cuerpo.columnconfigure(0, weight=3)
-        cuerpo.columnconfigure(1, weight=2)
+        cuerpo.columnconfigure(1, weight=2, minsize=400)
         cuerpo.rowconfigure(0, weight=3)
         cuerpo.rowconfigure(1, weight=1)
 
@@ -131,58 +138,8 @@ class Aplicacion(tk.Tk):
         self.editor = EditorConLineas(marco_codigo)
         self.editor.grid(row=0, column=0, sticky="nsew")
 
-        # ===== INICIO aporte: BURGOS (panel de tokens reconocidos) =====
-        self.panel_tokens = tk.LabelFrame(cuerpo, text="Tokens reconocidos")
-        self.panel_tokens.grid(row=0, column=1, sticky="nsew", padx=(4, 0), pady=(0, 4))
-        self.panel_tokens.rowconfigure(0, weight=1)
-        self.panel_tokens.columnconfigure(0, weight=1)
-
-        # Configuración de la tabla Treeview
-        columnas = ("Tipo", "Valor", "Línea")
-        self.tabla_tokens = ttk.Treeview(self.panel_tokens, columns=columnas, show="headings")
-        self.tabla_tokens.heading("Tipo", text="Tipo")
-        self.tabla_tokens.heading("Valor", text="Valor")
-        self.tabla_tokens.heading("Línea", text="Línea")
-
-        self.tabla_tokens.column("Tipo", width=110, anchor="w")
-        self.tabla_tokens.column("Valor", width=120, anchor="w")
-        self.tabla_tokens.column("Línea", width=60, anchor="center")
-
-        scroll_tokens = tk.Scrollbar(self.panel_tokens, orient="vertical", command=self.tabla_tokens.yview)
-        self.tabla_tokens.configure(yscrollcommand=scroll_tokens.set)
-
-        self.tabla_tokens.grid(row=0, column=0, sticky="nsew")
-        scroll_tokens.grid(row=0, column=1, sticky="ns")
-        # ===== FIN aporte: BURGOS (panel de tokens reconocidos) =====
-        
-    # ===== INICIO aporte: BURGOS (Lógica de análisis e integración de tokens) =====
-    def ejecutar_analisis(self):
-        codigo = self.editor.obtener_codigo()
-        if not codigo.strip():
-            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
-            return
-
-        # Limpiar la tabla antes de un nuevo análisis
-        for item in self.tabla_tokens.get_children():
-            self.tabla_tokens.delete(item)
-
-        # Ejecución del analizador léxico
-        lexer.errores_lexicos = []
-        lexer.lexer.input(codigo)
-
-        while True:
-            tok = lexer.lexer.token()
-            if not tok:
-                break
-            self.tabla_tokens.insert("", "end", values=(tok.type, tok.value, f"Línea {tok.lineno}"))
-
-        self.estado.set("Estado: análisis léxico finalizado")
-    # ===== FIN aporte: BURGOS =====
-
-        # ===== INICIO aporte: MORA (panel de mensajes de error) =====
-        self.panel_mensajes = tk.LabelFrame(cuerpo, text="Mensajes")
-        self.panel_mensajes.grid(row=1, column=0, columnspan=2, sticky="nsew", pady=(0, 4))
-        # ===== FIN aporte: MORA (panel de mensajes de error) =====
+        self._crear_panel_tokens(cuerpo)      # Burgos
+        self._crear_panel_mensajes(cuerpo)    # Mora
 
     def abrir_archivo(self):
         ruta = filedialog.askopenfilename(
@@ -203,16 +160,115 @@ class Aplicacion(tk.Tk):
 
     def limpiar(self):
         self.editor.limpiar()
+        self.vaciar_tokens()          # Burgos
+        self.vaciar_mensajes()        # Mora
         self.ruta_actual = None
+        self.codigo_analizado = None
         self.estado.set("Estado: listo")
     # ===== FIN aporte: ANDRADE (ventana, botones y editor) =====
 
-    # ===== INICIO aporte: MORA (barra de estado) =====
+    # ===== INICIO aporte: BURGOS (panel de tokens y ejecución del análisis) =====
+    def _crear_panel_tokens(self, cuerpo):
+        self.panel_tokens = tk.LabelFrame(cuerpo, text="Tokens reconocidos")
+        self.panel_tokens.grid(row=0, column=1, sticky="nsew", padx=(4, 0), pady=(0, 4))
+        self.panel_tokens.rowconfigure(0, weight=1)
+        self.panel_tokens.columnconfigure(0, weight=1)
+
+        columnas = ("Tipo", "Valor", "Línea")
+        self.tabla_tokens = ttk.Treeview(self.panel_tokens, columns=columnas, show="headings")
+        self.tabla_tokens.heading("Tipo", text="Tipo")
+        self.tabla_tokens.heading("Valor", text="Valor")
+        self.tabla_tokens.heading("Línea", text="Línea")
+        self.tabla_tokens.column("Tipo", width=170, anchor="w")
+        self.tabla_tokens.column("Valor", width=110, anchor="w")
+        self.tabla_tokens.column("Línea", width=80, anchor="center")
+
+        scroll_tokens = tk.Scrollbar(self.panel_tokens, orient="vertical", command=self.tabla_tokens.yview)
+        self.tabla_tokens.configure(yscrollcommand=scroll_tokens.set)
+        self.tabla_tokens.grid(row=0, column=0, sticky="nsew")
+        scroll_tokens.grid(row=0, column=1, sticky="ns")
+
+    def vaciar_tokens(self):
+        for item in self.tabla_tokens.get_children():
+            self.tabla_tokens.delete(item)
+
+    def ejecutar_analisis(self):
+        codigo = self.editor.obtener_codigo()
+        if not codigo.strip():
+            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
+            return
+
+        # analizar() reinicia el contador de líneas y la lista de errores en cada ejecución
+        tokens, errores = analizar(codigo)
+        self.codigo_analizado = codigo
+
+        self.vaciar_tokens()
+        for tipo, valor, linea in tokens:
+            self.tabla_tokens.insert("", "end", values=(tipo, valor, f"Línea {linea}"))
+
+        self.mostrar_mensajes(errores)    # Mora
+        if errores:
+            self.estado.set(f"Estado: análisis léxico finalizado · {len(tokens)} tokens · "
+                            f"{len(errores)} error(es) léxico(s)")
+        else:
+            self.estado.set(f"Estado: análisis léxico finalizado · {len(tokens)} tokens · sin errores")
+        self.guardar_log()    # Mora
+    # ===== FIN aporte: BURGOS (panel de tokens y ejecución del análisis) =====
+
+    # ===== INICIO aporte: MORA (mensajes de error, barra de estado y log) =====
+    def _crear_panel_mensajes(self, cuerpo):
+        self.panel_mensajes = tk.LabelFrame(cuerpo, text="Mensajes")
+        self.panel_mensajes.grid(row=1, column=0, columnspan=2, sticky="nsew", pady=(0, 4))
+        self.panel_mensajes.rowconfigure(0, weight=1)
+        self.panel_mensajes.columnconfigure(0, weight=1)
+
+        self.texto_mensajes = tk.Text(self.panel_mensajes, height=6, wrap="word", state="disabled",
+                                      font=FUENTE_CODIGO)
+        self.texto_mensajes.tag_configure("lexico", foreground="#b00020")   # rojo = léxico
+        self.texto_mensajes.tag_configure("ok", foreground="#1b5e20")
+        barra = tk.Scrollbar(self.panel_mensajes, orient="vertical", command=self.texto_mensajes.yview)
+        self.texto_mensajes.configure(yscrollcommand=barra.set)
+        self.texto_mensajes.grid(row=0, column=0, sticky="nsew")
+        barra.grid(row=0, column=1, sticky="ns")
+
+    def vaciar_mensajes(self):
+        self.texto_mensajes.config(state="normal")
+        self.texto_mensajes.delete("1.0", "end")
+        self.texto_mensajes.config(state="disabled")
+
+    def mostrar_mensajes(self, errores):
+        self.vaciar_mensajes()
+        self.texto_mensajes.config(state="normal")
+        if errores:
+            for error in errores:
+                self.texto_mensajes.insert("end", error["mensaje"] + "\n", "lexico")
+        else:
+            self.texto_mensajes.insert("end", "Análisis léxico sin errores.\n", "ok")
+        self.texto_mensajes.config(state="disabled")
+
     def _crear_barra_estado(self):
         self.estado = tk.StringVar(value="Estado: listo")
         tk.Label(self, textvariable=self.estado, anchor="w", relief="sunken",
                  padx=8).grid(row=2, column=0, sticky="ew")
-    # ===== FIN aporte: MORA (barra de estado) =====
+
+    def guardar_log(self):
+        if self.codigo_analizado is None:
+            return
+        archivo = os.path.basename(self.ruta_actual) if self.ruta_actual else "editor"
+        autor = AUTORES.get(os.path.splitext(archivo)[0]) or self.autor
+        if not autor:
+            autor = simpledialog.askstring(
+                "Autor del log", "Escribe tu NombreApellido, sin espacios ni tildes (ej. MariaAndrade):", parent=self)
+            if autor is None:
+                return
+            autor = autor.strip()
+            if not re.fullmatch(r"[A-Za-z]+", autor):
+                messagebox.showerror("Nombre no válido", "Usa solo letras, por ejemplo MariaAndrade.")
+                return
+            self.autor = autor
+        destino, _, _ = guardar_log(self.codigo_analizado, archivo, autor)
+        self.estado.set(f"{self.estado.get().split(' · log ')[0]} · log {destino.name}")
+    # ===== FIN aporte: MORA (mensajes de error, barra de estado y log) =====
 
 
 if __name__ == "__main__":
