@@ -9,7 +9,7 @@ sección marcada con INICIO/FIN, igual que en lexer.py.
 import os
 import re
 import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, ttk
+from tkinter import messagebox, simpledialog, ttk
 
 from generar_log import guardar_log
 from lexer import analizar
@@ -29,22 +29,24 @@ class EditorConLineas(tk.Frame):
     """Cuadro de texto con una columna de números de línea a la izquierda."""
 
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master, background="#1e293b")
 
-        # Columna de números: solo lectura, se llena sola
+        # Columna de números: estilo IDE oscuro profesional
         self.numeros = tk.Text(self, width=4, padx=6, takefocus=0, wrap="none",
                                borderwidth=0, highlightthickness=0,
-                               background="#f0f0f0", foreground="#666666",
+                               background="#1e293b", foreground="#64748b",
                                font=FUENTE_CODIGO, state="disabled")
         self.numeros.tag_configure("derecha", justify="right")
 
-        # Cuadro donde se escribe el código
-        self.texto = tk.Text(self, wrap="none", undo=True, padx=6,
+        # Cuadro donde se escribe el código (Fondo oscuro profundo y tipografía nítida)
+        self.texto = tk.Text(self, wrap="none", undo=True, padx=8, pady=4,
                              borderwidth=0, highlightthickness=0,
+                             background="#0f172a", foreground="#f8fafc",
+                             insertbackground="#3b82f6",
                              font=FUENTE_CODIGO)
 
-        self.barra_y = tk.Scrollbar(self, orient="vertical", command=self._desplazar)
-        self.barra_x = tk.Scrollbar(self, orient="horizontal", command=self.texto.xview)
+        self.barra_y = ttk.Scrollbar(self, orient="vertical", command=self._desplazar)
+        self.barra_x = ttk.Scrollbar(self, orient="horizontal", command=self.texto.xview)
         self.texto.configure(yscrollcommand=self._al_desplazar,
                              xscrollcommand=self.barra_x.set)
 
@@ -98,11 +100,20 @@ class Aplicacion(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Analizador Go | Léxico · Sintáctico · Semántico")
-        self.geometry("1100x650")
-        self.minsize(800, 500)
+        
+        # Pantalla completa por defecto (maximizado)
+        self.state("zoomed")
+        self.minsize(950, 600)
+        
         self.ruta_actual = None
         self.codigo_analizado = None  # código del último análisis (para guardar el log)
         self.autor = None  # solo se pide si el archivo no está en AUTORES
+
+        # Configurar colores generales de la ventana (Fondo oscuro corporativo)
+        self.configure(bg="#0f172a")
+
+        # Aplicar estilos con ttk adaptados al tema oscuro profesional
+        self._configurar_estilos()
 
         self.rowconfigure(1, weight=1)
         self.columnconfigure(0, weight=1)
@@ -111,56 +122,126 @@ class Aplicacion(tk.Tk):
         self._crear_cuerpo()
         self._crear_barra_estado()
 
+    def _configurar_estilos(self):
+        estilo = ttk.Style()
+        estilo.theme_use("clam")
+        
+        # Estilo para la tabla (Treeview) con paleta oscura elegante
+        estilo.configure("Treeview",
+                         background="#0f172a",
+                         foreground="#f8fafc",
+                         rowheight=26,
+                         fieldbackground="#0f172a",
+                         borderwidth=0,
+                         font=("Segoe UI", 10))
+        estilo.configure("Treeview.Heading",
+                         background="#1e293b",
+                         foreground="#f8fafc",
+                         relief="flat",
+                         font=("Segoe UI", 10, "bold"))
+        estilo.map("Treeview", background=[('selected', '#2563eb')], foreground=[('selected', '#ffffff')])
+
     # ===== INICIO aporte: ANDRADE (ventana, botones y editor) =====
     def _crear_barra_superior(self):
-        barra = tk.Frame(self, padx=8, pady=6)
+        barra = tk.Frame(self, bg="#0f172a", padx=12, pady=10)
         barra.grid(row=0, column=0, sticky="ew")
 
-        self.btn_abrir = tk.Button(barra, text="Abrir archivo .go", command=self.abrir_archivo)
-        self.btn_analizar = tk.Button(barra, text="Analizar léxico", command=self.ejecutar_analisis)
-        self.btn_limpiar = tk.Button(barra, text="Limpiar", command=self.limpiar)
+        # Botones con estilo moderno azul corporativo
+        estilo_boton = {
+            "font": ("Segoe UI", 10, "bold"),
+            "bg": "#2563eb",
+            "fg": "#ffffff",
+            "activebackground": "#1d4ed8",
+            "activeforeground": "#ffffff",
+            "relief": "flat",
+            "padx": 14,
+            "pady": 8,
+            "cursor": "hand2"
+        }
 
-        for boton in (self.btn_abrir, self.btn_analizar, self.btn_limpiar):
-            boton.pack(side="left", padx=4)
+        self.btn_analizar = tk.Button(barra, text="▶ Analizar léxico", command=self.ejecutar_analisis, **estilo_boton)
+        # Botón limpiar con un tono slate oscuro elegante y sofisticado
+        self.btn_limpiar = tk.Button(barra, text="🧹 Limpiar", command=self.limpiar,
+                                     font=("Segoe UI", 10, "bold"), bg="#334155", fg="#f8fafc",
+                                     activebackground="#475569", activeforeground="#ffffff",
+                                     relief="flat", padx=14, pady=8, cursor="hand2")
+
+        for boton in (self.btn_analizar, self.btn_limpiar):
+            boton.pack(side="left", padx=(0, 10))
 
     def _crear_cuerpo(self):
-        cuerpo = tk.Frame(self, padx=8)
+        cuerpo = tk.Frame(self, bg="#0f172a", padx=12, pady=4)
         cuerpo.grid(row=1, column=0, sticky="nsew")
-        cuerpo.columnconfigure(0, weight=3)
-        cuerpo.columnconfigure(1, weight=2, minsize=400)
+        
+        # Distribución en columnas profesionales
+        cuerpo.columnconfigure(0, weight=1, minsize=230)
+        cuerpo.columnconfigure(1, weight=3, minsize=420)
+        cuerpo.columnconfigure(2, weight=2, minsize=360)
         cuerpo.rowconfigure(0, weight=3)
         cuerpo.rowconfigure(1, weight=1)
 
-        marco_codigo = tk.LabelFrame(cuerpo, text="Código fuente (Go)")
-        marco_codigo.grid(row=0, column=0, sticky="nsew", padx=(0, 4), pady=(0, 4))
+        # 1. Panel lateral izquierdo: Selector integrado de archivos .go
+        marco_archivos = tk.LabelFrame(cuerpo, text=" Archivos del Proyecto ", font=("Segoe UI", 10, "bold"),
+                                       bg="#1e293b", fg="#93c5fd", padx=8, pady=8, bd=1, relief="solid")
+        marco_archivos.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=(0, 8), pady=(0, 8))
+        marco_archivos.rowconfigure(0, weight=1)
+        marco_archivos.columnconfigure(0, weight=1)
+
+        self.lista_archivos = tk.Listbox(marco_archivos, font=("Consolas", 10),
+                                         bg="#0f172a", fg="#f8fafc", selectbackground="#2563eb",
+                                         selectforeground="#ffffff", borderwidth=0, highlightthickness=0)
+        scroll_archivos = ttk.Scrollbar(marco_archivos, orient="vertical", command=self.lista_archivos.yview)
+        self.lista_archivos.configure(yscrollcommand=scroll_archivos.set)
+        
+        self.lista_archivos.grid(row=0, column=0, sticky="nsew")
+        scroll_archivos.grid(row=0, column=1, sticky="ns")
+        
+        self.lista_archivos.bind("<Double-Button-1>", self.cargar_archivo_seleccionado)
+        self._cargar_lista_algoritmos()
+
+        # 2. Panel central: Editor de código fuente
+        marco_codigo = tk.LabelFrame(cuerpo, text=" Código fuente (Go) ", font=("Segoe UI", 10, "bold"),
+                                     bg="#1e293b", fg="#93c5fd", padx=8, pady=8, bd=1, relief="solid")
+        marco_codigo.grid(row=0, column=1, sticky="nsew", padx=(0, 8), pady=(0, 8))
         marco_codigo.rowconfigure(0, weight=1)
         marco_codigo.columnconfigure(0, weight=1)
         self.editor = EditorConLineas(marco_codigo)
         self.editor.grid(row=0, column=0, sticky="nsew")
 
-        self._crear_panel_tokens(cuerpo)      # Burgos
+        # 3. Paneles derechos e inferiores
+        self._crear_panel_tokens(cuerpo)    # Burgos
         self._crear_panel_mensajes(cuerpo)    # Mora
 
-    def abrir_archivo(self):
-        ruta = filedialog.askopenfilename(
-            title="Abrir archivo Go",
-            filetypes=[("Archivos Go", "*.go"), ("Todos los archivos", "*.*")],
-        )
-        if not ruta:
+    def _cargar_lista_algoritmos(self):
+        carpeta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "algoritmos")
+        if os.path.exists(carpeta_algoritmos):
+            archivos_go = [f for f in os.listdir(carpeta_algoritmos) if f.endswith(".go")]
+            archivos_go.sort()
+            for arch in archivos_go:
+                self.lista_archivos.insert("end", arch)
+
+    def cargar_archivo_seleccionado(self, event=None):
+        seleccion = self.lista_archivos.curselection()
+        if not seleccion:
             return
+        nombre_archivo = self.lista_archivos.get(seleccion[0])
+        carpeta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "algoritmos")
+        ruta_completa = os.path.join(carpeta_algoritmos, nombre_archivo)
+        
         try:
-            with open(ruta, encoding="utf-8") as archivo:
+            with open(ruta_completa, encoding="utf-8") as archivo:
                 codigo = archivo.read()
         except (OSError, UnicodeDecodeError) as error:
             messagebox.showerror("Error al abrir", f"No se pudo leer el archivo:\n{error}")
             return
+        
         self.editor.poner_codigo(codigo)
-        self.ruta_actual = ruta
-        self.estado.set(f"Estado: archivo abierto · {os.path.basename(ruta)}")
+        self.ruta_actual = ruta_completa
+        self.estado.set(f"Estado: archivo abierto · {nombre_archivo}")
 
     def limpiar(self):
         self.editor.limpiar()
-        self.vaciar_tokens()          # Burgos
+        self.vaciar_tokens()            # Burgos
         self.vaciar_mensajes()        # Mora
         self.ruta_actual = None
         self.codigo_analizado = None
@@ -169,8 +250,9 @@ class Aplicacion(tk.Tk):
 
     # ===== INICIO aporte: BURGOS (panel de tokens y ejecución del análisis) =====
     def _crear_panel_tokens(self, cuerpo):
-        self.panel_tokens = tk.LabelFrame(cuerpo, text="Tokens reconocidos")
-        self.panel_tokens.grid(row=0, column=1, sticky="nsew", padx=(4, 0), pady=(0, 4))
+        self.panel_tokens = tk.LabelFrame(cuerpo, text=" Tokens reconocidos ", font=("Segoe UI", 10, "bold"),
+                                          bg="#1e293b", fg="#93c5fd", padx=8, pady=8, bd=1, relief="solid")
+        self.panel_tokens.grid(row=0, column=2, sticky="nsew", padx=(0, 0), pady=(0, 8))
         self.panel_tokens.rowconfigure(0, weight=1)
         self.panel_tokens.columnconfigure(0, weight=1)
 
@@ -179,11 +261,11 @@ class Aplicacion(tk.Tk):
         self.tabla_tokens.heading("Tipo", text="Tipo")
         self.tabla_tokens.heading("Valor", text="Valor")
         self.tabla_tokens.heading("Línea", text="Línea")
-        self.tabla_tokens.column("Tipo", width=170, anchor="w")
-        self.tabla_tokens.column("Valor", width=110, anchor="w")
-        self.tabla_tokens.column("Línea", width=80, anchor="center")
+        self.tabla_tokens.column("Tipo", width=150, anchor="w")
+        self.tabla_tokens.column("Valor", width=100, anchor="w")
+        self.tabla_tokens.column("Línea", width=70, anchor="center")
 
-        scroll_tokens = tk.Scrollbar(self.panel_tokens, orient="vertical", command=self.tabla_tokens.yview)
+        scroll_tokens = ttk.Scrollbar(self.panel_tokens, orient="vertical", command=self.tabla_tokens.yview)
         self.tabla_tokens.configure(yscrollcommand=scroll_tokens.set)
         self.tabla_tokens.grid(row=0, column=0, sticky="nsew")
         scroll_tokens.grid(row=0, column=1, sticky="ns")
@@ -217,16 +299,19 @@ class Aplicacion(tk.Tk):
 
     # ===== INICIO aporte: MORA (mensajes de error, barra de estado y log) =====
     def _crear_panel_mensajes(self, cuerpo):
-        self.panel_mensajes = tk.LabelFrame(cuerpo, text="Mensajes")
-        self.panel_mensajes.grid(row=1, column=0, columnspan=2, sticky="nsew", pady=(0, 4))
+        self.panel_mensajes = tk.LabelFrame(cuerpo, text=" Mensajes y Consola ", font=("Segoe UI", 10, "bold"),
+                                          bg="#1e293b", fg="#93c5fd", padx=8, pady=8, bd=1, relief="solid")
+        self.panel_mensajes.grid(row=1, column=1, columnspan=2, sticky="nsew", pady=(0, 0))
         self.panel_mensajes.rowconfigure(0, weight=1)
         self.panel_mensajes.columnconfigure(0, weight=1)
 
         self.texto_mensajes = tk.Text(self.panel_mensajes, height=6, wrap="word", state="disabled",
-                                      font=FUENTE_CODIGO)
-        self.texto_mensajes.tag_configure("lexico", foreground="#b00020")   # rojo = léxico
-        self.texto_mensajes.tag_configure("ok", foreground="#1b5e20")
-        barra = tk.Scrollbar(self.panel_mensajes, orient="vertical", command=self.texto_mensajes.yview)
+                                      background="#0f172a", foreground="#f8fafc",
+                                      font=FUENTE_CODIGO, padx=8, pady=4, borderwidth=0, highlightthickness=0)
+        self.texto_mensajes.tag_configure("lexico", foreground="#f87171")   # Rojo suave optimizado para modo oscuro
+        self.texto_mensajes.tag_configure("ok", foreground="#4ade80")       # Verde suave optimizado para modo oscuro
+        
+        barra = ttk.Scrollbar(self.panel_mensajes, orient="vertical", command=self.texto_mensajes.yview)
         self.texto_mensajes.configure(yscrollcommand=barra.set)
         self.texto_mensajes.grid(row=0, column=0, sticky="nsew")
         barra.grid(row=0, column=1, sticky="ns")
@@ -248,8 +333,11 @@ class Aplicacion(tk.Tk):
 
     def _crear_barra_estado(self):
         self.estado = tk.StringVar(value="Estado: listo")
-        tk.Label(self, textvariable=self.estado, anchor="w", relief="sunken",
-                 padx=8).grid(row=2, column=0, sticky="ew")
+        # Barra de estado inferior elegante en tono oscuro armonizado
+        lbl_estado = tk.Label(self, textvariable=self.estado, anchor="w",
+                              bg="#1e293b", fg="#94a3b8", font=("Segoe UI", 9, "bold"),
+                              padx=14, pady=6, relief="flat")
+        lbl_estado.grid(row=2, column=0, columnspan=3, sticky="ew")
 
     def guardar_log(self):
         if self.codigo_analizado is None:
