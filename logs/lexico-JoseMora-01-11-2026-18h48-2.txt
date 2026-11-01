@@ -1,0 +1,51 @@
+ANALISIS LEXICO - JoseMora
+Archivo: algoritmos/errores_mora.go
+Fecha: 01-11-2026 18:48:18
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 002 | NEWLINE              | \n
+Linea 003 | FUNC                 | 'func'
+Linea 003 | ID                   | 'main'
+Linea 003 | PAREN_IZQ            | '('
+Linea 003 | PAREN_DER            | ')'
+Linea 003 | LLAVE_IZQ            | '{'
+Linea 003 | NEWLINE              | \n
+Linea 004 | ID                   | 'valor'
+Linea 004 | DECLARACION_CORTA    | ':='
+Linea 004 | ENTERO               | 10
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'valor'
+Linea 005 | ENTERO               | 5
+Linea 005 | NEWLINE              | \n
+Linea 006 | FMT_PRINTLN          | 'fmt.Println'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | ID                   | 'valor'
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | NEWLINE              | \n
+Linea 007 | LLAVE_DER            | '}'
+
+Total de tokens: 23
+
+RESUMEN POR TIPO DE TOKEN
+============================================================
+DECLARACION_CORTA    | 1
+ENTERO               | 2
+FMT_PRINTLN          | 1
+FUNC                 | 1
+ID                   | 5
+LLAVE_DER            | 1
+LLAVE_IZQ            | 1
+NEWLINE              | 6
+PACKAGE              | 1
+PAREN_DER            | 2
+PAREN_IZQ            | 2
+
+ERRORES LEXICOS
+============================================================
+Error léxico en la línea 5. Símbolo no reconocido @
+
+Total de errores: 1
