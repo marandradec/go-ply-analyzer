@@ -34,11 +34,12 @@ reservadas_andrade = {
 
 # INICIO aporte: BURGOS
 reservadas_burgos = {
-	'var': 'VAR',
+    'var': 'VAR',
     'const': 'CONST',
     'for': 'FOR',
     'break': 'BREAK',
-    'return': 'RETURN'
+    'return': 'RETURN',
+    'float64': 'FLOAT64',
 }
 # FIN aporte: BURGOS
 
@@ -61,18 +62,35 @@ reservadas = {**reservadas_andrade, **reservadas_burgos, **reservadas_mora}
 # LISTA DE TOKENS
 # INICIO aporte: ANDRADE
 tokens_andrade = [
-    'ID', 'ENTERO', 'CADENA', 'ARREGLO',
-    'ASIGNACION', 'DECLARACION_CORTA',
-    'LLAVE_IZQ', 'LLAVE_DER', 'PAREN_IZQ', 'PAREN_DER',
+    'ID', 
+    'ENTERO', 
+    'CADENA', 
+    'ARREGLO',
+    'ASIGNACION', 
+    'DECLARACION_CORTA',
+    'LLAVE_IZQ', 
+    'LLAVE_DER', 
+    'PAREN_IZQ', 
+    'PAREN_DER',
     'NEWLINE',
 ]
 # FIN aporte: ANDRADE
 
 # INICIO aporte: BURGOS
 tokens_burgos = [
-'FLOAT64', 'MATRIZ', 'FLOAT_LITERAL',
-    'EQ', 'NEQ', 'LE', 'GE', 'LT', 'GT',
-    'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULO',
+    'MATRIZ', 
+    'FLOAT_LITERAL',
+    'EQ', 
+    'NEQ', 
+    'LE', 
+    'GE', 
+    'LT', 
+    'GT',
+    'PLUS', 
+    'MINUS', 
+    'TIMES', 
+    'DIVIDE', 
+    'MODULO',
     'SEMICOLON'
 ]
 # FIN aporte: BURGOS
@@ -105,9 +123,8 @@ tokens = tokens_andrade + tokens_burgos + tokens_mora + sorted(set(reservadas.va
 # INICIO aporte: BURGOS (funciones)
 
 def t_MALFORMED_NUMBER(t):
-    r'(?:\d+[a-zA-Z_]+)|(?:\d+\.)'
-    print(f"Error léxico: Número mal formado '{t.value}'")
-    t.lexer.skip(len(t.value))
+    r'(?:[0-9]+[a-zA-Z_]\w*)|(?:[0-9]+\.(?![0-9]))'
+    registrar_error(t.lexer.lineno, f"Número mal formado {t.value}")
 
 def t_FLOAT_LITERAL(t):
     r'\d+\.\d+'
@@ -182,8 +199,7 @@ t_ignore = ' \t\r'
 # FIN aporte: ANDRADE (cadenas)
 
 # INICIO aporte: BURGOS (cadenas)
-t_MATRIZ    = r'\[[0-9]+\]\[[0-9]+\](?:[a-zA-Z_][a-zA-Z0-9_]*)' 
-t_FLOAT64   = r'float64'
+t_MATRIZ    = r'\[[0-9]+\]\[[0-9]+\](?:int|float64|string|bool)'
 
 t_EQ        = r'=='
 t_NEQ       = r'!='
@@ -229,12 +245,7 @@ t_COMA = r','
 
 def t_error(t):
     caracter = t.value[0]
-
-    registrar_error(
-        t.lineno,
-        f"Simbolo no reconocido '{caracter}'"
-    )
-
+    registrar_error(t.lineno, f"Símbolo no reconocido {caracter}")
     t.lexer.skip(1)
 
 # FIN aporte: MORA (errores lexicos)
