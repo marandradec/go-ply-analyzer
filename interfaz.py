@@ -102,7 +102,7 @@ class Aplicacion(tk.Tk):
         self.title("Analizador Go | Léxico · Sintáctico · Semántico")
         
         # Pantalla completa por defecto (maximizado)
-        self.state("zoomed")
+        self.attributes("-zoomed", True)
         self.minsize(950, 600)
         
         self.ruta_actual = None
