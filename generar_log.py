@@ -11,15 +11,10 @@ CARPETA_LOGS = Path(__file__).resolve().parent / "logs"
 
 
 def _destino_log(autor, ahora):
-    """Devuelve una ruta libre: si ya existe un log del mismo minuto agrega -2, -3..."""
+    """Devuelve la ruta fija del log: si se ejecuta en el mismo minuto, sobrescribe el archivo."""
     CARPETA_LOGS.mkdir(exist_ok=True)
     base = f"lexico-{autor}-{ahora:%d-%m-%Y-%Hh%M}"
-    destino = CARPETA_LOGS / f"{base}.txt"
-    n = 2
-    while destino.exists():
-        destino = CARPETA_LOGS / f"{base}-{n}.txt"
-        n += 1
-    return destino
+    return CARPETA_LOGS / f"{base}.txt"
 
 
 def _valor(tipo, valor):
