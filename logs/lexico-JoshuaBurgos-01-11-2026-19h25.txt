@@ -1,0 +1,60 @@
+ANALISIS LEXICO - JoshuaBurgos
+Archivo: errores_burgos.go
+Fecha: 01-11-2026 19:25:11
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | NEWLINE              | \n
+Linea 004 | FUNC                 | 'func'
+Linea 004 | ID                   | 'main'
+Linea 004 | PAREN_IZQ            | '('
+Linea 004 | PAREN_DER            | ')'
+Linea 004 | LLAVE_IZQ            | '{'
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'a'
+Linea 005 | DECLARACION_CORTA    | ':='
+Linea 005 | NEWLINE              | \n
+Linea 006 | ID                   | 'b'
+Linea 006 | DECLARACION_CORTA    | ':='
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'c'
+Linea 007 | DECLARACION_CORTA    | ':='
+Linea 007 | NEWLINE              | \n
+Linea 008 | FMT_PRINTLN          | 'fmt.Println'
+Linea 008 | PAREN_IZQ            | '('
+Linea 008 | ID                   | 'a'
+Linea 008 | COMA                 | ','
+Linea 008 | ID                   | 'b'
+Linea 008 | COMA                 | ','
+Linea 008 | ID                   | 'c'
+Linea 008 | PAREN_DER            | ')'
+Linea 008 | NEWLINE              | \n
+Linea 009 | LLAVE_DER            | '}'
+Linea 009 | NEWLINE              | \n
+
+Total de tokens: 30
+
+RESUMEN POR TIPO DE TOKEN
+============================================================
+COMA                 | 2
+DECLARACION_CORTA    | 3
+FMT_PRINTLN          | 1
+FUNC                 | 1
+ID                   | 8
+LLAVE_DER            | 1
+LLAVE_IZQ            | 1
+NEWLINE              | 8
+PACKAGE              | 1
+PAREN_DER            | 2
+PAREN_IZQ            | 2
+
+ERRORES LEXICOS
+============================================================
+Error léxico en la línea 5. Número mal formado 12abc
+Error léxico en la línea 6. Número mal formado 3.
+Error léxico en la línea 7. Número mal formado 3.14xyz
+
+Total de errores: 3
