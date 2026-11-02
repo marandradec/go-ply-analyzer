@@ -8,6 +8,7 @@ sección marcada con INICIO/FIN, igual que en lexer.py.
 """
 import os
 import re
+import sys
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
 
@@ -101,8 +102,12 @@ class Aplicacion(tk.Tk):
         super().__init__()
         self.title("Analizador Go | Léxico · Sintáctico · Semántico")
         
-        # Pantalla completa por defecto (maximizado)
-        self.attributes("-zoomed", True)
+        # Maximizado compatible entre plataformas (Windows vs Linux)
+        if sys.platform.startswith("win"):
+            self.state("zoomed")
+        else:
+            self.attributes("-zoomed", True)
+
         self.minsize(950, 600)
         
         self.ruta_actual = None
