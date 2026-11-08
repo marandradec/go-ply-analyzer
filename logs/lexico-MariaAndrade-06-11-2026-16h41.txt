@@ -1,0 +1,251 @@
+ANALISIS LEXICO - MariaAndrade
+Archivo: algoritmos/algoritmo1.go
+Fecha: 06-11-2026 16:41:22
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | IMPORT               | 'import'
+Linea 003 | CADENA               | '"fmt"'
+Linea 003 | NEWLINE              | \n
+Linea 005 | NEWLINE              | \n
+Linea 006 | NEWLINE              | \n
+Linea 007 | FUNC                 | 'func'
+Linea 007 | ID                   | 'saludar'
+Linea 007 | PAREN_IZQ            | '('
+Linea 007 | PAREN_DER            | ')'
+Linea 007 | LLAVE_IZQ            | '{'
+Linea 007 | NEWLINE              | \n
+Linea 008 | FMT_PRINTLN          | 'fmt.Println'
+Linea 008 | PAREN_IZQ            | '('
+Linea 008 | CADENA               | '"Hola Mundo"'
+Linea 008 | PAREN_DER            | ')'
+Linea 008 | NEWLINE              | \n
+Linea 009 | LLAVE_DER            | '}'
+Linea 009 | NEWLINE              | \n
+Linea 011 | FUNC                 | 'func'
+Linea 011 | ID                   | 'main'
+Linea 011 | PAREN_IZQ            | '('
+Linea 011 | PAREN_DER            | ')'
+Linea 011 | LLAVE_IZQ            | '{'
+Linea 011 | NEWLINE              | \n
+Linea 012 | NEWLINE              | \n
+Linea 013 | ID                   | 'contador'
+Linea 013 | DECLARACION_CORTA    | ':='
+Linea 013 | ENTERO               | 1
+Linea 013 | NEWLINE              | \n
+Linea 014 | ID                   | 'contador'
+Linea 014 | ASIGNACION           | '='
+Linea 014 | ENTERO               | 2
+Linea 014 | NEWLINE              | \n
+Linea 015 | ID                   | 'mensaje'
+Linea 015 | DECLARACION_CORTA    | ':='
+Linea 015 | CADENA               | '"Prueba léxica"'
+Linea 015 | NEWLINE              | \n
+Linea 019 | NEWLINE              | \n
+Linea 021 | NEWLINE              | \n
+Linea 022 | VAR                  | 'var'
+Linea 022 | ID                   | 'edad'
+Linea 022 | T_INT                | 'int'
+Linea 022 | ASIGNACION           | '='
+Linea 022 | ENTERO               | 20
+Linea 022 | NEWLINE              | \n
+Linea 023 | VAR                  | 'var'
+Linea 023 | ID                   | 'nombre'
+Linea 023 | T_STRING             | 'string'
+Linea 023 | ASIGNACION           | '='
+Linea 023 | CADENA               | '"Ana"'
+Linea 023 | NEWLINE              | \n
+Linea 025 | NEWLINE              | \n
+Linea 026 | ID                   | 'suma'
+Linea 026 | DECLARACION_CORTA    | ':='
+Linea 026 | ID                   | 'edad'
+Linea 026 | PLUS                 | '+'
+Linea 026 | ID                   | 'contador'
+Linea 026 | NEWLINE              | \n
+Linea 027 | ID                   | 'resta'
+Linea 027 | DECLARACION_CORTA    | ':='
+Linea 027 | ID                   | 'suma'
+Linea 027 | MINUS                | '-'
+Linea 027 | ENTERO               | 1
+Linea 027 | NEWLINE              | \n
+Linea 029 | NEWLINE              | \n
+Linea 030 | ID                   | 'esIgual'
+Linea 030 | DECLARACION_CORTA    | ':='
+Linea 030 | ID                   | 'contador'
+Linea 030 | EQ                   | '=='
+Linea 030 | ENTERO               | 2
+Linea 030 | NEWLINE              | \n
+Linea 031 | ID                   | 'esDistinto'
+Linea 031 | DECLARACION_CORTA    | ':='
+Linea 031 | ID                   | 'edad'
+Linea 031 | NEQ                  | '!='
+Linea 031 | ENTERO               | 18
+Linea 031 | NEWLINE              | \n
+Linea 033 | NEWLINE              | \n
+Linea 034 | VAR                  | 'var'
+Linea 034 | ID                   | 'notas'
+Linea 034 | ARREGLO              | '[3]int'
+Linea 034 | NEWLINE              | \n
+Linea 035 | ID                   | 'notas'
+Linea 035 | CORCHETE_IZQ         | '['
+Linea 035 | ENTERO               | 0
+Linea 035 | CORCHETE_DER         | ']'
+Linea 035 | ASIGNACION           | '='
+Linea 035 | ENTERO               | 15
+Linea 035 | NEWLINE              | \n
+Linea 036 | ID                   | 'primos'
+Linea 036 | DECLARACION_CORTA    | ':='
+Linea 036 | ARREGLO              | '[3]int'
+Linea 036 | LLAVE_IZQ            | '{'
+Linea 036 | ENTERO               | 2
+Linea 036 | COMA                 | ','
+Linea 036 | ENTERO               | 3
+Linea 036 | COMA                 | ','
+Linea 036 | ENTERO               | 5
+Linea 036 | LLAVE_DER            | '}'
+Linea 036 | NEWLINE              | \n
+Linea 038 | NEWLINE              | \n
+Linea 039 | IF                   | 'if'
+Linea 039 | ID                   | 'edad'
+Linea 039 | GT                   | '>'
+Linea 039 | ENTERO               | 18
+Linea 039 | LLAVE_IZQ            | '{'
+Linea 039 | NEWLINE              | \n
+Linea 040 | FMT_PRINTLN          | 'fmt.Println'
+Linea 040 | PAREN_IZQ            | '('
+Linea 040 | ID                   | 'mensaje'
+Linea 040 | PAREN_DER            | ')'
+Linea 040 | NEWLINE              | \n
+Linea 041 | LLAVE_DER            | '}'
+Linea 041 | ELSE                 | 'else'
+Linea 041 | LLAVE_IZQ            | '{'
+Linea 041 | NEWLINE              | \n
+Linea 042 | FMT_PRINTLN          | 'fmt.Println'
+Linea 042 | PAREN_IZQ            | '('
+Linea 042 | ID                   | 'nombre'
+Linea 042 | PAREN_DER            | ')'
+Linea 042 | NEWLINE              | \n
+Linea 043 | LLAVE_DER            | '}'
+Linea 043 | NEWLINE              | \n
+Linea 045 | FMT_PRINTLN          | 'fmt.Println'
+Linea 045 | PAREN_IZQ            | '('
+Linea 045 | ID                   | 'resta'
+Linea 045 | COMA                 | ','
+Linea 045 | ID                   | 'esIgual'
+Linea 045 | COMA                 | ','
+Linea 045 | ID                   | 'esDistinto'
+Linea 045 | PAREN_DER            | ')'
+Linea 045 | NEWLINE              | \n
+Linea 046 | NEWLINE              | \n
+Linea 048 | NEWLINE              | \n
+Linea 049 | NEWLINE              | \n
+Linea 050 | ID                   | 'calculo'
+Linea 050 | DECLARACION_CORTA    | ':='
+Linea 050 | ID                   | 'edad'
+Linea 050 | PLUS                 | '+'
+Linea 050 | ID                   | 'contador'
+Linea 050 | MINUS                | '-'
+Linea 050 | ENTERO               | 1
+Linea 050 | NEWLINE              | \n
+Linea 051 | ID                   | 'primero'
+Linea 051 | DECLARACION_CORTA    | ':='
+Linea 051 | ID                   | 'notas'
+Linea 051 | CORCHETE_IZQ         | '['
+Linea 051 | ENTERO               | 0
+Linea 051 | CORCHETE_DER         | ']'
+Linea 051 | PLUS                 | '+'
+Linea 051 | ID                   | 'primos'
+Linea 051 | CORCHETE_IZQ         | '['
+Linea 051 | ENTERO               | 1
+Linea 051 | CORCHETE_DER         | ']'
+Linea 051 | NEWLINE              | \n
+Linea 052 | NEWLINE              | \n
+Linea 053 | IF                   | 'if'
+Linea 053 | ID                   | 'calculo'
+Linea 053 | GT                   | '>'
+Linea 053 | ENTERO               | 30
+Linea 053 | LLAVE_IZQ            | '{'
+Linea 053 | NEWLINE              | \n
+Linea 054 | FMT_PRINTLN          | 'fmt.Println'
+Linea 054 | PAREN_IZQ            | '('
+Linea 054 | CADENA               | '"alto"'
+Linea 054 | PAREN_DER            | ')'
+Linea 054 | NEWLINE              | \n
+Linea 055 | LLAVE_DER            | '}'
+Linea 055 | ELSE                 | 'else'
+Linea 055 | IF                   | 'if'
+Linea 055 | ID                   | 'calculo'
+Linea 055 | EQ                   | '=='
+Linea 055 | ENTERO               | 30
+Linea 055 | LLAVE_IZQ            | '{'
+Linea 055 | NEWLINE              | \n
+Linea 056 | FMT_PRINTLN          | 'fmt.Println'
+Linea 056 | PAREN_IZQ            | '('
+Linea 056 | CADENA               | '"medio"'
+Linea 056 | PAREN_DER            | ')'
+Linea 056 | NEWLINE              | \n
+Linea 057 | LLAVE_DER            | '}'
+Linea 057 | ELSE                 | 'else'
+Linea 057 | LLAVE_IZQ            | '{'
+Linea 057 | NEWLINE              | \n
+Linea 058 | FMT_PRINTLN          | 'fmt.Println'
+Linea 058 | PAREN_IZQ            | '('
+Linea 058 | CADENA               | '"bajo"'
+Linea 058 | PAREN_DER            | ')'
+Linea 058 | NEWLINE              | \n
+Linea 059 | LLAVE_DER            | '}'
+Linea 059 | NEWLINE              | \n
+Linea 060 | FMT_PRINTLN          | 'fmt.Println'
+Linea 060 | PAREN_IZQ            | '('
+Linea 060 | ID                   | 'primero'
+Linea 060 | PAREN_DER            | ')'
+Linea 060 | NEWLINE              | \n
+Linea 061 | NEWLINE              | \n
+Linea 062 | ID                   | 'saludar'
+Linea 062 | PAREN_IZQ            | '('
+Linea 062 | PAREN_DER            | ')'
+Linea 062 | NEWLINE              | \n
+Linea 063 | LLAVE_DER            | '}'
+Linea 063 | NEWLINE              | \n
+
+Total de tokens: 206
+
+RESUMEN POR TIPO DE TOKEN
+============================================================
+ARREGLO              | 2
+ASIGNACION           | 4
+CADENA               | 7
+COMA                 | 4
+CORCHETE_DER         | 3
+CORCHETE_IZQ         | 3
+DECLARACION_CORTA    | 9
+ELSE                 | 3
+ENTERO               | 17
+EQ                   | 2
+FMT_PRINTLN          | 8
+FUNC                 | 2
+GT                   | 2
+ID                   | 36
+IF                   | 3
+IMPORT               | 1
+LLAVE_DER            | 8
+LLAVE_IZQ            | 8
+MINUS                | 2
+NEQ                  | 1
+NEWLINE              | 50
+PACKAGE              | 1
+PAREN_DER            | 11
+PAREN_IZQ            | 11
+PLUS                 | 3
+T_INT                | 1
+T_STRING             | 1
+VAR                  | 3
+
+ERRORES LEXICOS
+============================================================
+No se encontraron errores lexicos.
+
+Total de errores: 0
