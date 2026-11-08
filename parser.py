@@ -242,183 +242,183 @@ def _error_andrade(p, pila, enc):
 
 
 # INICIO aporte: BURGOS (sintáctico)
+# var con y sin valor inicial, * / %, comparación de orden, impresión de valores,
+# for con contador o condición, matrices y funciones con un valor de retorno
+# (con o sin parámetros).
 
+def p_funcion_con_retorno(p):
+    '''funcion : FUNC ID PAREN_IZQ lista_params PAREN_DER tipo bloque nl'''
+    p[0] = _funcion_reconocida(('funcion', p[2], p[4], p[6], p[7], p.lineno(1)))
 
 
+# Con retorno y sin parámetros. Ejemplo: func uno() int { return 1 }
+def p_funcion_con_retorno_sin_parametros(p):
+    '''funcion : FUNC ID PAREN_IZQ PAREN_DER tipo bloque nl'''
+    p[0] = _funcion_reconocida(('funcion', p[2], [], p[5], p[6], p.lineno(1)))
 
 
+def p_tipo_burgos(p):
+    '''tipo : T_FLOAT64'''
+    p[0] = p[1]
 
 
+def p_tipo_var(p):
+    '''tipo_var : tipo
+                | MATRIZ'''
+    p[0] = p[1]
 
 
+def p_var_decl(p):
+    '''var_decl : VAR ID tipo_var ASIGNACION expresion
+                | VAR ID tipo_var'''
+    p[0] = ('var', p[2], p[3], p[5] if len(p) == 6 else None, p.lineno(1))
 
 
+def p_term(p):
+    '''term : term TIMES factor
+            | term DIVIDE factor
+            | term MODULO factor'''
+    p[0] = ('binop', p[2], p[1], p[3], p.lineno(2))
 
 
+def p_term_factor(p):
+    '''term : factor'''
+    p[0] = p[1]
 
 
+def p_orden(p):
+    '''orden : orden LT expr
+             | orden LE expr
+             | orden GT expr
+             | orden GE expr'''
+    p[0] = ('binop', p[2], p[1], p[3], p.lineno(2))
 
 
+def p_orden_expr(p):
+    '''orden : expr'''
+    p[0] = p[1]
 
 
+def p_imprimir_valores(p):
+    '''imprimir : FMT_PRINTLN PAREN_IZQ lista_expr PAREN_DER'''
+    p[0] = ('imprimir', p[3], p.lineno(1))
 
 
+# Sin argumentos. fmt.Println() imprime solo un salto de línea.
+def p_imprimir_vacio(p):
+    '''imprimir : FMT_PRINTLN PAREN_IZQ PAREN_DER'''
+    p[0] = ('imprimir', [], p.lineno(1))
 
 
+def p_lista_expr(p):
+    '''lista_expr : lista_expr COMA expresion
+                  | expresion'''
+    p[0] = (p[1] + [p[3]]) if len(p) == 4 else [p[1]]
 
 
+def p_for(p):
+    '''for_stmt : FOR for_init SEMICOLON expresion SEMICOLON for_post bloque
+                | FOR expresion bloque
+                | FOR bloque'''
+    if len(p) == 8:
+        p[0] = ('for', p[2], p[4], p[6], p[7], p.lineno(1))
+    elif len(p) == 4:
+        p[0] = ('for', None, p[2], None, p[3], p.lineno(1))
+    else:
+        p[0] = ('for', None, None, None, p[2], p.lineno(1))
 
 
+def p_for_init(p):
+    '''for_init : decl_corta
+                | asignacion'''
+    p[0] = p[1]
 
 
+def p_for_post(p):
+    '''for_post : asignacion
+                | asig_comp
+                | inc_dec'''
+    p[0] = p[1]
 
 
+# Recuperación: encabezado del for mal escrito; se descarta hasta la llave {.
+def p_for_error(p):
+    '''for_stmt : FOR error bloque'''
+    parser.errok()
+    p[0] = ('for_error', p.lineno(1))
 
 
+def p_retorno(p):
+    '''retorno : RETURN expresion
+               | RETURN'''
+    p[0] = ('return', p[2] if len(p) == 3 else None, p.lineno(1))
 
 
+def p_factor_flotante(p):
+    '''factor : FLOAT_LITERAL'''
+    p[0] = ('flotante', p[1], p.lineno(1))
 
 
+def p_factor_matriz(p):
+    '''factor : MATRIZ LLAVE_IZQ lista_filas LLAVE_DER'''
+    p[0] = ('matriz', p[1], p[3], p.lineno(1))
 
 
+# Literal vacío: [2][2]int{} crea la matriz con sus valores por defecto.
+def p_factor_matriz_vacia(p):
+    '''factor : MATRIZ LLAVE_IZQ LLAVE_DER'''
+    p[0] = ('matriz', p[1], [], p.lineno(1))
 
 
+def p_lista_filas(p):
+    '''lista_filas : lista_filas COMA fila
+                   | fila'''
+    p[0] = (p[1] + [p[3]]) if len(p) == 4 else [p[1]]
 
 
+def p_fila(p):
+    '''fila : LLAVE_IZQ lista_expr LLAVE_DER'''
+    p[0] = p[2]
 
 
+def p_acceso_matriz(p):
+    '''acceso : acceso CORCHETE_IZQ expresion CORCHETE_DER'''
+    p[0] = ('acceso', p[1], p[3], p.lineno(2))
 
 
+def p_llamada_con_argumentos(p):
+    '''llamada : ID PAREN_IZQ lista_expr PAREN_DER'''
+    p[0] = ('llamada', p[1], p[3], p.lineno(1))
 
 
+# Recuperación: argumentos mal escritos; se descarta hasta el paréntesis ).
+def p_llamada_error(p):
+    '''llamada : ID PAREN_IZQ error PAREN_DER'''
+    parser.errok()
+    p[0] = ('llamada_error', p[1], p.lineno(1))
 
 
+# Manejador de errores de Burgos. Ejemplos de lo que reconoce
+#   var edad = 20                <- var exige tipo explícito
+#   for i := 0; i < 10 {         <- el for con contador exige tres partes separadas por ;
+#   total := 4 *                 <- falta el operando derecho
+#   suma := sumar(1, )           <- falta un argumento después de la coma
+_OPERADORES = {'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MODULO', 'EQ', 'NEQ', 'LT', 'LE', 'GT', 'GE'}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def _error_burgos(p, pila, enc):
+    if pila[-1] in _OPERADORES:
+        simbolo = parser.symstack[-1].value
+        return f"Falta el operando a la derecha del operador {simbolo}"
+    if len(pila) >= 2 and pila[-1] == 'ID' and pila[-2] == 'VAR':
+        return "La declaración con var exige un tipo explícito. Ejemplo: var edad int = 20"
+    if pila[-1] == 'COMA' and enc in ('PAREN_DER', 'NEWLINE', 'LLAVE_DER'):
+        return "Falta un elemento después de la coma"
+    if 'FOR' in pila and enc == 'LLAVE_IZQ':
+        idx = len(pila) - 1 - pila[::-1].index('FOR')
+        if pila[idx:].count('SEMICOLON') < 2:
+            return "El for con contador exige tres partes separadas por ;. Ejemplo: for i := 0; i < 10; i++ {"
+    return None
 # FIN aporte: BURGOS (sintáctico)
 
 

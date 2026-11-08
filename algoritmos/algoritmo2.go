@@ -57,6 +57,18 @@ func main() {
 	tablero[0][0] = 1
 	matriz := [2][2]int{{1, 2}, {3, 4}}
 
+		// Sintáctico
+	// Operaciones * / % encadenadas, llamada con retorno en una declaración,
+	// var sin valor inicial y for con contador distinto (j)
+	mixto := producto * 2 / 4 % 3
+	suma := sumar(2, 3)
+	var vacio float64
+	for j := 0; j < 3; j++ {
+		suma = suma + j
+	}
+	fmt.Println("Suma", suma, mixto, vacio)
+	// FIN sintáctico
+
 	fmt.Println(igual, distinto, menor, menorIgual, mayor, mayorIgual)
 	fmt.Println(sumar(total, resto), promedio(precio, 3.5))
 	fmt.Println(MAX, diferencia, area, tablero[0][0], matriz[1][1])
