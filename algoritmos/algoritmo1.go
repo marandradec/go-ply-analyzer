@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// INICIO lexico
 // Función sin parámetros ni valor de retorno
 func saludar() {
 	fmt.Println("Hola Mundo")
@@ -42,6 +43,21 @@ func main() {
 	}
 
 	fmt.Println(resta, esIgual, esDistinto)
+	// FIN lexico
 
+	// INICIO sintáctico
+	// Suma y resta encadenadas, acceso a arreglo dentro de una expresión
+	calculo := edad + contador - 1
+	primero := notas[0] + primos[1]
+	// if / else if / else y llamada a función sin parámetros
+	if calculo > 30 {
+		fmt.Println("alto")
+	} else if calculo == 30 {
+		fmt.Println("medio")
+	} else {
+		fmt.Println("bajo")
+	}
+	fmt.Println(primero)
+	// FIN sintáctico
 	saludar()
 }
