@@ -12,10 +12,19 @@ import sys
 import tkinter as tk
 from tkinter import messagebox, simpledialog, ttk
 
+try:
+    import ttkbootstrap as tb
+except ImportError:  # sin ttkbootstrap la aplicación sigue funcionando con Tk clásico
+    tb = None
+
+from consola import ConsolaInteractiva, SimuladorEjecucion
 from generar_log import guardar_log
+from generar_log_sintactico import (USUARIOS_GIT, analizar_completo, generar_logs_de_prueba,
+                                    guardar_log_sintactico, usuario_git_valido)
 from lexer import analizar
 
 FUENTE_CODIGO = ("Consolas", 11)
+TEXTO_CONFIRMACION_LOGS = "Se ejecutarán todos los archivos de prueba, ¿está seguro/a?"
 
 # Autor de cada archivo de prueba, para nombrar el log sin preguntar
 AUTORES = {
@@ -97,9 +106,12 @@ class EditorConLineas(tk.Frame):
 # ===== FIN aporte: ANDRADE (editor con numeración de líneas) =====
 
 
-class Aplicacion(tk.Tk):
+class Aplicacion(tb.Window if tb else tk.Tk):
     def __init__(self):
-        super().__init__()
+        if tb:
+            super().__init__(themename="darkly")
+        else:
+            super().__init__()
         self.title("Analizador Go | Léxico · Sintáctico · Semántico")
         
         # Maximizado compatible entre plataformas (Windows vs Linux)
@@ -113,6 +125,7 @@ class Aplicacion(tk.Tk):
         self.ruta_actual = None
         self.codigo_analizado = None  # código del último análisis (para guardar el log)
         self.autor = None  # solo se pide si el archivo no está en AUTORES
+        self.usuario_git = None  # solo se pide si el archivo no está en USUARIOS_GIT
 
         # Configurar colores generales de la ventana (Fondo oscuro corporativo)
         self.configure(bg="#0f172a")
@@ -129,7 +142,8 @@ class Aplicacion(tk.Tk):
 
     def _configurar_estilos(self):
         estilo = ttk.Style()
-        estilo.theme_use("clam")
+        if not tb:  # ttkbootstrap ya aplica su propio tema
+            estilo.theme_use("clam")
         
         # Estilo para la tabla (Treeview) con paleta oscura elegante
         estilo.configure("Treeview",
@@ -171,8 +185,13 @@ class Aplicacion(tk.Tk):
                                      activebackground="#475569", activeforeground="#ffffff",
                                      relief="flat", padx=14, pady=8, cursor="hand2")
 
-        for boton in (self.btn_analizar, self.btn_limpiar):
-            boton.pack(side="left", padx=(0, 10))
+        self.btn_analizar.pack(side="left", padx=(0, 10))
+
+        # Avance 2: botones del análisis sintáctico, simulación y logs de prueba
+        self._crear_botones_sintacticos(barra)
+
+        # Limpiar va siempre al final de la barra, después de Logs de prueba
+        self.btn_limpiar.pack(side="left", padx=(0, 10))
 
     def _crear_cuerpo(self):
         cuerpo = tk.Frame(self, bg="#0f172a", padx=12, pady=4)
@@ -184,11 +203,12 @@ class Aplicacion(tk.Tk):
         cuerpo.columnconfigure(2, weight=2, minsize=360)
         cuerpo.rowconfigure(0, weight=3)
         cuerpo.rowconfigure(1, weight=1)
+        cuerpo.rowconfigure(2, weight=2)
 
         # 1. Panel lateral izquierdo: Selector integrado de archivos .go
         marco_archivos = tk.LabelFrame(cuerpo, text=" Archivos del Proyecto ", font=("Segoe UI", 10, "bold"),
                                        bg="#1e293b", fg="#93c5fd", padx=8, pady=8, bd=1, relief="solid")
-        marco_archivos.grid(row=0, column=0, rowspan=2, sticky="nsew", padx=(0, 8), pady=(0, 8))
+        marco_archivos.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=(0, 8), pady=(0, 8))
         marco_archivos.rowconfigure(0, weight=1)
         marco_archivos.columnconfigure(0, weight=1)
 
@@ -216,6 +236,7 @@ class Aplicacion(tk.Tk):
         # 3. Paneles derechos e inferiores
         self._crear_panel_tokens(cuerpo)    # Burgos
         self._crear_panel_mensajes(cuerpo)    # Mora
+        self._crear_panel_sintactico(cuerpo)  # Avance 2: log sintáctico y consola
 
     def _cargar_lista_algoritmos(self):
         carpeta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "algoritmos")
@@ -246,8 +267,10 @@ class Aplicacion(tk.Tk):
 
     def limpiar(self):
         self.editor.limpiar()
-        self.vaciar_tokens()            # Burgos
+        self.vaciar_tokens()          # Burgos
         self.vaciar_mensajes()        # Mora
+        self.vaciar_log_sintactico()  # Avance 2
+        self.consola.limpiar()        # Avance 2
         self.ruta_actual = None
         self.codigo_analizado = None
         self.estado.set("Estado: listo")
@@ -362,6 +385,198 @@ class Aplicacion(tk.Tk):
         destino, _, _ = guardar_log(self.codigo_analizado, archivo, autor)
         self.estado.set(f"{self.estado.get().split(' · log ')[0]} · log {destino.name}")
     # ===== FIN aporte: MORA (mensajes de error, barra de estado y log) =====
+
+    # ===== INICIO aporte: ANDRADE (Avance 2, botones, pestañas y confirmación de logs de prueba) =====
+    def _crear_botones_sintacticos(self, barra):
+        if tb:
+            self.btn_sintaxis = tb.Button(barra, text="🔍 Analizar Sintaxis", bootstyle="warning",
+                                          command=self.ejecutar_analisis_sintactico)
+            self.btn_simular = tb.Button(barra, text="⌨ Simular ejecución", bootstyle="success",
+                                         command=self.simular_ejecucion)
+            self.btn_logs = tb.Button(barra, text="📄 Logs de prueba", bootstyle="info-outline",
+                                      command=self.generar_logs_prueba)
+        else:
+            estilo = {"font": ("Segoe UI", 10, "bold"), "fg": "#ffffff", "relief": "flat",
+                      "padx": 14, "pady": 8, "cursor": "hand2"}
+            self.btn_sintaxis = tk.Button(barra, text="🔍 Analizar Sintaxis", bg="#d97706",
+                                          command=self.ejecutar_analisis_sintactico, **estilo)
+            self.btn_simular = tk.Button(barra, text="⌨ Simular ejecución", bg="#16a34a",
+                                         command=self.simular_ejecucion, **estilo)
+            self.btn_logs = tk.Button(barra, text="📄 Logs de prueba", bg="#0e7490",
+                                      command=self.generar_logs_prueba, **estilo)
+        for boton in (self.btn_sintaxis, self.btn_simular, self.btn_logs):
+            boton.pack(side="left", padx=(0, 10))
+
+    def _crear_panel_sintactico(self, cuerpo):
+        """Panel inferior con dos pestañas: log sintáctico y consola interactiva."""
+        self.pestanas = ttk.Notebook(cuerpo)
+        self.pestanas.grid(row=2, column=1, columnspan=2, sticky="nsew", pady=(8, 0))
+
+        marco_log = tk.Frame(self.pestanas, bg="#1e293b", padx=6, pady=6)
+        marco_log.rowconfigure(0, weight=1)
+        marco_log.columnconfigure(0, weight=1)
+        self.texto_sintactico = tk.Text(marco_log, height=8, wrap="word", state="disabled",
+                                        background="#0f172a", foreground="#f8fafc",
+                                        font=FUENTE_CODIGO, padx=8, pady=4,
+                                        borderwidth=0, highlightthickness=0)
+        for etiqueta, color in (("titulo", "#93c5fd"), ("ok", "#4ade80"), ("lexico", "#f87171"),
+                                ("sintactico", "#facc15"), ("detalle", "#94a3b8")):
+            self.texto_sintactico.tag_configure(etiqueta, foreground=color)
+        self.texto_sintactico.tag_configure("titulo", font=("Consolas", 11, "bold"))
+        barra = ttk.Scrollbar(marco_log, orient="vertical", command=self.texto_sintactico.yview)
+        self.texto_sintactico.configure(yscrollcommand=barra.set)
+        self.texto_sintactico.grid(row=0, column=0, sticky="nsew")
+        barra.grid(row=0, column=1, sticky="ns")
+        self.pestanas.add(marco_log, text="  Log sintáctico  ")
+
+        marco_consola = tk.Frame(self.pestanas, bg="#1e293b", padx=6, pady=6)
+        marco_consola.rowconfigure(0, weight=1)
+        marco_consola.columnconfigure(0, weight=1)
+        self.consola = ConsolaInteractiva(marco_consola)
+        self.consola.grid(row=0, column=0, sticky="nsew")
+        self.pestanas.add(marco_consola, text="  Consola interactiva  ")
+
+    def _confirmar_logs_prueba(self):
+        """Pregunta (con advertencia) si se ejecutan todos los archivos de prueba. True solo con Sí."""
+        if tb:
+            from ttkbootstrap.dialogs import MessageDialog
+            try:  # ttkbootstrap 1.x trae el icono de advertencia; la 2.x usa el nombre del glifo
+                from ttkbootstrap.icons import Icon
+                icono = Icon.warning
+            except ImportError:
+                icono = "exclamation-triangle-fill"
+            dialogo = MessageDialog(message=TEXTO_CONFIRMACION_LOGS, title="Confirmar ejecución",
+                                    buttons=["No:secondary", "Sí:warning"], icon=icono,
+                                    parent=self, alert=True)
+            dialogo.show()
+            return dialogo.result == "Sí"
+        return messagebox.askyesno("Confirmar ejecución", TEXTO_CONFIRMACION_LOGS,
+                                   icon="warning", parent=self)
+
+    def generar_logs_prueba(self):
+        # Si el usuario responde No, se cancela la operación por completo
+        if not self._confirmar_logs_prueba():
+            return
+        resumen = generar_logs_de_prueba()
+        self.vaciar_log_sintactico()
+        self.texto_sintactico.config(state="normal")
+        self._escribir_log("LOGS DE PRUEBA (léxico + sintáctico)", "titulo")
+        for nombre, tokens, lex, sint, destino in resumen:
+            etiqueta = "ok" if not (lex or sint) else "sintactico"
+            self._escribir_log(f"{nombre:20s} tokens {tokens:4d} · léxicos {lex} · sintácticos {sint} · {destino.name}",
+                               etiqueta)
+        self.texto_sintactico.config(state="disabled")
+        self.pestanas.select(0)
+        self.estado.set(f"Estado: {len(resumen)} logs de prueba generados en la carpeta logs")
+    # ===== FIN aporte: ANDRADE (Avance 2, botones, pestañas y confirmación de logs de prueba) =====
+
+    # ===== INICIO aporte: BURGOS (Avance 2, ejecución y visualización del análisis sintáctico) =====
+    def vaciar_log_sintactico(self):
+        self.texto_sintactico.config(state="normal")
+        self.texto_sintactico.delete("1.0", "end")
+        self.texto_sintactico.config(state="disabled")
+
+    def _escribir_log(self, texto, etiqueta=None):
+        self.texto_sintactico.insert("end", texto + "\n", etiqueta)
+
+    def ejecutar_analisis_sintactico(self):
+        codigo = self.editor.obtener_codigo()
+        if not codigo.strip():
+            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
+            return
+
+        resultado = analizar_completo(codigo)
+        self.codigo_analizado = codigo
+        self.ultimo_resultado = resultado
+
+        # La tabla de tokens y el panel de mensajes se mantienen al día con la fase léxica
+        self.vaciar_tokens()
+        for tipo, valor, linea in resultado["tokens"]:
+            self.tabla_tokens.insert("", "end", values=(tipo, valor, f"Línea {linea}"))
+        self.mostrar_mensajes(resultado["errores_lexicos"])
+
+        self.mostrar_log_sintactico(resultado, codigo)
+        self.pestanas.select(0)
+        total = len(resultado["errores_sintacticos"])
+        self.estado.set(f"Estado: análisis sintáctico finalizado · {len(resultado['tokens'])} tokens · "
+                        + (f"{total} error(es) sintáctico(s)" if total else "sintaxis correcta"))
+        self.guardar_log_sintactico()
+
+    def mostrar_log_sintactico(self, resultado, codigo):
+        lineas_codigo = codigo.splitlines()
+        err_lex = resultado["errores_lexicos"]
+        err_sin = resultado["errores_sintacticos"]
+        self.vaciar_log_sintactico()
+        self.texto_sintactico.config(state="normal")
+
+        self._escribir_log("FASE 1 · ANÁLISIS LÉXICO", "titulo")
+        self._escribir_log(f"Tokens reconocidos: {len(resultado['tokens'])}", "detalle")
+        if err_lex:
+            for error in err_lex:
+                self._escribir_log("✘ " + error["mensaje"], "lexico")
+        else:
+            self._escribir_log("✔ Sin errores léxicos.", "ok")
+
+        self._escribir_log("\nFASE 2 · ANÁLISIS SINTÁCTICO", "titulo")
+        if err_sin:
+            self._escribir_log(f"✘ Se encontraron {len(err_sin)} error(es) sintáctico(s).", "sintactico")
+            for error in err_sin:
+                self._escribir_log(f"✘ Línea {error['linea']} · token «{error.get('token') or '-'}»", "sintactico")
+                self._escribir_log("    " + error["mensaje"], "sintactico")
+                if 1 <= error["linea"] <= len(lineas_codigo):
+                    self._escribir_log("    código: " + lineas_codigo[error["linea"] - 1].strip(), "detalle")
+        else:
+            self._escribir_log("✔ Análisis sintáctico correcto.", "ok")
+        if resultado["omitidos"]:
+            self._escribir_log(f"({resultado['omitidos']} error(es) sintáctico(s) omitido(s) por coincidir "
+                               "con una línea con error léxico)", "detalle")
+        for nombre, linea, n in ((f[1], f[5], len(f[4])) for f in resultado["funciones"]):
+            self._escribir_log(f"✔ func {nombre} (línea {linea}) · {n} sentencia(s)", "ok")
+        self.texto_sintactico.config(state="disabled")
+    # ===== FIN aporte: BURGOS (Avance 2, ejecución y visualización del análisis sintáctico) =====
+
+    # ===== INICIO aporte: MORA (Avance 2, log sintáctico por usuario de Git y simulación de ejecución) =====
+    def _obtener_usuario_git(self, archivo):
+        """Usuario de Git para nombrar el log. Los seis archivos del proyecto ya lo tienen asignado."""
+        usuario = USUARIOS_GIT.get(os.path.splitext(archivo)[0]) or self.usuario_git
+        if usuario:
+            return usuario
+        usuario = simpledialog.askstring(
+            "Usuario de Git", "Escribe tu usuario de Git para nombrar el log (ej. marandradec):", parent=self)
+        if usuario is None:
+            return None
+        usuario = usuario.strip()
+        if not usuario_git_valido(usuario):
+            messagebox.showerror("Usuario no válido", "Usa solo letras, números y guiones, por ejemplo marandradec.")
+            return None
+        self.usuario_git = usuario
+        return usuario
+
+    def guardar_log_sintactico(self):
+        if self.codigo_analizado is None:
+            return
+        archivo = os.path.basename(self.ruta_actual) if self.ruta_actual else "editor"
+        usuario = self._obtener_usuario_git(archivo)
+        if not usuario:
+            return
+        destino, _ = guardar_log_sintactico(self.codigo_analizado, archivo, usuario)
+        self.estado.set(f"{self.estado.get().split(' · log ')[0]} · log {destino.name}")
+
+    def simular_ejecucion(self):
+        codigo = self.editor.obtener_codigo()
+        if not codigo.strip():
+            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
+            return
+        resultado = analizar_completo(codigo)
+        self.pestanas.select(1)
+        if resultado["errores_sintacticos"]:
+            self.consola.escribir("No se puede simular. Corrige primero los errores sintácticos "
+                                  "(botón Analizar Sintaxis).\n", "error")
+            return
+        self.btn_simular.config(state="disabled")
+        SimuladorEjecucion(self.consola, al_terminar=lambda: self.btn_simular.config(state="normal")
+                           ).iniciar(resultado["funciones"])
+    # ===== FIN aporte: MORA (Avance 2, log sintáctico por usuario de Git y simulación de ejecución) =====
 
 
 if __name__ == "__main__":
