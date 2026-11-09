@@ -1,0 +1,412 @@
+ANALISIS LEXICO Y SINTACTICO - usuario Git: JosMoraE
+Archivo: algoritmo3.go
+Fecha: 08-11-2026 19:39:07
+
+FASE 1. ANALISIS LEXICO
+============================================================
+TOKENS RECONOCIDOS
+------------------------------------------------------------
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | IMPORT               | 'import'
+Linea 003 | CADENA               | '"fmt"'
+Linea 003 | NEWLINE              | \n
+Linea 005 | FUNC                 | 'func'
+Linea 005 | ID                   | 'mostrarResultado'
+Linea 005 | PAREN_IZQ            | '('
+Linea 005 | ID                   | 'numero'
+Linea 005 | T_INT                | 'int'
+Linea 005 | COMA                 | ','
+Linea 005 | ID                   | 'activo'
+Linea 005 | T_BOOL               | 'bool'
+Linea 005 | PAREN_DER            | ')'
+Linea 005 | LLAVE_IZQ            | '{'
+Linea 005 | NEWLINE              | \n
+Linea 006 | FMT_PRINTLN          | 'fmt.Println'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | CADENA               | '"Numero:"'
+Linea 006 | COMA                 | ','
+Linea 006 | ID                   | 'numero'
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | NEWLINE              | \n
+Linea 007 | FMT_PRINTLN          | 'fmt.Println'
+Linea 007 | PAREN_IZQ            | '('
+Linea 007 | CADENA               | '"Activo:"'
+Linea 007 | COMA                 | ','
+Linea 007 | ID                   | 'activo'
+Linea 007 | PAREN_DER            | ')'
+Linea 007 | NEWLINE              | \n
+Linea 008 | LLAVE_DER            | '}'
+Linea 008 | NEWLINE              | \n
+Linea 010 | FUNC                 | 'func'
+Linea 010 | ID                   | 'main'
+Linea 010 | PAREN_IZQ            | '('
+Linea 010 | PAREN_DER            | ')'
+Linea 010 | LLAVE_IZQ            | '{'
+Linea 010 | NEWLINE              | \n
+Linea 011 | NEWLINE              | \n
+Linea 012 | CONST                | 'const'
+Linea 012 | ID                   | 'LIMITE'
+Linea 012 | T_INT                | 'int'
+Linea 012 | ASIGNACION           | '='
+Linea 012 | ENTERO               | 10
+Linea 012 | NEWLINE              | \n
+Linea 014 | NEWLINE              | \n
+Linea 015 | ID                   | 'activo'
+Linea 015 | DECLARACION_CORTA    | ':='
+Linea 015 | BOOL_LITERAL         | 'true'
+Linea 015 | NEWLINE              | \n
+Linea 016 | ID                   | 'bloqueado'
+Linea 016 | DECLARACION_CORTA    | ':='
+Linea 016 | BOOL_LITERAL         | 'false'
+Linea 016 | NEWLINE              | \n
+Linea 018 | NEWLINE              | \n
+Linea 019 | ID                   | 'permitido'
+Linea 019 | DECLARACION_CORTA    | ':='
+Linea 019 | ID                   | 'activo'
+Linea 019 | AND                  | '&&'
+Linea 019 | NOT                  | '!'
+Linea 019 | ID                   | 'bloqueado'
+Linea 019 | NEWLINE              | \n
+Linea 020 | ID                   | 'disponible'
+Linea 020 | DECLARACION_CORTA    | ':='
+Linea 020 | ID                   | 'activo'
+Linea 020 | OR                   | '||'
+Linea 020 | ID                   | 'bloqueado'
+Linea 020 | NEWLINE              | \n
+Linea 022 | NEWLINE              | \n
+Linea 023 | ID                   | 'edades'
+Linea 023 | DECLARACION_CORTA    | ':='
+Linea 023 | MAPA                 | 'map[string]int'
+Linea 023 | LLAVE_IZQ            | '{'
+Linea 023 | CADENA               | '"Ana"'
+Linea 023 | DOSPUNTOS            | ':'
+Linea 023 | ENTERO               | 20
+Linea 023 | COMA                 | ','
+Linea 023 | CADENA               | '"Luis"'
+Linea 023 | DOSPUNTOS            | ':'
+Linea 023 | ENTERO               | 22
+Linea 023 | LLAVE_DER            | '}'
+Linea 023 | NEWLINE              | \n
+Linea 024 | ID                   | 'edades'
+Linea 024 | CORCHETE_IZQ         | '['
+Linea 024 | CADENA               | '"Pedro"'
+Linea 024 | CORCHETE_DER         | ']'
+Linea 024 | ASIGNACION           | '='
+Linea 024 | ENTERO               | 25
+Linea 024 | NEWLINE              | \n
+Linea 026 | NEWLINE              | \n
+Linea 027 | ID                   | 'contador'
+Linea 027 | DECLARACION_CORTA    | ':='
+Linea 027 | ENTERO               | 1
+Linea 027 | NEWLINE              | \n
+Linea 028 | ID                   | 'contador'
+Linea 028 | INCREMENT            | '++'
+Linea 028 | NEWLINE              | \n
+Linea 029 | ID                   | 'contador'
+Linea 029 | DECREMENT            | '--'
+Linea 029 | NEWLINE              | \n
+Linea 030 | ID                   | 'contador'
+Linea 030 | PLUS_ASSIGN          | '+='
+Linea 030 | ENTERO               | 5
+Linea 030 | NEWLINE              | \n
+Linea 031 | ID                   | 'contador'
+Linea 031 | MINUS_ASSIGN         | '-='
+Linea 031 | ENTERO               | 2
+Linea 031 | NEWLINE              | \n
+Linea 033 | NEWLINE              | \n
+Linea 034 | ID                   | 'opuesto'
+Linea 034 | DECLARACION_CORTA    | ':='
+Linea 034 | MINUS                | '-'
+Linea 034 | ID                   | 'contador'
+Linea 034 | NEWLINE              | \n
+Linea 035 | ID                   | 'negativo'
+Linea 035 | DECLARACION_CORTA    | ':='
+Linea 035 | MINUS                | '-'
+Linea 035 | PAREN_IZQ            | '('
+Linea 035 | ID                   | 'contador'
+Linea 035 | PLUS                 | '+'
+Linea 035 | ENTERO               | 1
+Linea 035 | PAREN_DER            | ')'
+Linea 035 | NEWLINE              | \n
+Linea 036 | ID                   | 'doble'
+Linea 036 | DECLARACION_CORTA    | ':='
+Linea 036 | PAREN_IZQ            | '('
+Linea 036 | ID                   | 'contador'
+Linea 036 | PLUS                 | '+'
+Linea 036 | ENTERO               | 2
+Linea 036 | PAREN_DER            | ')'
+Linea 036 | TIMES                | '*'
+Linea 036 | ENTERO               | 2
+Linea 036 | NEWLINE              | \n
+Linea 037 | ID                   | 'ajustado'
+Linea 037 | DECLARACION_CORTA    | ':='
+Linea 037 | PAREN_IZQ            | '('
+Linea 037 | ID                   | 'doble'
+Linea 037 | MINUS                | '-'
+Linea 037 | ID                   | 'LIMITE'
+Linea 037 | PAREN_DER            | ')'
+Linea 037 | DIVIDE               | '/'
+Linea 037 | PAREN_IZQ            | '('
+Linea 037 | ID                   | 'contador'
+Linea 037 | PLUS                 | '+'
+Linea 037 | ENTERO               | 1
+Linea 037 | PAREN_DER            | ')'
+Linea 037 | NEWLINE              | \n
+Linea 039 | NEWLINE              | \n
+Linea 040 | SWITCH               | 'switch'
+Linea 040 | ID                   | 'contador'
+Linea 040 | LLAVE_IZQ            | '{'
+Linea 040 | NEWLINE              | \n
+Linea 041 | CASE                 | 'case'
+Linea 041 | ENTERO               | 1
+Linea 041 | DOSPUNTOS            | ':'
+Linea 041 | NEWLINE              | \n
+Linea 042 | FMT_PRINTLN          | 'fmt.Println'
+Linea 042 | PAREN_IZQ            | '('
+Linea 042 | CADENA               | '"Uno"'
+Linea 042 | PAREN_DER            | ')'
+Linea 042 | NEWLINE              | \n
+Linea 043 | CASE                 | 'case'
+Linea 043 | ENTERO               | 4
+Linea 043 | DOSPUNTOS            | ':'
+Linea 043 | NEWLINE              | \n
+Linea 044 | FMT_PRINTLN          | 'fmt.Println'
+Linea 044 | PAREN_IZQ            | '('
+Linea 044 | CADENA               | '"Cuatro"'
+Linea 044 | PAREN_DER            | ')'
+Linea 044 | NEWLINE              | \n
+Linea 045 | DEFAULT              | 'default'
+Linea 045 | DOSPUNTOS            | ':'
+Linea 045 | NEWLINE              | \n
+Linea 046 | FMT_PRINTLN          | 'fmt.Println'
+Linea 046 | PAREN_IZQ            | '('
+Linea 046 | CADENA               | '"Otro valor"'
+Linea 046 | PAREN_DER            | ')'
+Linea 046 | NEWLINE              | \n
+Linea 047 | LLAVE_DER            | '}'
+Linea 047 | NEWLINE              | \n
+Linea 049 | NEWLINE              | \n
+Linea 050 | VAR                  | 'var'
+Linea 050 | ID                   | 'numero'
+Linea 050 | T_INT                | 'int'
+Linea 050 | NEWLINE              | \n
+Linea 051 | FMT_PRINTLN          | 'fmt.Println'
+Linea 051 | PAREN_IZQ            | '('
+Linea 051 | CADENA               | '"Ingrese un numero:"'
+Linea 051 | PAREN_DER            | ')'
+Linea 051 | NEWLINE              | \n
+Linea 052 | FMT_SCANLN           | 'fmt.Scanln'
+Linea 052 | PAREN_IZQ            | '('
+Linea 052 | AMPERSAND            | '&'
+Linea 052 | ID                   | 'numero'
+Linea 052 | PAREN_DER            | ')'
+Linea 052 | NEWLINE              | \n
+Linea 054 | IF                   | 'if'
+Linea 054 | ID                   | 'permitido'
+Linea 054 | AND                  | '&&'
+Linea 054 | ID                   | 'disponible'
+Linea 054 | LLAVE_IZQ            | '{'
+Linea 054 | NEWLINE              | \n
+Linea 055 | ID                   | 'mostrarResultado'
+Linea 055 | PAREN_IZQ            | '('
+Linea 055 | ID                   | 'numero'
+Linea 055 | COMA                 | ','
+Linea 055 | ID                   | 'activo'
+Linea 055 | PAREN_DER            | ')'
+Linea 055 | NEWLINE              | \n
+Linea 056 | LLAVE_DER            | '}'
+Linea 056 | NEWLINE              | \n
+Linea 057 | NEWLINE              | \n
+Linea 058 | NEWLINE              | \n
+Linea 059 | SWITCH               | 'switch'
+Linea 059 | ID                   | 'contador'
+Linea 059 | LLAVE_IZQ            | '{'
+Linea 059 | NEWLINE              | \n
+Linea 060 | CASE                 | 'case'
+Linea 060 | ENTERO               | 1
+Linea 060 | DOSPUNTOS            | ':'
+Linea 060 | NEWLINE              | \n
+Linea 061 | FMT_PRINTLN          | 'fmt.Println'
+Linea 061 | PAREN_IZQ            | '('
+Linea 061 | CADENA               | '"Uno"'
+Linea 061 | PAREN_DER            | ')'
+Linea 061 | NEWLINE              | \n
+Linea 062 | BREAK                | 'break'
+Linea 062 | NEWLINE              | \n
+Linea 063 | CASE                 | 'case'
+Linea 063 | ENTERO               | 2
+Linea 063 | DOSPUNTOS            | ':'
+Linea 063 | NEWLINE              | \n
+Linea 064 | FMT_PRINTLN          | 'fmt.Println'
+Linea 064 | PAREN_IZQ            | '('
+Linea 064 | CADENA               | '"Dos"'
+Linea 064 | PAREN_DER            | ')'
+Linea 064 | NEWLINE              | \n
+Linea 065 | DEFAULT              | 'default'
+Linea 065 | DOSPUNTOS            | ':'
+Linea 065 | NEWLINE              | \n
+Linea 066 | FMT_PRINTLN          | 'fmt.Println'
+Linea 066 | PAREN_IZQ            | '('
+Linea 066 | CADENA               | '"Otro"'
+Linea 066 | PAREN_DER            | ')'
+Linea 066 | NEWLINE              | \n
+Linea 067 | LLAVE_DER            | '}'
+Linea 067 | NEWLINE              | \n
+Linea 068 | NEWLINE              | \n
+Linea 069 | ID                   | 'valido'
+Linea 069 | DECLARACION_CORTA    | ':='
+Linea 069 | ID                   | 'contador'
+Linea 069 | GE                   | '>='
+Linea 069 | ENTERO               | 18
+Linea 069 | AND                  | '&&'
+Linea 069 | NOT                  | '!'
+Linea 069 | ID                   | 'bloqueado'
+Linea 069 | NEWLINE              | \n
+Linea 070 | ID                   | 'coincide'
+Linea 070 | DECLARACION_CORTA    | ':='
+Linea 070 | ID                   | 'contador'
+Linea 070 | EQ                   | '=='
+Linea 070 | ENTERO               | 2
+Linea 070 | OR                   | '||'
+Linea 070 | ID                   | 'contador'
+Linea 070 | NEQ                  | '!='
+Linea 070 | ENTERO               | 4
+Linea 070 | NEWLINE              | \n
+Linea 071 | ID                   | 'edades'
+Linea 071 | CORCHETE_IZQ         | '['
+Linea 071 | CADENA               | '"Luis"'
+Linea 071 | CORCHETE_DER         | ']'
+Linea 071 | PLUS_ASSIGN          | '+='
+Linea 071 | ENTERO               | 1
+Linea 071 | NEWLINE              | \n
+Linea 072 | ID                   | 'edades'
+Linea 072 | CORCHETE_IZQ         | '['
+Linea 072 | CADENA               | '"Luis"'
+Linea 072 | CORCHETE_DER         | ']'
+Linea 072 | INCREMENT            | '++'
+Linea 072 | NEWLINE              | \n
+Linea 073 | FMT_PRINTLN          | 'fmt.Println'
+Linea 073 | PAREN_IZQ            | '('
+Linea 073 | ID                   | 'valido'
+Linea 073 | COMA                 | ','
+Linea 073 | ID                   | 'coincide'
+Linea 073 | PAREN_DER            | ')'
+Linea 073 | NEWLINE              | \n
+Linea 074 | NEWLINE              | \n
+Linea 076 | FMT_PRINTLN          | 'fmt.Println'
+Linea 076 | PAREN_IZQ            | '('
+Linea 076 | ID                   | 'opuesto'
+Linea 076 | COMA                 | ','
+Linea 076 | ID                   | 'negativo'
+Linea 076 | COMA                 | ','
+Linea 076 | ID                   | 'ajustado'
+Linea 076 | PAREN_DER            | ')'
+Linea 076 | NEWLINE              | \n
+Linea 077 | FMT_PRINTLN          | 'fmt.Println'
+Linea 077 | PAREN_IZQ            | '('
+Linea 077 | ID                   | 'edades'
+Linea 077 | CORCHETE_IZQ         | '['
+Linea 077 | CADENA               | '"Ana"'
+Linea 077 | CORCHETE_DER         | ']'
+Linea 077 | PAREN_DER            | ')'
+Linea 077 | NEWLINE              | \n
+Linea 078 | LLAVE_DER            | '}'
+Linea 078 | NEWLINE              | \n
+
+Total de tokens: 308
+
+RESUMEN POR TIPO DE TOKEN
+------------------------------------------------------------
+AMPERSAND            | 1
+AND                  | 3
+ASIGNACION           | 2
+BOOL_LITERAL         | 2
+BREAK                | 1
+CADENA               | 16
+CASE                 | 4
+COMA                 | 8
+CONST                | 1
+CORCHETE_DER         | 4
+CORCHETE_IZQ         | 4
+DECLARACION_CORTA    | 12
+DECREMENT            | 1
+DEFAULT              | 2
+DIVIDE               | 1
+DOSPUNTOS            | 8
+ENTERO               | 19
+EQ                   | 1
+FMT_PRINTLN          | 12
+FMT_SCANLN           | 1
+FUNC                 | 2
+GE                   | 1
+ID                   | 56
+IF                   | 1
+IMPORT               | 1
+INCREMENT            | 2
+LLAVE_DER            | 6
+LLAVE_IZQ            | 6
+MAPA                 | 1
+MINUS                | 3
+MINUS_ASSIGN         | 1
+NEQ                  | 1
+NEWLINE              | 66
+NOT                  | 2
+OR                   | 2
+PACKAGE              | 1
+PAREN_DER            | 20
+PAREN_IZQ            | 20
+PLUS                 | 3
+PLUS_ASSIGN          | 2
+SWITCH               | 2
+TIMES                | 1
+T_BOOL               | 1
+T_INT                | 3
+VAR                  | 1
+
+ERRORES LEXICOS
+------------------------------------------------------------
+No se encontraron errores lexicos.
+
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
+Linea 005 | func mostrarResultado | 2 sentencia(s) en su bloque
+Linea 010 | func main | 29 sentencia(s) en su bloque
+
+declaraciones cortas (:=)          | 12
+asignaciones                       | 1
+asignaciones compuestas            | 3
+incrementos y decrementos          | 3
+declaraciones var                  | 1
+declaraciones const                | 1
+impresiones (fmt.Println)          | 12
+lecturas (fmt.Scanln)              | 1
+break                              | 1
+if                                 | 1
+switch                             | 2
+case                               | 4
+default                            | 2
+
+ERRORES SINTACTICOS
+------------------------------------------------------------
+No se encontraron errores sintacticos.
+
+Total de errores sintacticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 308
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Fase sintactica ejecutada | Si

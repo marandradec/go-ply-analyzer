@@ -113,7 +113,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         else:
             super().__init__()
         self.title("Analizador Go | Léxico · Sintáctico · Semántico")
-        
+
         # Maximizado compatible entre plataformas (Windows vs Linux)
         if sys.platform.startswith("win"):
             self.state("zoomed")
@@ -121,7 +121,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
             self.attributes("-zoomed", True)
 
         self.minsize(950, 600)
-        
+
         self.ruta_actual = None
         self.codigo_analizado = None  # código del último análisis (para guardar el log)
         self.autor = None  # solo se pide si el archivo no está en AUTORES
@@ -144,7 +144,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         estilo = ttk.Style()
         if not tb:  # ttkbootstrap ya aplica su propio tema
             estilo.theme_use("clam")
-        
+
         # Estilo para la tabla (Treeview) con paleta oscura elegante
         estilo.configure("Treeview",
                          background="#0f172a",
@@ -196,7 +196,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
     def _crear_cuerpo(self):
         cuerpo = tk.Frame(self, bg="#0f172a", padx=12, pady=4)
         cuerpo.grid(row=1, column=0, sticky="nsew")
-        
+
         # Distribución en columnas profesionales
         cuerpo.columnconfigure(0, weight=1, minsize=230)
         cuerpo.columnconfigure(1, weight=3, minsize=420)
@@ -217,10 +217,10 @@ class Aplicacion(tb.Window if tb else tk.Tk):
                                          selectforeground="#ffffff", borderwidth=0, highlightthickness=0)
         scroll_archivos = ttk.Scrollbar(marco_archivos, orient="vertical", command=self.lista_archivos.yview)
         self.lista_archivos.configure(yscrollcommand=scroll_archivos.set)
-        
+
         self.lista_archivos.grid(row=0, column=0, sticky="nsew")
         scroll_archivos.grid(row=0, column=1, sticky="ns")
-        
+
         self.lista_archivos.bind("<Double-Button-1>", self.cargar_archivo_seleccionado)
         self._cargar_lista_algoritmos()
 
@@ -253,21 +253,21 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         nombre_archivo = self.lista_archivos.get(seleccion[0])
         carpeta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "algoritmos")
         ruta_completa = os.path.join(carpeta_algoritmos, nombre_archivo)
-        
+
         try:
             with open(ruta_completa, encoding="utf-8") as archivo:
                 codigo = archivo.read()
         except (OSError, UnicodeDecodeError) as error:
             messagebox.showerror("Error al abrir", f"No se pudo leer el archivo:\n{error}")
             return
-        
+
         self.editor.poner_codigo(codigo)
         self.ruta_actual = ruta_completa
         self.estado.set(f"Estado: archivo abierto · {nombre_archivo}")
 
     def limpiar(self):
         self.editor.limpiar()
-        self.vaciar_tokens()          # Burgos
+        self.vaciar_tokens()            # Burgos
         self.vaciar_mensajes()        # Mora
         self.vaciar_log_sintactico()  # Avance 2
         self.consola.limpiar()        # Avance 2
@@ -338,7 +338,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
                                       font=FUENTE_CODIGO, padx=8, pady=4, borderwidth=0, highlightthickness=0)
         self.texto_mensajes.tag_configure("lexico", foreground="#f87171")   # Rojo suave optimizado para modo oscuro
         self.texto_mensajes.tag_configure("ok", foreground="#4ade80")       # Verde suave optimizado para modo oscuro
-        
+
         barra = ttk.Scrollbar(self.panel_mensajes, orient="vertical", command=self.texto_mensajes.yview)
         self.texto_mensajes.configure(yscrollcommand=barra.set)
         self.texto_mensajes.grid(row=0, column=0, sticky="nsew")
@@ -463,8 +463,17 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         self._escribir_log("LOGS DE PRUEBA (léxico + sintáctico)", "titulo")
         for nombre, tokens, lex, sint, destino in resumen:
             etiqueta = "ok" if not (lex or sint) else "sintactico"
-            self._escribir_log(f"{nombre:20s} tokens {tokens:4d} · léxicos {lex} · sintácticos {sint} · {destino.name}",
-                               etiqueta)
+            estado_sintactico = (
+                "NO EJECUTADO" if lex
+                else f"{sint} error(es)"
+            )
+            self._escribir_log(
+                f"{nombre:20s} tokens {tokens:4d} · "
+                f"léxicos {lex} · "
+                f"sintáctico: {estado_sintactico} · "
+                f"{destino.name}",
+                etiqueta
+            )
         self.texto_sintactico.config(state="disabled")
         self.pestanas.select(0)
         self.estado.set(f"Estado: {len(resumen)} logs de prueba generados en la carpeta logs")
@@ -497,42 +506,133 @@ class Aplicacion(tb.Window if tb else tk.Tk):
 
         self.mostrar_log_sintactico(resultado, codigo)
         self.pestanas.select(0)
+        #Para identificar correctamente entre un si el parser se ejecuto correctamente y no encontro errores
+        # y si el parser no se ejcuto porque habia errores lexicos
         total = len(resultado["errores_sintacticos"])
-        self.estado.set(f"Estado: análisis sintáctico finalizado · {len(resultado['tokens'])} tokens · "
-                        + (f"{total} error(es) sintáctico(s)" if total else "sintaxis correcta"))
+        cantidad_tokens = len(resultado["tokens"])
+
+        if not resultado["sintactico_ejecutado"]:
+            estado = (
+                "Análisis sintáctico NO EJECUTADO: "
+                f"{len(resultado['errores_lexicos'])} error(es) léxico(s)"
+            )
+
+        elif total:
+            estado = (
+                f"Análisis sintáctico finalizado: "
+                f"{total} error(es) sintáctico(s)"
+            )
+
+        elif resultado["arbol"] is None:
+            estado = "Análisis sintáctico incompleto"
+
+        else:
+            estado = "Análisis sintáctico correcto"
+
+        self.estado.set(
+            f"Estado: {estado} · {cantidad_tokens} tokens"
+        )
+
         self.guardar_log_sintactico()
 
     def mostrar_log_sintactico(self, resultado, codigo):
         lineas_codigo = codigo.splitlines()
         err_lex = resultado["errores_lexicos"]
         err_sin = resultado["errores_sintacticos"]
+
         self.vaciar_log_sintactico()
         self.texto_sintactico.config(state="normal")
 
+        # FASE 1: ANALISIS LEXICO
         self._escribir_log("FASE 1 · ANÁLISIS LÉXICO", "titulo")
-        self._escribir_log(f"Tokens reconocidos: {len(resultado['tokens'])}", "detalle")
+        self._escribir_log(
+            f"Tokens reconocidos: {len(resultado['tokens'])}",
+            "detalle"
+        )
+
         if err_lex:
             for error in err_lex:
-                self._escribir_log("✘ " + error["mensaje"], "lexico")
+                self._escribir_log(
+                    "✘ " + error["mensaje"],
+                    "lexico"
+                )
         else:
             self._escribir_log("✔ Sin errores léxicos.", "ok")
 
-        self._escribir_log("\nFASE 2 · ANÁLISIS SINTÁCTICO", "titulo")
-        if err_sin:
-            self._escribir_log(f"✘ Se encontraron {len(err_sin)} error(es) sintáctico(s).", "sintactico")
+        # FASE 2: ANALISIS SINTACTICO
+        self._escribir_log(
+            "\nFASE 2 · ANÁLISIS SINTÁCTICO",
+            "titulo"
+        )
+
+        if not resultado["sintactico_ejecutado"]:
+            self._escribir_log(
+                "ANÁLISIS SINTÁCTICO NO EJECUTADO",
+                "sintactico"
+            )
+            self._escribir_log(
+                "Motivo: existen errores léxicos en el código fuente.",
+                "detalle"
+            )
+
+        elif err_sin:
+            self._escribir_log(
+                f"✘ Se encontraron {len(err_sin)} "
+                "error(es) sintáctico(s).",
+                "sintactico"
+            )
+
             for error in err_sin:
-                self._escribir_log(f"✘ Línea {error['linea']} · token «{error.get('token') or '-'}»", "sintactico")
-                self._escribir_log("    " + error["mensaje"], "sintactico")
+                self._escribir_log(
+                    f"✘ Línea {error['linea']} · "
+                    f"token «{error.get('token') or '-'}»",
+                    "sintactico"
+                )
+
+                self._escribir_log(
+                    "    " + error["mensaje"],
+                    "sintactico"
+                )
+
                 if 1 <= error["linea"] <= len(lineas_codigo):
-                    self._escribir_log("    código: " + lineas_codigo[error["linea"] - 1].strip(), "detalle")
+                    self._escribir_log(
+                        "    código: "
+                        + lineas_codigo[error["linea"] - 1].strip(),
+                        "detalle"
+                    )
+
+        elif resultado["arbol"] is None:
+            self._escribir_log(
+                "ANÁLISIS SINTÁCTICO INCOMPLETO",
+                "sintactico"
+            )
+            self._escribir_log(
+                "El parser no pudo construir un árbol completo.",
+                "detalle"
+            )
+
         else:
-            self._escribir_log("✔ Análisis sintáctico correcto.", "ok")
-        if resultado["omitidos"]:
-            self._escribir_log(f"({resultado['omitidos']} error(es) sintáctico(s) omitido(s) por coincidir "
-                               "con una línea con error léxico)", "detalle")
-        for nombre, linea, n in ((f[1], f[5], len(f[4])) for f in resultado["funciones"]):
-            self._escribir_log(f"✔ func {nombre} (línea {linea}) · {n} sentencia(s)", "ok")
+            self._escribir_log(
+                "✔ Análisis sintáctico correcto.",
+                "ok"
+            )
+
+        # Mostrar funciones reconocidas solamente
+        # cuando se ejecutó el parser.
+        if resultado["sintactico_ejecutado"]:
+            for f in resultado["funciones"]:
+                nombre = f[1]
+                linea = f[5]
+                cantidad = len(f[4])
+
+                self._escribir_log(
+                    f"✔ func {nombre} (línea {linea}) · "
+                    f"{cantidad} sentencia(s)",
+                    "ok"
+                )
+
         self.texto_sintactico.config(state="disabled")
+
     # ===== FIN aporte: BURGOS (Avance 2, ejecución y visualización del análisis sintáctico) =====
 
     # ===== INICIO aporte: MORA (Avance 2, log sintáctico por usuario de Git y simulación de ejecución) =====
@@ -567,12 +667,33 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         if not codigo.strip():
             messagebox.showwarning("Advertencia", "El editor de código está vacío.")
             return
+        #Se dividira por fases para una mejor estructuracion al momento de compilar
         resultado = analizar_completo(codigo)
         self.pestanas.select(1)
-        if resultado["errores_sintacticos"]:
-            self.consola.escribir("No se puede simular. Corrige primero los errores sintácticos "
-                                  "(botón Analizar Sintaxis).\n", "error")
+
+        # FASE 1: errores léxicos
+        if resultado["errores_lexicos"]:
+            self.consola.escribir(
+                "No se puede simular: existen errores lexicos.\n"
+                "Corrige primero los errores del analizador lexico.\n",
+                "error"
+            )
             return
+
+        # FASE 2: errores sintácticos
+        if (
+            not resultado["sintactico_ejecutado"]
+            or resultado["errores_sintacticos"]
+            or resultado["arbol"] is None
+        ):
+            self.consola.escribir(
+                "No se puede simular: el analisis sintactico "
+                "no fue completado correctamente.\n"
+                "Revisa los errores en Analizar Sintaxis.\n",
+                "error"
+            )
+            return
+
         self.btn_simular.config(state="disabled")
         SimuladorEjecucion(self.consola, al_terminar=lambda: self.btn_simular.config(state="normal")
                            ).iniciar(resultado["funciones"])
