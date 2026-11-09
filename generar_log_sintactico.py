@@ -2,9 +2,20 @@
 """
 generar_log_sintactico.py - Logs del análisis léxico + sintáctico (Avance 2)
 
-Uso:
+No modifica generar_log.py (logs léxicos del Avance 1); lo complementa.
+Cada log registra, para un mismo archivo, las dos fases en orden:
+  FASE 1  análisis léxico   -> tokens, resumen y errores léxicos
+  FASE 2  análisis sintáctico -> resultado, estructura reconocida y errores
+                                 (línea, token, mensaje y código de la línea)
+
+Uso (igual que generar_log.py)
   py generar_log_sintactico.py archivo.go usuarioGit
   py generar_log_sintactico.py algoritmos/algoritmo1.go marandradec
+En los seis archivos de prueba el usuarioGit es opcional (se asigna solo).
+Los seis logs a la vez se generan desde la interfaz con el botón Logs de prueba.
+Nombre del log  sintactico-usuarioGit-ddmmaaaa-HHhMM.txt   (ej. sintactico-marandradec-20102026-23h32.txt)
+Si ya existe un log del mismo minuto y del mismo usuario se agrega un sufijo (-2, -3 ...).
+Los logs se guardan en la carpeta logs/.
 """
 import re
 import sys
@@ -16,15 +27,15 @@ import parser as parser_go
 from generar_log import CARPETA_LOGS, _valor
 from lexer import analizar
 
-# Logs del análisis sintáctico
+# INICIO aporte: MORA (logs del análisis sintáctico)
 RAIZ = Path(__file__).resolve().parent
 CARPETA_ALGORITMOS = RAIZ / "algoritmos"
 
 # Usuario de Git responsable de cada archivo de prueba (se usa para nombrar el log)
 USUARIOS_GIT = {
-    "algoritmo1": "marandradec", "errores_andrade": "marandradec",   # Andrade
+    "algoritmo1": "marandradec", "errores_andrade": "marandradec",   # María Andrade
     "algoritmo2": "TheFearLess", "errores_burgos": "TheFearLess",    # Burgos
-    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE",            # Mora
+    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE", "errores_sintacticos_mora": "JosMoraE"    # Mora
 }
 PATRON_USUARIO_GIT = r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
 
@@ -52,20 +63,40 @@ _SENTENCIAS = {
 
 
 # ANÁLISIS COMBINADO
+
 def analizar_completo(codigo):
-    """Ejecuta léxico y sintáctico sobre el mismo código y devuelve un diccionario."""
+    """Ejecuta el análisis léxico y, si es válido, el sintáctico."""
+
     tokens, errores_lexicos = analizar(codigo)
+
+    # FASE 1: si falla el lexer, no ejecutamos el parser.
+    if errores_lexicos:
+        return {
+            "tokens": tokens,
+            "errores_lexicos": errores_lexicos,
+            "arbol": None,
+            "funciones": [],
+            "errores_sintacticos": [],
+            "omitidos": 0,
+            "sintactico_ejecutado": False,
+        }
+
+    # FASE 2: ejecutar el parser únicamente si el lexer pasó.
     arbol, errores = parser_go.analizar_sintactico(codigo)
+
     return {
         "tokens": tokens,
-        "errores_lexicos": errores_lexicos,
+        "errores_lexicos": [],
         "arbol": arbol,
-        # con error grave el árbol no se devuelve, pero las funciones completas sí se conservan
-        "funciones": arbol[3] if arbol else list(parser_go.funciones_reconocidas),
+        "funciones": (
+            arbol[3] if arbol is not None
+            else list(parser_go.funciones_reconocidas)
+        ),
         "errores_sintacticos": errores,
-        # errores de líneas que ya tienen un error léxico (consecuencia del token descartado)
-        "omitidos": len(parser_go.errores_sintacticos) - len(errores),
+        "omitidos": 0,
+        "sintactico_ejecutado": True,
     }
+
 
 
 def _contar_nodos(nodo, cuenta):
@@ -113,28 +144,65 @@ def construir_log_sintactico(resultado, codigo, archivo, autor, ahora):
     lineas += [e["mensaje"] for e in err_lex] or ["No se encontraron errores lexicos."]
     lineas += ["", f"Total de errores lexicos: {len(err_lex)}", ""]
 
+    #La idea es primero indicar que existen errores lexicos antes de pasar a sintacticos, asi no es necesario
+    #Correr y analizar mas codigo en la segunda fase si es que existen errores lexicos, haciendolo mas eficiente
     lineas += ["FASE 2. ANALISIS SINTACTICO", "=" * 60]
-    correcto = not err_sin
-    lineas.append("Resultado: " + ("ANALISIS SINTACTICO CORRECTO" if correcto
-                                   else f"SE ENCONTRARON {len(err_sin)} ERROR(ES) SINTACTICO(S)"))
-    if err_lex:
-        lineas.append("Nota: el archivo tiene errores lexicos; los errores sintacticos de esas "
-                      f"mismas lineas se omiten ({resultado['omitidos']} omitido(s)).")
+    if not resultado["sintactico_ejecutado"]:
+        estado = "NO EJECUTADO"
+        motivo = "Existen errores léxicos en el código fuente."
+    elif err_sin:
+        estado = f"SE ENCONTRARON {len(err_sin)} ERROR(ES) SINTACTICO(S)"
+        motivo = None
+    elif resultado["arbol"] is None:
+        estado = "ANALISIS SINTACTICO INCOMPLETO"
+        motivo = "El parser no pudo construir un árbol completo."
+    else:
+        estado = "ANALISIS SINTACTICO CORRECTO"
+        motivo = None
+    lineas.append(f"Resultado: {estado}")
+    if motivo:
+        lineas.append(f"Motivo: {motivo}")
+
 
     funciones, cuenta = resumir_arbol(resultado["funciones"])
     lineas += ["", "ESTRUCTURA RECONOCIDA (aciertos)", "-" * 60]
     if funciones:
-        lineas.append("Programa: package y import fmt reconocidos")
-        if resultado["arbol"] is None:
-            lineas.append("Arbol incompleto: solo se listan las funciones completas anteriores al error grave.")
-        for nombre, linea, n in funciones:
-            lineas.append(f"Linea {linea:03d} | func {nombre} | {n} sentencia(s) en su bloque")
-        lineas.append("")
-        for clave, etiqueta in _SENTENCIAS.items():
-            if cuenta[clave]:
-                lineas.append(f"{etiqueta:34s} | {cuenta[clave]}")
-    else:
-        lineas.append("No se reconocio ninguna funcion completa (revisar package, import y la primera funcion).")
+        # ESTRUCTURA RECONOCIDA
+        funciones, cuenta = resumir_arbol(resultado["funciones"])
+        lineas += [
+            "",
+            "ESTRUCTURA RECONOCIDA (aciertos)",
+            "-" * 60
+        ]
+        if not resultado["sintactico_ejecutado"]:
+            lineas.append(
+                "Estructura no evaluada porque existen errores lexicos."
+            )
+        elif funciones:
+            lineas.append(
+                "Programa: package y estructura de import reconocidos"
+            )
+            if resultado["arbol"] is None:
+                lineas.append(
+                    "Arbol incompleto: solo se listan "
+                    "las funciones completas reconocidas."
+                )
+            for nombre, linea, n in funciones:
+                lineas.append(
+                    f"Linea {linea:03d} | func {nombre} | "
+                    f"{n} sentencia(s) en su bloque"
+                )
+            lineas.append("")
+            for clave, etiqueta in _SENTENCIAS.items():
+                if cuenta[clave]:
+                    lineas.append(
+                        f"{etiqueta:34s} | {cuenta[clave]}"
+                    )
+        else:
+            lineas.append(
+                "No se reconocio ninguna funcion completa."
+            )
+
 
     lineas += ["", "ERRORES SINTACTICOS", "-" * 60]
     if err_sin:
@@ -143,14 +211,42 @@ def construir_log_sintactico(resultado, codigo, archivo, autor, ahora):
             lineas.append(f"    {e['mensaje']}")
             if 1 <= e["linea"] <= len(lineas_codigo):
                 lineas.append(f"    Codigo: {lineas_codigo[e['linea'] - 1].strip()}")
-    else:
-        lineas.append("No se encontraron errores sintacticos.")
-    lineas += ["", f"Total de errores sintacticos: {len(err_sin)}", "",
-               "RESUMEN FINAL", "=" * 60,
-               f"Tokens reconocidos        | {len(tokens)}",
-               f"Errores lexicos           | {len(err_lex)}",
-               f"Errores sintacticos       | {len(err_sin)}"]
+    else:  #La idea de este else es ser especifico en cuanto al estados de cada fase a mi parecer
+        if not resultado["sintactico_ejecutado"]:
+            lineas.append(
+                "No se evaluaron errores sintacticos: "
+                "el analisis se detuvo en la fase lexica."
+            )
+        elif resultado["arbol"] is None:
+            lineas.append(
+                "No se registraron errores adicionales, "
+                "pero el arbol sintactico esta incompleto."
+            )
+        else:
+            lineas.append("No se encontraron errores sintacticos.")
+
+
+
+    lineas += ["",(f"Total de errores sintacticos: {len(err_sin)}"
+            if resultado["sintactico_ejecutado"]
+            else "Total de errores sintacticos: NO EVALUADOS"
+        ),"",
+        "RESUMEN FINAL","=" * 60,
+        f"Tokens reconocidos        | {len(tokens)}",
+        f"Errores lexicos           | {len(err_lex)}",
+        (
+            f"Errores sintacticos       | {len(err_sin)}"
+            if resultado["sintactico_ejecutado"]
+            else "Errores sintacticos       | NO EVALUADOS"
+        ),
+        (
+            "Fase sintactica ejecutada | Si"
+            if resultado["sintactico_ejecutado"]
+            else "Fase sintactica ejecutada | No"
+        ),
+    ]
     return "\n".join(lineas) + "\n"
+
 
 
 def _destino(autor, archivo, ahora):
@@ -193,6 +289,7 @@ def _imprimir_resumen(resumen):
     for nombre, tokens, lex, sint, destino in resumen:
         print(f"{nombre:20s} {tokens:7d} {lex:8d} {sint:9d}  {destino.name}")
 
+# FIN aporte: MORA (logs del análisis sintáctico)
 
 
 if __name__ == "__main__":

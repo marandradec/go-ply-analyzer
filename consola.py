@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 """
 consola.py - Consola interactiva y simulación de entrada/salida (Avance 2)
-ConsolaInteractiva y SimuladorEjecucion
+
+ConsolaInteractiva  Widget de consola dentro de la interfaz. Captura la tecla Enter para
+                    entregar lo que escribe el usuario, ya sea a un fmt.Scanln simulado
+                    (solicitar_entrada) o como comando propio de la consola.
+SimuladorEjecucion  Recorre el árbol del parser y simula SOLO la entrada y salida de la
+                    función main: fmt.Println imprime y fmt.Scanln pide un dato por la
+                    consola. No es un intérprete completo; las estructuras de control
+                    (if, for, switch) y las llamadas a funciones se avisan y se omiten.
 """
 import tkinter as tk
 from tkinter import ttk
@@ -10,7 +17,7 @@ FUENTE_CONSOLA = ("Consolas", 11)
 PROMPT = "> "
 
 
-# Consola interactiva
+# INICIO aporte: MORA (consola interactiva)
 class ConsolaInteractiva(tk.Frame):
     """Consola con entrada por teclado. Todo lo escrito antes de la marca 'entrada' es de solo lectura."""
 
@@ -133,9 +140,10 @@ class ConsolaInteractiva(tk.Frame):
     def _al_inicio(self, evento=None):
         self.texto.mark_set("insert", "entrada")
         return "break"
+# FIN aporte: MORA (consola interactiva)
 
 
-# simulación de entrada y salida
+# INICIO aporte: MORA (simulación de entrada y salida)
 class SimuladorEjecucion:
     """Simula fmt.Println y fmt.Scanln de main siguiendo el orden del código."""
 
@@ -256,3 +264,4 @@ class SimuladorEjecucion:
         if isinstance(valor, bool):
             return "true" if valor else "false"
         return str(valor)
+# FIN aporte: MORA (simulación de entrada y salida)

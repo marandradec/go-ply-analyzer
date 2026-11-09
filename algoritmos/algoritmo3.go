@@ -54,6 +54,24 @@ func main() {
 	if permitido && disponible {
 		mostrarResultado(numero, activo)
 	}
+	// INICIO aporte: MORA (sintáctico)
+	// switch con break, conectores combinados con comparaciones y
+	switch contador {
+	case 1:
+		fmt.Println("Uno")
+		break
+	case 2:
+		fmt.Println("Dos")
+	default:
+		fmt.Println("Otro")
+	}
+	// asignación compuesta e incremento sobre un elemento de mapa
+	valido := contador >= 18 && !bloqueado
+	coincide := contador == 2 || contador != 4
+	edades["Luis"] += 1
+	edades["Luis"]++
+	fmt.Println(valido, coincide)
+	// FIN aporte: MORA (sintáctico)
 
 	fmt.Println(opuesto, negativo, ajustado)
 	fmt.Println(edades["Ana"])

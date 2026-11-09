@@ -62,47 +62,47 @@ class TestSintacticoAndrade(PruebasComunes, unittest.TestCase):
 # FIN aporte: ANDRADE (pruebas sintácticas)
 
 
+# INICIO aporte: BURGOS (pruebas sintácticas)
+class TestSintacticoBurgos(PruebasComunes, unittest.TestCase):
+    valido, con_errores, usuario = "algoritmo2.go", "errores_burgos.go", "TheFearLess"
+    lineas_esperadas = [16, 21, 28, 33, 38]
+
+    def test_funcion_con_retorno_sin_parametros(self):
+        codigo = ("func uno() int {\n\treturn 1\n}\n"
+                  "func nombre() string {\n\treturn \"Ana\"\n}\n"
+                  "func main() {\n\tx := uno()\n\tfmt.Println(x, nombre())\n}\n")
+        self.assertEqual(errores_de(codigo), [])
+
+    def test_println_sin_argumentos(self):
+        self.assertEqual(errores_de("func main() {\n\tfmt.Println()\n}\n"), [])
+
+    def test_matriz_vacia(self):
+        self.assertEqual(errores_de("func main() {\n\tm := [2][2]int{}\n}\n"), [])
+# FIN aporte: BURGOS (pruebas sintácticas)
 
 
+# INICIO aporte: MORA (pruebas sintácticas y formato de logs)
+class TestSintacticoMora(PruebasComunes, unittest.TestCase):
+    valido, con_errores, usuario = "algoritmo3.go", "errores_mora.go", "JosMoraE"
+    lineas_esperadas = [17, 22, 27, 32, 39, 50]
+
+    def test_mapa_vacio(self):
+        self.assertEqual(errores_de("func main() {\n\tm := map[string]int{}\n\tm[\"a\"] = 1\n}\n"), [])
 
 
+class TestNombreDeLogs(unittest.TestCase):
+    def test_formato_del_nombre(self):
+        ahora = datetime(2026, 10, 20, 23, 32)
+        destino = gls._destino("marandradec", "algoritmo1.go", ahora)
+        self.assertRegex(destino.name, r"^sintactico-marandradec-20102026-23h32(-\d+)?\.txt$")
+        self.assertEqual(destino.parent, gls.CARPETA_LOGS)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def test_usuarios_validos(self):
+        for usuario in ("marandradec", "TheFearLess", "JosMoraE"):
+            self.assertTrue(gls.usuario_git_valido(usuario))
+        for usuario in ("", "con espacio", "tilde-é", None):
+            self.assertFalse(gls.usuario_git_valido(usuario))
+# FIN aporte: MORA (pruebas sintácticas y formato de logs)
 
 
 if __name__ == "__main__":
