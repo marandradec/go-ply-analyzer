@@ -1,5 +1,5 @@
 package main
-
+import "fmt"
 // Errores léxicos: números mal formados
 func main() {
 	a := 12abc
@@ -7,10 +7,10 @@ func main() {
 	c := 3.14xyz
 	fmt.Println(a, b, c)
 }
+
+// Errores sintácticos:
 // Cada función contiene un error sintáctico distinto de las reglas de Burgos.
 
-
-//Errores Sintácticos
 // Error 1: var exige un tipo explícito
 func varSinTipo() {
 	var edad = 20
@@ -39,3 +39,4 @@ func condicionFor() {
 		total = total + 1
 	}
 }
+// FIN aporte: BURGOS (errores sintácticos)
