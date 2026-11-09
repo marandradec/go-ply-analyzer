@@ -38,7 +38,7 @@ py parser.py algoritmos/algoritmo1.go
 py generar_log_sintactico.py algoritmos/algoritmo1.go marandradec
 ```
 
-Los seis logs de prueba a la vez se generan desde la interfaz con el botón Logs de prueba.
+Los seis logs de prueba a la vez se generan desde la interfaz con el botón Logs de prueba. Si un archivo tiene errores léxicos, el análisis sintáctico no se ejecuta (el log indica NO EVALUADOS). Para obtener el log con los errores sintácticos de un archivo `errores_*.go`, corrige primero sus errores léxicos en el editor de la interfaz y presiona Analizar Sintaxis.
 
 El log se llama `sintactico-usuarioGit-ddmmaaaa-HHhMM.txt` (por ejemplo `sintactico-marandradec-20102026-23h32.txt`) e incluye el análisis léxico y el sintáctico con sus errores, líneas y tokens. Si el mismo usuario genera dos logs en el mismo minuto, se agrega un sufijo (-2, -3). Usuario de Git por archivo de prueba:
 
