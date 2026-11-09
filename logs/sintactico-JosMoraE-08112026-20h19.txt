@@ -1,0 +1,263 @@
+ANALISIS LEXICO Y SINTACTICO - usuario Git: JosMoraE
+Archivo: algoritmos/errores_mora.go (variante sintactica)
+Fecha: 08-11-2026 20:19:28
+
+FASE 1. ANALISIS LEXICO
+============================================================
+TOKENS RECONOCIDOS
+------------------------------------------------------------
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 002 | IMPORT               | 'import'
+Linea 002 | CADENA               | '"fmt"'
+Linea 002 | NEWLINE              | \n
+Linea 003 | NEWLINE              | \n
+Linea 004 | FUNC                 | 'func'
+Linea 004 | ID                   | 'main'
+Linea 004 | PAREN_IZQ            | '('
+Linea 004 | PAREN_DER            | ')'
+Linea 004 | LLAVE_IZQ            | '{'
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'valor'
+Linea 005 | DECLARACION_CORTA    | ':='
+Linea 005 | ENTERO               | 10
+Linea 005 | NEWLINE              | \n
+Linea 006 | ID                   | 'valor'
+Linea 006 | ASIGNACION           | '='
+Linea 006 | ENTERO               | 5
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'valor'
+Linea 007 | ASIGNACION           | '='
+Linea 007 | ENTERO               | 6
+Linea 007 | NEWLINE              | \n
+Linea 008 | ID                   | 'valor'
+Linea 008 | ASIGNACION           | '='
+Linea 008 | ENTERO               | 7
+Linea 008 | NEWLINE              | \n
+Linea 009 | FMT_PRINTLN          | 'fmt.Println'
+Linea 009 | PAREN_IZQ            | '('
+Linea 009 | ID                   | 'valor'
+Linea 009 | PAREN_DER            | ')'
+Linea 009 | NEWLINE              | \n
+Linea 010 | LLAVE_DER            | '}'
+Linea 010 | NEWLINE              | \n
+Linea 011 | NEWLINE              | \n
+Linea 012 | NEWLINE              | \n
+Linea 014 | NEWLINE              | \n
+Linea 015 | FUNC                 | 'func'
+Linea 015 | ID                   | 'lecturaSinDireccion'
+Linea 015 | PAREN_IZQ            | '('
+Linea 015 | PAREN_DER            | ')'
+Linea 015 | LLAVE_IZQ            | '{'
+Linea 015 | NEWLINE              | \n
+Linea 016 | VAR                  | 'var'
+Linea 016 | ID                   | 'numero'
+Linea 016 | T_INT                | 'int'
+Linea 016 | NEWLINE              | \n
+Linea 017 | FMT_SCANLN           | 'fmt.Scanln'
+Linea 017 | PAREN_IZQ            | '('
+Linea 017 | ID                   | 'numero'
+Linea 017 | PAREN_DER            | ')'
+Linea 017 | NEWLINE              | \n
+Linea 018 | LLAVE_DER            | '}'
+Linea 018 | NEWLINE              | \n
+Linea 020 | NEWLINE              | \n
+Linea 021 | FUNC                 | 'func'
+Linea 021 | ID                   | 'constanteSinValor'
+Linea 021 | PAREN_IZQ            | '('
+Linea 021 | PAREN_DER            | ')'
+Linea 021 | LLAVE_IZQ            | '{'
+Linea 021 | NEWLINE              | \n
+Linea 022 | CONST                | 'const'
+Linea 022 | ID                   | 'LIMITE'
+Linea 022 | T_INT                | 'int'
+Linea 022 | NEWLINE              | \n
+Linea 023 | LLAVE_DER            | '}'
+Linea 023 | NEWLINE              | \n
+Linea 025 | NEWLINE              | \n
+Linea 026 | FUNC                 | 'func'
+Linea 026 | ID                   | 'faltaCierreParentesis'
+Linea 026 | PAREN_IZQ            | '('
+Linea 026 | PAREN_DER            | ')'
+Linea 026 | LLAVE_IZQ            | '{'
+Linea 026 | NEWLINE              | \n
+Linea 027 | ID                   | 'nuevo'
+Linea 027 | DECLARACION_CORTA    | ':='
+Linea 027 | PAREN_IZQ            | '('
+Linea 027 | ENTERO               | 3
+Linea 027 | PLUS                 | '+'
+Linea 027 | ENTERO               | 4
+Linea 027 | TIMES                | '*'
+Linea 027 | ENTERO               | 2
+Linea 027 | NEWLINE              | \n
+Linea 028 | LLAVE_DER            | '}'
+Linea 028 | NEWLINE              | \n
+Linea 030 | NEWLINE              | \n
+Linea 031 | FUNC                 | 'func'
+Linea 031 | ID                   | 'conectorIncompleto'
+Linea 031 | PAREN_IZQ            | '('
+Linea 031 | PAREN_DER            | ')'
+Linea 031 | LLAVE_IZQ            | '{'
+Linea 031 | NEWLINE              | \n
+Linea 032 | ID                   | 'activo'
+Linea 032 | DECLARACION_CORTA    | ':='
+Linea 032 | BOOL_LITERAL         | 'true'
+Linea 032 | AND                  | '&&'
+Linea 032 | NEWLINE              | \n
+Linea 033 | LLAVE_DER            | '}'
+Linea 033 | NEWLINE              | \n
+Linea 035 | NEWLINE              | \n
+Linea 036 | FUNC                 | 'func'
+Linea 036 | ID                   | 'casoSinDosPuntos'
+Linea 036 | PAREN_IZQ            | '('
+Linea 036 | PAREN_DER            | ')'
+Linea 036 | LLAVE_IZQ            | '{'
+Linea 036 | NEWLINE              | \n
+Linea 037 | ID                   | 'dia'
+Linea 037 | DECLARACION_CORTA    | ':='
+Linea 037 | ENTERO               | 2
+Linea 037 | NEWLINE              | \n
+Linea 038 | SWITCH               | 'switch'
+Linea 038 | ID                   | 'dia'
+Linea 038 | LLAVE_IZQ            | '{'
+Linea 038 | NEWLINE              | \n
+Linea 039 | CASE                 | 'case'
+Linea 039 | ENTERO               | 1
+Linea 039 | NEWLINE              | \n
+Linea 040 | FMT_PRINTLN          | 'fmt.Println'
+Linea 040 | PAREN_IZQ            | '('
+Linea 040 | CADENA               | '"lunes"'
+Linea 040 | PAREN_DER            | ')'
+Linea 040 | NEWLINE              | \n
+Linea 041 | CASE                 | 'case'
+Linea 041 | ENTERO               | 2
+Linea 041 | DOSPUNTOS            | ':'
+Linea 041 | NEWLINE              | \n
+Linea 042 | FMT_PRINTLN          | 'fmt.Println'
+Linea 042 | PAREN_IZQ            | '('
+Linea 042 | CADENA               | '"martes"'
+Linea 042 | PAREN_DER            | ')'
+Linea 042 | NEWLINE              | \n
+Linea 043 | DEFAULT              | 'default'
+Linea 043 | DOSPUNTOS            | ':'
+Linea 043 | NEWLINE              | \n
+Linea 044 | FMT_PRINTLN          | 'fmt.Println'
+Linea 044 | PAREN_IZQ            | '('
+Linea 044 | CADENA               | '"otro"'
+Linea 044 | PAREN_DER            | ')'
+Linea 044 | NEWLINE              | \n
+Linea 045 | LLAVE_DER            | '}'
+Linea 045 | NEWLINE              | \n
+Linea 046 | LLAVE_DER            | '}'
+Linea 046 | NEWLINE              | \n
+Linea 048 | NEWLINE              | \n
+Linea 049 | FUNC                 | 'func'
+Linea 049 | ID                   | 'mapaSinDosPuntos'
+Linea 049 | PAREN_IZQ            | '('
+Linea 049 | PAREN_DER            | ')'
+Linea 049 | LLAVE_IZQ            | '{'
+Linea 049 | NEWLINE              | \n
+Linea 050 | ID                   | 'edades'
+Linea 050 | DECLARACION_CORTA    | ':='
+Linea 050 | MAPA                 | 'map[string]int'
+Linea 050 | LLAVE_IZQ            | '{'
+Linea 050 | CADENA               | '"Ana"'
+Linea 050 | ENTERO               | 20
+Linea 050 | LLAVE_DER            | '}'
+Linea 050 | NEWLINE              | \n
+Linea 051 | LLAVE_DER            | '}'
+Linea 051 | NEWLINE              | \n
+
+Total de tokens: 162
+
+RESUMEN POR TIPO DE TOKEN
+------------------------------------------------------------
+AND                  | 1
+ASIGNACION           | 3
+BOOL_LITERAL         | 1
+CADENA               | 5
+CASE                 | 2
+CONST                | 1
+DECLARACION_CORTA    | 5
+DEFAULT              | 1
+DOSPUNTOS            | 2
+ENTERO               | 11
+FMT_PRINTLN          | 4
+FMT_SCANLN           | 1
+FUNC                 | 7
+ID                   | 21
+IMPORT               | 1
+LLAVE_DER            | 9
+LLAVE_IZQ            | 9
+MAPA                 | 1
+NEWLINE              | 45
+PACKAGE              | 1
+PAREN_DER            | 12
+PAREN_IZQ            | 13
+PLUS                 | 1
+SWITCH               | 1
+TIMES                | 1
+T_INT                | 2
+VAR                  | 1
+
+ERRORES LEXICOS
+------------------------------------------------------------
+No se encontraron errores lexicos.
+
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 6 ERROR(ES) SINTACTICO(S)
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
+Linea 004 | func main | 5 sentencia(s) en su bloque
+Linea 015 | func lecturaSinDireccion | 2 sentencia(s) en su bloque
+Linea 021 | func constanteSinValor | 1 sentencia(s) en su bloque
+Linea 026 | func faltaCierreParentesis | 1 sentencia(s) en su bloque
+Linea 031 | func conectorIncompleto | 1 sentencia(s) en su bloque
+Linea 036 | func casoSinDosPuntos | 2 sentencia(s) en su bloque
+Linea 049 | func mapaSinDosPuntos | 1 sentencia(s) en su bloque
+
+declaraciones cortas (:=)          | 2
+asignaciones                       | 3
+declaraciones var                  | 1
+impresiones (fmt.Println)          | 3
+switch                             | 1
+default                            | 1
+
+ERRORES SINTACTICOS
+------------------------------------------------------------
+Linea 017 | Token: identificador numero
+    Error sintáctico en la línea 17. Se encontró el token identificador numero. fmt.Scanln necesita la dirección de la variable. Ejemplo: fmt.Scanln(&nombre)
+    Codigo: fmt.Scanln(numero)
+Linea 022 | Token: salto de línea
+    Error sintáctico en la línea 22. Se encontró el token salto de línea. Una constante debe inicializarse. Ejemplo: const MAX int = 100
+    Codigo: const LIMITE int
+Linea 027 | Token: salto de línea
+    Error sintáctico en la línea 27. Se encontró el token salto de línea. Falta cerrar un paréntesis )
+    Codigo: nuevo := (3 + 4 * 2
+Linea 032 | Token: salto de línea
+    Error sintáctico en la línea 32. Se encontró el token salto de línea. Falta el operando a la derecha del operador &&
+    Codigo: activo := true &&
+Linea 039 | Token: salto de línea
+    Error sintáctico en la línea 39. Se encontró el token salto de línea. Falta : después del valor del case
+    Codigo: case 1
+Linea 050 | Token: 20
+    Error sintáctico en la línea 50. Se encontró el token 20. Falta : entre la clave y el valor del mapa. Ejemplo: {"Ana": 20}
+    Codigo: edades := map[string]int{"Ana" 20}
+
+Total de errores sintacticos: 6
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 162
+Errores lexicos           | 0
+Errores sintacticos       | 6
+Fase sintactica ejecutada | Si

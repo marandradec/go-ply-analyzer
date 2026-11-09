@@ -30,8 +30,14 @@ class TestFasesMora(unittest.TestCase):
 
     def test_errores_sintacticos_sin_errores_lexicos(self):
         codigo = (
-            RAIZ / "algoritmos" / "errores_sintacticos_mora.go"
+            RAIZ / "algoritmos" / "errores_mora.go"
         ).read_text(encoding="utf-8")
+
+        # Neutralizamos únicamente los tres errores léxicos
+        # para comprobar las seis estructuras sintácticas.
+        codigo = codigo.replace("valor @ 5", "valor = 5")
+        codigo = codigo.replace("valor # 6", "valor = 6")
+        codigo = codigo.replace("valor $ 7", "valor = 7")
 
         resultado = analizar_completo(codigo)
 
