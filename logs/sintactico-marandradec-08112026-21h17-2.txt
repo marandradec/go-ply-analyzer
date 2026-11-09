@@ -1,0 +1,250 @@
+ANALISIS LEXICO Y SINTACTICO - usuario Git: marandradec
+Archivo: errores_andrade.go
+Fecha: 08-11-2026 21:17:53
+
+FASE 1. ANALISIS LEXICO
+============================================================
+TOKENS RECONOCIDOS
+------------------------------------------------------------
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 002 | IMPORT               | 'import'
+Linea 002 | CADENA               | '"fmt"'
+Linea 002 | NEWLINE              | \n
+Linea 003 | NEWLINE              | \n
+Linea 004 | FUNC                 | 'func'
+Linea 004 | ID                   | 'main'
+Linea 004 | PAREN_IZQ            | '('
+Linea 004 | PAREN_DER            | ')'
+Linea 004 | LLAVE_IZQ            | '{'
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'saludo'
+Linea 005 | DECLARACION_CORTA    | ':='
+Linea 005 | CADENA               | '"Hola Mundo"'
+Linea 005 | NEWLINE              | \n
+Linea 006 | FMT_PRINTLN          | 'fmt.Println'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | ID                   | 'saludo'
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'despedida'
+Linea 007 | DECLARACION_CORTA    | ':='
+Linea 007 | CADENA               | '"Adios"'
+Linea 007 | NEWLINE              | \n
+Linea 008 | LLAVE_DER            | '}'
+Linea 008 | NEWLINE              | \n
+Linea 010 | NEWLINE              | \n
+Linea 011 | NEWLINE              | \n
+Linea 013 | NEWLINE              | \n
+Linea 014 | FUNC                 | 'func'
+Linea 014 | ID                   | 'faltaValor'
+Linea 014 | PAREN_IZQ            | '('
+Linea 014 | PAREN_DER            | ')'
+Linea 014 | LLAVE_IZQ            | '{'
+Linea 014 | NEWLINE              | \n
+Linea 015 | ID                   | 'total'
+Linea 015 | DECLARACION_CORTA    | ':='
+Linea 015 | NEWLINE              | \n
+Linea 016 | LLAVE_DER            | '}'
+Linea 016 | NEWLINE              | \n
+Linea 018 | NEWLINE              | \n
+Linea 019 | FUNC                 | 'func'
+Linea 019 | ID                   | 'ifSinCondicion'
+Linea 019 | PAREN_IZQ            | '('
+Linea 019 | PAREN_DER            | ')'
+Linea 019 | LLAVE_IZQ            | '{'
+Linea 019 | NEWLINE              | \n
+Linea 020 | IF                   | 'if'
+Linea 020 | LLAVE_IZQ            | '{'
+Linea 020 | NEWLINE              | \n
+Linea 021 | FMT_PRINTLN          | 'fmt.Println'
+Linea 021 | PAREN_IZQ            | '('
+Linea 021 | CADENA               | '"mayor"'
+Linea 021 | PAREN_DER            | ')'
+Linea 021 | NEWLINE              | \n
+Linea 022 | LLAVE_DER            | '}'
+Linea 022 | NEWLINE              | \n
+Linea 023 | LLAVE_DER            | '}'
+Linea 023 | NEWLINE              | \n
+Linea 025 | NEWLINE              | \n
+Linea 026 | FUNC                 | 'func'
+Linea 026 | ID                   | 'faltaParentesis'
+Linea 026 | PAREN_IZQ            | '('
+Linea 026 | PAREN_DER            | ')'
+Linea 026 | LLAVE_IZQ            | '{'
+Linea 026 | NEWLINE              | \n
+Linea 027 | FMT_PRINTLN          | 'fmt.Println'
+Linea 027 | PAREN_IZQ            | '('
+Linea 027 | CADENA               | '"Hola Mundo"'
+Linea 027 | NEWLINE              | \n
+Linea 028 | LLAVE_DER            | '}'
+Linea 028 | NEWLINE              | \n
+Linea 030 | NEWLINE              | \n
+Linea 031 | FUNC                 | 'func'
+Linea 031 | ID                   | 'faltaLlaveArreglo'
+Linea 031 | PAREN_IZQ            | '('
+Linea 031 | PAREN_DER            | ')'
+Linea 031 | LLAVE_IZQ            | '{'
+Linea 031 | NEWLINE              | \n
+Linea 032 | ID                   | 'primos'
+Linea 032 | DECLARACION_CORTA    | ':='
+Linea 032 | ARREGLO              | '[3]int'
+Linea 032 | LLAVE_IZQ            | '{'
+Linea 032 | ENTERO               | 2
+Linea 032 | COMA                 | ','
+Linea 032 | ENTERO               | 3
+Linea 032 | COMA                 | ','
+Linea 032 | ENTERO               | 5
+Linea 032 | NEWLINE              | \n
+Linea 033 | LLAVE_DER            | '}'
+Linea 033 | NEWLINE              | \n
+Linea 035 | NEWLINE              | \n
+Linea 036 | FUNC                 | 'func'
+Linea 036 | ID                   | 'reasignacionIncompleta'
+Linea 036 | PAREN_IZQ            | '('
+Linea 036 | PAREN_DER            | ')'
+Linea 036 | LLAVE_IZQ            | '{'
+Linea 036 | NEWLINE              | \n
+Linea 037 | ID                   | 'contador'
+Linea 037 | DECLARACION_CORTA    | ':='
+Linea 037 | ENTERO               | 1
+Linea 037 | NEWLINE              | \n
+Linea 038 | ID                   | 'contador'
+Linea 038 | ASIGNACION           | '='
+Linea 038 | NEWLINE              | \n
+Linea 039 | LLAVE_DER            | '}'
+Linea 039 | NEWLINE              | \n
+Linea 041 | NEWLINE              | \n
+Linea 042 | FUNC                 | 'func'
+Linea 042 | ID                   | 'elseSuelto'
+Linea 042 | PAREN_IZQ            | '('
+Linea 042 | PAREN_DER            | ')'
+Linea 042 | LLAVE_IZQ            | '{'
+Linea 042 | NEWLINE              | \n
+Linea 043 | ID                   | 'edad'
+Linea 043 | DECLARACION_CORTA    | ':='
+Linea 043 | ENTERO               | 20
+Linea 043 | NEWLINE              | \n
+Linea 044 | IF                   | 'if'
+Linea 044 | ID                   | 'edad'
+Linea 044 | GT                   | '>'
+Linea 044 | ENTERO               | 18
+Linea 044 | LLAVE_IZQ            | '{'
+Linea 044 | NEWLINE              | \n
+Linea 045 | FMT_PRINTLN          | 'fmt.Println'
+Linea 045 | PAREN_IZQ            | '('
+Linea 045 | CADENA               | '"mayor"'
+Linea 045 | PAREN_DER            | ')'
+Linea 045 | NEWLINE              | \n
+Linea 046 | LLAVE_DER            | '}'
+Linea 046 | NEWLINE              | \n
+Linea 047 | ELSE                 | 'else'
+Linea 047 | LLAVE_IZQ            | '{'
+Linea 047 | NEWLINE              | \n
+Linea 048 | FMT_PRINTLN          | 'fmt.Println'
+Linea 048 | PAREN_IZQ            | '('
+Linea 048 | CADENA               | '"menor"'
+Linea 048 | PAREN_DER            | ')'
+Linea 048 | NEWLINE              | \n
+Linea 049 | LLAVE_DER            | '}'
+Linea 049 | NEWLINE              | \n
+Linea 050 | LLAVE_DER            | '}'
+Linea 050 | NEWLINE              | \n
+Linea 052 | NEWLINE              | \n
+Linea 053 | FUNC                 | 'func'
+Linea 053 | ID                   | 'sinCierre'
+Linea 053 | PAREN_IZQ            | '('
+Linea 053 | PAREN_DER            | ')'
+Linea 053 | LLAVE_IZQ            | '{'
+Linea 053 | NEWLINE              | \n
+Linea 054 | ID                   | 'contador'
+Linea 054 | DECLARACION_CORTA    | ':='
+Linea 054 | ENTERO               | 1
+Linea 054 | NEWLINE              | \n
+
+Total de tokens: 156
+
+RESUMEN POR TIPO DE TOKEN
+------------------------------------------------------------
+ARREGLO              | 1
+ASIGNACION           | 1
+CADENA               | 7
+COMA                 | 2
+DECLARACION_CORTA    | 7
+ELSE                 | 1
+ENTERO               | 7
+FMT_PRINTLN          | 5
+FUNC                 | 8
+GT                   | 1
+ID                   | 19
+IF                   | 2
+IMPORT               | 1
+LLAVE_DER            | 10
+LLAVE_IZQ            | 12
+NEWLINE              | 46
+PACKAGE              | 1
+PAREN_DER            | 12
+PAREN_IZQ            | 13
+
+ERRORES LEXICOS
+------------------------------------------------------------
+No se encontraron errores lexicos.
+
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 7 ERROR(ES) SINTACTICO(S)
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
+Arbol incompleto: solo se listan las funciones completas reconocidas.
+Linea 004 | func main | 3 sentencia(s) en su bloque
+Linea 014 | func faltaValor | 1 sentencia(s) en su bloque
+Linea 019 | func ifSinCondicion | 1 sentencia(s) en su bloque
+Linea 026 | func faltaParentesis | 1 sentencia(s) en su bloque
+Linea 031 | func faltaLlaveArreglo | 1 sentencia(s) en su bloque
+Linea 036 | func reasignacionIncompleta | 2 sentencia(s) en su bloque
+Linea 042 | func elseSuelto | 3 sentencia(s) en su bloque
+
+declaraciones cortas (:=)          | 4
+impresiones (fmt.Println)          | 2
+if                                 | 1
+
+ERRORES SINTACTICOS
+------------------------------------------------------------
+Linea 015 | Token: salto de línea
+    Error sintáctico en la línea 15. Se encontró el token salto de línea. Falta el valor a la derecha de :=
+    Codigo: total :=
+Linea 020 | Token: {
+    Error sintáctico en la línea 20. Se encontró el token {. El if necesita una condición antes de {
+    Codigo: if {
+Linea 027 | Token: salto de línea
+    Error sintáctico en la línea 27. Se encontró el token salto de línea. Falta cerrar un paréntesis )
+    Codigo: fmt.Println("Hola Mundo"
+Linea 032 | Token: salto de línea
+    Error sintáctico en la línea 32. Se encontró el token salto de línea. Falta cerrar el literal con }
+    Codigo: primos := [3]int{2, 3, 5
+Linea 038 | Token: salto de línea
+    Error sintáctico en la línea 38. Se encontró el token salto de línea. Falta el valor a la derecha de =
+    Codigo: contador =
+Linea 047 | Token: else
+    Error sintáctico en la línea 47. Se encontró el token else. El else debe ir en la misma línea que la llave de cierre. Ejemplo: } else {
+    Codigo: else {
+Linea 055 | Token: fin del archivo
+    Error sintáctico en la línea 55. Se encontró el fin del archivo y se esperaba }. Falta cerrar un bloque abierto con {
+    Codigo: // FIN aporte: ANDRADE (errores sintácticos)
+
+Total de errores sintacticos: 7
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 156
+Errores lexicos           | 0
+Errores sintacticos       | 7
+Fase sintactica ejecutada | Si
