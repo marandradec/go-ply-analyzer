@@ -1,0 +1,449 @@
+ANALISIS LEXICO Y SINTACTICO - usuario Git: TheFearLess
+Archivo: algoritmo2.go
+Fecha: 08-11-2026 21:56:32
+
+FASE 1. ANALISIS LEXICO
+============================================================
+TOKENS RECONOCIDOS
+------------------------------------------------------------
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | IMPORT               | 'import'
+Linea 003 | CADENA               | '"fmt"'
+Linea 003 | NEWLINE              | \n
+Linea 008 | NEWLINE              | \n
+Linea 010 | NEWLINE              | \n
+Linea 011 | FUNC                 | 'func'
+Linea 011 | ID                   | 'sumar'
+Linea 011 | PAREN_IZQ            | '('
+Linea 011 | ID                   | 'a'
+Linea 011 | T_INT                | 'int'
+Linea 011 | COMA                 | ','
+Linea 011 | ID                   | 'b'
+Linea 011 | T_INT                | 'int'
+Linea 011 | PAREN_DER            | ')'
+Linea 011 | T_INT                | 'int'
+Linea 011 | LLAVE_IZQ            | '{'
+Linea 011 | NEWLINE              | \n
+Linea 012 | RETURN               | 'return'
+Linea 012 | ID                   | 'a'
+Linea 012 | PLUS                 | '+'
+Linea 012 | ID                   | 'b'
+Linea 012 | NEWLINE              | \n
+Linea 013 | LLAVE_DER            | '}'
+Linea 013 | NEWLINE              | \n
+Linea 015 | FUNC                 | 'func'
+Linea 015 | ID                   | 'promedio'
+Linea 015 | PAREN_IZQ            | '('
+Linea 015 | ID                   | 'a'
+Linea 015 | T_FLOAT64            | 'float64'
+Linea 015 | COMA                 | ','
+Linea 015 | ID                   | 'b'
+Linea 015 | T_FLOAT64            | 'float64'
+Linea 015 | PAREN_DER            | ')'
+Linea 015 | T_FLOAT64            | 'float64'
+Linea 015 | LLAVE_IZQ            | '{'
+Linea 015 | NEWLINE              | \n
+Linea 016 | RETURN               | 'return'
+Linea 016 | PAREN_IZQ            | '('
+Linea 016 | ID                   | 'a'
+Linea 016 | PLUS                 | '+'
+Linea 016 | ID                   | 'b'
+Linea 016 | PAREN_DER            | ')'
+Linea 016 | DIVIDE               | '/'
+Linea 016 | FLOAT_LITERAL        | 2.0
+Linea 016 | NEWLINE              | \n
+Linea 017 | LLAVE_DER            | '}'
+Linea 017 | NEWLINE              | \n
+Linea 019 | FUNC                 | 'func'
+Linea 019 | ID                   | 'main'
+Linea 019 | PAREN_IZQ            | '('
+Linea 019 | PAREN_DER            | ')'
+Linea 019 | LLAVE_IZQ            | '{'
+Linea 019 | NEWLINE              | \n
+Linea 020 | NEWLINE              | \n
+Linea 021 | CONST                | 'const'
+Linea 021 | ID                   | 'MAX'
+Linea 021 | T_INT                | 'int'
+Linea 021 | ASIGNACION           | '='
+Linea 021 | ENTERO               | 100
+Linea 021 | NEWLINE              | \n
+Linea 022 | CONST                | 'const'
+Linea 022 | ID                   | 'PI'
+Linea 022 | T_FLOAT64            | 'float64'
+Linea 022 | ASIGNACION           | '='
+Linea 022 | FLOAT_LITERAL        | 3.14
+Linea 022 | NEWLINE              | \n
+Linea 023 | VAR                  | 'var'
+Linea 023 | ID                   | 'total'
+Linea 023 | T_INT                | 'int'
+Linea 023 | ASIGNACION           | '='
+Linea 023 | ENTERO               | 0
+Linea 023 | NEWLINE              | \n
+Linea 024 | VAR                  | 'var'
+Linea 024 | ID                   | 'precio'
+Linea 024 | T_FLOAT64            | 'float64'
+Linea 024 | ASIGNACION           | '='
+Linea 024 | FLOAT_LITERAL        | 20.5
+Linea 024 | NEWLINE              | \n
+Linea 025 | VAR                  | 'var'
+Linea 025 | ID                   | 'resto'
+Linea 025 | T_INT                | 'int'
+Linea 025 | NEWLINE              | \n
+Linea 027 | NEWLINE              | \n
+Linea 028 | ID                   | 'producto'
+Linea 028 | DECLARACION_CORTA    | ':='
+Linea 028 | ENTERO               | 6
+Linea 028 | TIMES                | '*'
+Linea 028 | ENTERO               | 7
+Linea 028 | NEWLINE              | \n
+Linea 029 | ID                   | 'cociente'
+Linea 029 | DECLARACION_CORTA    | ':='
+Linea 029 | ID                   | 'producto'
+Linea 029 | DIVIDE               | '/'
+Linea 029 | ENTERO               | 2
+Linea 029 | NEWLINE              | \n
+Linea 030 | ID                   | 'resto'
+Linea 030 | ASIGNACION           | '='
+Linea 030 | ENTERO               | 17
+Linea 030 | MODULO               | '%'
+Linea 030 | ENTERO               | 5
+Linea 030 | NEWLINE              | \n
+Linea 031 | ID                   | 'diferencia'
+Linea 031 | DECLARACION_CORTA    | ':='
+Linea 031 | ID                   | 'cociente'
+Linea 031 | MINUS                | '-'
+Linea 031 | ID                   | 'resto'
+Linea 031 | NEWLINE              | \n
+Linea 032 | ID                   | 'area'
+Linea 032 | DECLARACION_CORTA    | ':='
+Linea 032 | ID                   | 'PI'
+Linea 032 | TIMES                | '*'
+Linea 032 | ID                   | 'precio'
+Linea 032 | TIMES                | '*'
+Linea 032 | ID                   | 'precio'
+Linea 032 | NEWLINE              | \n
+Linea 034 | NEWLINE              | \n
+Linea 035 | ID                   | 'igual'
+Linea 035 | DECLARACION_CORTA    | ':='
+Linea 035 | ID                   | 'total'
+Linea 035 | EQ                   | '=='
+Linea 035 | ENTERO               | 0
+Linea 035 | NEWLINE              | \n
+Linea 036 | ID                   | 'distinto'
+Linea 036 | DECLARACION_CORTA    | ':='
+Linea 036 | ID                   | 'total'
+Linea 036 | NEQ                  | '!='
+Linea 036 | ID                   | 'MAX'
+Linea 036 | NEWLINE              | \n
+Linea 037 | ID                   | 'menor'
+Linea 037 | DECLARACION_CORTA    | ':='
+Linea 037 | ID                   | 'total'
+Linea 037 | LT                   | '<'
+Linea 037 | ID                   | 'MAX'
+Linea 037 | NEWLINE              | \n
+Linea 038 | ID                   | 'menorIgual'
+Linea 038 | DECLARACION_CORTA    | ':='
+Linea 038 | ID                   | 'total'
+Linea 038 | LE                   | '<='
+Linea 038 | ID                   | 'MAX'
+Linea 038 | NEWLINE              | \n
+Linea 039 | ID                   | 'mayor'
+Linea 039 | DECLARACION_CORTA    | ':='
+Linea 039 | ID                   | 'precio'
+Linea 039 | GT                   | '>'
+Linea 039 | FLOAT_LITERAL        | 10.5
+Linea 039 | NEWLINE              | \n
+Linea 040 | ID                   | 'mayorIgual'
+Linea 040 | DECLARACION_CORTA    | ':='
+Linea 040 | ID                   | 'precio'
+Linea 040 | GE                   | '>='
+Linea 040 | FLOAT_LITERAL        | 20.5
+Linea 040 | NEWLINE              | \n
+Linea 042 | NEWLINE              | \n
+Linea 043 | FOR                  | 'for'
+Linea 043 | ID                   | 'i'
+Linea 043 | DECLARACION_CORTA    | ':='
+Linea 043 | ENTERO               | 0
+Linea 043 | SEMICOLON            | ';'
+Linea 043 | ID                   | 'i'
+Linea 043 | LT                   | '<'
+Linea 043 | ENTERO               | 10
+Linea 043 | SEMICOLON            | ';'
+Linea 043 | ID                   | 'i'
+Linea 043 | INCREMENT            | '++'
+Linea 043 | LLAVE_IZQ            | '{'
+Linea 043 | NEWLINE              | \n
+Linea 044 | IF                   | 'if'
+Linea 044 | ID                   | 'i'
+Linea 044 | EQ                   | '=='
+Linea 044 | ENTERO               | 7
+Linea 044 | LLAVE_IZQ            | '{'
+Linea 044 | NEWLINE              | \n
+Linea 045 | BREAK                | 'break'
+Linea 045 | NEWLINE              | \n
+Linea 046 | LLAVE_DER            | '}'
+Linea 046 | NEWLINE              | \n
+Linea 047 | ID                   | 'total'
+Linea 047 | ASIGNACION           | '='
+Linea 047 | ID                   | 'total'
+Linea 047 | PLUS                 | '+'
+Linea 047 | ID                   | 'i'
+Linea 047 | NEWLINE              | \n
+Linea 048 | LLAVE_DER            | '}'
+Linea 048 | NEWLINE              | \n
+Linea 050 | NEWLINE              | \n
+Linea 051 | FOR                  | 'for'
+Linea 051 | ID                   | 'total'
+Linea 051 | LT                   | '<'
+Linea 051 | ENTERO               | 100
+Linea 051 | LLAVE_IZQ            | '{'
+Linea 051 | NEWLINE              | \n
+Linea 052 | ID                   | 'total'
+Linea 052 | ASIGNACION           | '='
+Linea 052 | ID                   | 'total'
+Linea 052 | PLUS                 | '+'
+Linea 052 | ENTERO               | 5
+Linea 052 | NEWLINE              | \n
+Linea 053 | LLAVE_DER            | '}'
+Linea 053 | NEWLINE              | \n
+Linea 055 | NEWLINE              | \n
+Linea 056 | VAR                  | 'var'
+Linea 056 | ID                   | 'tablero'
+Linea 056 | MATRIZ               | '[2][2]int'
+Linea 056 | NEWLINE              | \n
+Linea 057 | ID                   | 'tablero'
+Linea 057 | CORCHETE_IZQ         | '['
+Linea 057 | ENTERO               | 0
+Linea 057 | CORCHETE_DER         | ']'
+Linea 057 | CORCHETE_IZQ         | '['
+Linea 057 | ENTERO               | 0
+Linea 057 | CORCHETE_DER         | ']'
+Linea 057 | ASIGNACION           | '='
+Linea 057 | ENTERO               | 1
+Linea 057 | NEWLINE              | \n
+Linea 058 | ID                   | 'matriz'
+Linea 058 | DECLARACION_CORTA    | ':='
+Linea 058 | MATRIZ               | '[2][2]int'
+Linea 058 | LLAVE_IZQ            | '{'
+Linea 058 | LLAVE_IZQ            | '{'
+Linea 058 | ENTERO               | 1
+Linea 058 | COMA                 | ','
+Linea 058 | ENTERO               | 2
+Linea 058 | LLAVE_DER            | '}'
+Linea 058 | COMA                 | ','
+Linea 058 | LLAVE_IZQ            | '{'
+Linea 058 | ENTERO               | 3
+Linea 058 | COMA                 | ','
+Linea 058 | ENTERO               | 4
+Linea 058 | LLAVE_DER            | '}'
+Linea 058 | LLAVE_DER            | '}'
+Linea 058 | NEWLINE              | \n
+Linea 060 | NEWLINE              | \n
+Linea 061 | NEWLINE              | \n
+Linea 062 | NEWLINE              | \n
+Linea 063 | ID                   | 'mixto'
+Linea 063 | DECLARACION_CORTA    | ':='
+Linea 063 | ID                   | 'producto'
+Linea 063 | TIMES                | '*'
+Linea 063 | ENTERO               | 2
+Linea 063 | DIVIDE               | '/'
+Linea 063 | ENTERO               | 4
+Linea 063 | MODULO               | '%'
+Linea 063 | ENTERO               | 3
+Linea 063 | NEWLINE              | \n
+Linea 064 | ID                   | 'suma'
+Linea 064 | DECLARACION_CORTA    | ':='
+Linea 064 | ID                   | 'sumar'
+Linea 064 | PAREN_IZQ            | '('
+Linea 064 | ENTERO               | 2
+Linea 064 | COMA                 | ','
+Linea 064 | ENTERO               | 3
+Linea 064 | PAREN_DER            | ')'
+Linea 064 | NEWLINE              | \n
+Linea 065 | VAR                  | 'var'
+Linea 065 | ID                   | 'vacio'
+Linea 065 | T_FLOAT64            | 'float64'
+Linea 065 | NEWLINE              | \n
+Linea 066 | FOR                  | 'for'
+Linea 066 | ID                   | 'j'
+Linea 066 | DECLARACION_CORTA    | ':='
+Linea 066 | ENTERO               | 0
+Linea 066 | SEMICOLON            | ';'
+Linea 066 | ID                   | 'j'
+Linea 066 | LT                   | '<'
+Linea 066 | ENTERO               | 3
+Linea 066 | SEMICOLON            | ';'
+Linea 066 | ID                   | 'j'
+Linea 066 | INCREMENT            | '++'
+Linea 066 | LLAVE_IZQ            | '{'
+Linea 066 | NEWLINE              | \n
+Linea 067 | ID                   | 'suma'
+Linea 067 | ASIGNACION           | '='
+Linea 067 | ID                   | 'suma'
+Linea 067 | PLUS                 | '+'
+Linea 067 | ID                   | 'j'
+Linea 067 | NEWLINE              | \n
+Linea 068 | LLAVE_DER            | '}'
+Linea 068 | NEWLINE              | \n
+Linea 069 | FMT_PRINTLN          | 'fmt.Println'
+Linea 069 | PAREN_IZQ            | '('
+Linea 069 | CADENA               | '"Suma"'
+Linea 069 | COMA                 | ','
+Linea 069 | ID                   | 'suma'
+Linea 069 | COMA                 | ','
+Linea 069 | ID                   | 'mixto'
+Linea 069 | COMA                 | ','
+Linea 069 | ID                   | 'vacio'
+Linea 069 | PAREN_DER            | ')'
+Linea 069 | NEWLINE              | \n
+Linea 070 | NEWLINE              | \n
+Linea 072 | FMT_PRINTLN          | 'fmt.Println'
+Linea 072 | PAREN_IZQ            | '('
+Linea 072 | ID                   | 'igual'
+Linea 072 | COMA                 | ','
+Linea 072 | ID                   | 'distinto'
+Linea 072 | COMA                 | ','
+Linea 072 | ID                   | 'menor'
+Linea 072 | COMA                 | ','
+Linea 072 | ID                   | 'menorIgual'
+Linea 072 | COMA                 | ','
+Linea 072 | ID                   | 'mayor'
+Linea 072 | COMA                 | ','
+Linea 072 | ID                   | 'mayorIgual'
+Linea 072 | PAREN_DER            | ')'
+Linea 072 | NEWLINE              | \n
+Linea 073 | FMT_PRINTLN          | 'fmt.Println'
+Linea 073 | PAREN_IZQ            | '('
+Linea 073 | ID                   | 'sumar'
+Linea 073 | PAREN_IZQ            | '('
+Linea 073 | ID                   | 'total'
+Linea 073 | COMA                 | ','
+Linea 073 | ID                   | 'resto'
+Linea 073 | PAREN_DER            | ')'
+Linea 073 | COMA                 | ','
+Linea 073 | ID                   | 'promedio'
+Linea 073 | PAREN_IZQ            | '('
+Linea 073 | ID                   | 'precio'
+Linea 073 | COMA                 | ','
+Linea 073 | FLOAT_LITERAL        | 3.5
+Linea 073 | PAREN_DER            | ')'
+Linea 073 | PAREN_DER            | ')'
+Linea 073 | NEWLINE              | \n
+Linea 074 | FMT_PRINTLN          | 'fmt.Println'
+Linea 074 | PAREN_IZQ            | '('
+Linea 074 | ID                   | 'MAX'
+Linea 074 | COMA                 | ','
+Linea 074 | ID                   | 'diferencia'
+Linea 074 | COMA                 | ','
+Linea 074 | ID                   | 'area'
+Linea 074 | COMA                 | ','
+Linea 074 | ID                   | 'tablero'
+Linea 074 | CORCHETE_IZQ         | '['
+Linea 074 | ENTERO               | 0
+Linea 074 | CORCHETE_DER         | ']'
+Linea 074 | CORCHETE_IZQ         | '['
+Linea 074 | ENTERO               | 0
+Linea 074 | CORCHETE_DER         | ']'
+Linea 074 | COMA                 | ','
+Linea 074 | ID                   | 'matriz'
+Linea 074 | CORCHETE_IZQ         | '['
+Linea 074 | ENTERO               | 1
+Linea 074 | CORCHETE_DER         | ']'
+Linea 074 | CORCHETE_IZQ         | '['
+Linea 074 | ENTERO               | 1
+Linea 074 | CORCHETE_DER         | ']'
+Linea 074 | PAREN_DER            | ')'
+Linea 074 | NEWLINE              | \n
+Linea 075 | LLAVE_DER            | '}'
+Linea 075 | NEWLINE              | \n
+
+Total de tokens: 352
+
+RESUMEN POR TIPO DE TOKEN
+------------------------------------------------------------
+ASIGNACION           | 9
+BREAK                | 1
+CADENA               | 2
+COMA                 | 21
+CONST                | 2
+CORCHETE_DER         | 6
+CORCHETE_IZQ         | 6
+DECLARACION_CORTA    | 15
+DIVIDE               | 3
+ENTERO               | 31
+EQ                   | 2
+FLOAT_LITERAL        | 6
+FMT_PRINTLN          | 4
+FOR                  | 3
+FUNC                 | 3
+GE                   | 1
+GT                   | 1
+ID                   | 86
+IF                   | 1
+IMPORT               | 1
+INCREMENT            | 2
+LE                   | 1
+LLAVE_DER            | 10
+LLAVE_IZQ            | 10
+LT                   | 4
+MATRIZ               | 2
+MINUS                | 1
+MODULO               | 2
+NEQ                  | 1
+NEWLINE              | 60
+PACKAGE              | 1
+PAREN_DER            | 11
+PAREN_IZQ            | 11
+PLUS                 | 5
+RETURN               | 2
+SEMICOLON            | 4
+TIMES                | 4
+T_FLOAT64            | 6
+T_INT                | 6
+VAR                  | 5
+
+ERRORES LEXICOS
+------------------------------------------------------------
+No se encontraron errores lexicos.
+
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
+Linea 011 | func sumar | 1 sentencia(s) en su bloque
+Linea 015 | func promedio | 1 sentencia(s) en su bloque
+Linea 019 | func main | 29 sentencia(s) en su bloque
+
+declaraciones cortas (:=)          | 15
+asignaciones                       | 5
+incrementos y decrementos          | 2
+declaraciones var                  | 5
+declaraciones const                | 2
+impresiones (fmt.Println)          | 4
+return                             | 2
+break                              | 1
+if                                 | 1
+for                                | 3
+
+ERRORES SINTACTICOS
+------------------------------------------------------------
+No se encontraron errores sintacticos.
+
+Total de errores sintacticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 352
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Fase sintactica ejecutada | Si

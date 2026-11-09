@@ -1,0 +1,219 @@
+ANALISIS LEXICO Y SINTACTICO - usuario Git: TheFearLess
+Archivo: errores_burgos.go
+Fecha: 08-11-2026 21:50:42
+
+FASE 1. ANALISIS LEXICO
+============================================================
+TOKENS RECONOCIDOS
+------------------------------------------------------------
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 002 | IMPORT               | 'import'
+Linea 002 | CADENA               | '"fmt"'
+Linea 002 | NEWLINE              | \n
+Linea 003 | NEWLINE              | \n
+Linea 004 | FUNC                 | 'func'
+Linea 004 | ID                   | 'main'
+Linea 004 | PAREN_IZQ            | '('
+Linea 004 | PAREN_DER            | ')'
+Linea 004 | LLAVE_IZQ            | '{'
+Linea 004 | NEWLINE              | \n
+Linea 005 | ID                   | 'a'
+Linea 005 | DECLARACION_CORTA    | ':='
+Linea 005 | ENTERO               | 12
+Linea 005 | NEWLINE              | \n
+Linea 006 | ID                   | 'b'
+Linea 006 | DECLARACION_CORTA    | ':='
+Linea 006 | FLOAT_LITERAL        | 3.0
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'c'
+Linea 007 | DECLARACION_CORTA    | ':='
+Linea 007 | FLOAT_LITERAL        | 3.14
+Linea 007 | NEWLINE              | \n
+Linea 008 | FMT_PRINTLN          | 'fmt.Println'
+Linea 008 | PAREN_IZQ            | '('
+Linea 008 | ID                   | 'a'
+Linea 008 | COMA                 | ','
+Linea 008 | ID                   | 'b'
+Linea 008 | COMA                 | ','
+Linea 008 | ID                   | 'c'
+Linea 008 | PAREN_DER            | ')'
+Linea 008 | NEWLINE              | \n
+Linea 009 | LLAVE_DER            | '}'
+Linea 009 | NEWLINE              | \n
+Linea 011 | NEWLINE              | \n
+Linea 012 | NEWLINE              | \n
+Linea 014 | NEWLINE              | \n
+Linea 015 | FUNC                 | 'func'
+Linea 015 | ID                   | 'varSinTipo'
+Linea 015 | PAREN_IZQ            | '('
+Linea 015 | PAREN_DER            | ')'
+Linea 015 | LLAVE_IZQ            | '{'
+Linea 015 | NEWLINE              | \n
+Linea 016 | VAR                  | 'var'
+Linea 016 | ID                   | 'edad'
+Linea 016 | ASIGNACION           | '='
+Linea 016 | ENTERO               | 20
+Linea 016 | NEWLINE              | \n
+Linea 017 | LLAVE_DER            | '}'
+Linea 017 | NEWLINE              | \n
+Linea 019 | NEWLINE              | \n
+Linea 020 | FUNC                 | 'func'
+Linea 020 | ID                   | 'forIncompleto'
+Linea 020 | PAREN_IZQ            | '('
+Linea 020 | PAREN_DER            | ')'
+Linea 020 | LLAVE_IZQ            | '{'
+Linea 020 | NEWLINE              | \n
+Linea 021 | FOR                  | 'for'
+Linea 021 | ID                   | 'i'
+Linea 021 | DECLARACION_CORTA    | ':='
+Linea 021 | ENTERO               | 0
+Linea 021 | SEMICOLON            | ';'
+Linea 021 | ID                   | 'i'
+Linea 021 | LT                   | '<'
+Linea 021 | ENTERO               | 10
+Linea 021 | LLAVE_IZQ            | '{'
+Linea 021 | NEWLINE              | \n
+Linea 022 | FMT_PRINTLN          | 'fmt.Println'
+Linea 022 | PAREN_IZQ            | '('
+Linea 022 | ID                   | 'i'
+Linea 022 | PAREN_DER            | ')'
+Linea 022 | NEWLINE              | \n
+Linea 023 | LLAVE_DER            | '}'
+Linea 023 | NEWLINE              | \n
+Linea 024 | LLAVE_DER            | '}'
+Linea 024 | NEWLINE              | \n
+Linea 026 | NEWLINE              | \n
+Linea 027 | FUNC                 | 'func'
+Linea 027 | ID                   | 'faltaOperando'
+Linea 027 | PAREN_IZQ            | '('
+Linea 027 | PAREN_DER            | ')'
+Linea 027 | LLAVE_IZQ            | '{'
+Linea 027 | NEWLINE              | \n
+Linea 028 | ID                   | 'total'
+Linea 028 | DECLARACION_CORTA    | ':='
+Linea 028 | ENTERO               | 4
+Linea 028 | TIMES                | '*'
+Linea 028 | NEWLINE              | \n
+Linea 029 | LLAVE_DER            | '}'
+Linea 029 | NEWLINE              | \n
+Linea 031 | NEWLINE              | \n
+Linea 032 | FUNC                 | 'func'
+Linea 032 | ID                   | 'faltaArgumento'
+Linea 032 | PAREN_IZQ            | '('
+Linea 032 | PAREN_DER            | ')'
+Linea 032 | LLAVE_IZQ            | '{'
+Linea 032 | NEWLINE              | \n
+Linea 033 | ID                   | 'resultado'
+Linea 033 | DECLARACION_CORTA    | ':='
+Linea 033 | ID                   | 'sumar'
+Linea 033 | PAREN_IZQ            | '('
+Linea 033 | ENTERO               | 1
+Linea 033 | COMA                 | ','
+Linea 033 | PAREN_DER            | ')'
+Linea 033 | NEWLINE              | \n
+Linea 034 | LLAVE_DER            | '}'
+Linea 034 | NEWLINE              | \n
+Linea 036 | NEWLINE              | \n
+Linea 037 | FUNC                 | 'func'
+Linea 037 | ID                   | 'condicionFor'
+Linea 037 | PAREN_IZQ            | '('
+Linea 037 | PAREN_DER            | ')'
+Linea 037 | LLAVE_IZQ            | '{'
+Linea 037 | NEWLINE              | \n
+Linea 038 | FOR                  | 'for'
+Linea 038 | ID                   | 'total'
+Linea 038 | LT                   | '<'
+Linea 038 | LLAVE_IZQ            | '{'
+Linea 038 | NEWLINE              | \n
+Linea 039 | ID                   | 'total'
+Linea 039 | ASIGNACION           | '='
+Linea 039 | ID                   | 'total'
+Linea 039 | PLUS                 | '+'
+Linea 039 | ENTERO               | 1
+Linea 039 | NEWLINE              | \n
+Linea 040 | LLAVE_DER            | '}'
+Linea 040 | NEWLINE              | \n
+Linea 041 | LLAVE_DER            | '}'
+Linea 041 | NEWLINE              | \n
+
+Total de tokens: 131
+
+RESUMEN POR TIPO DE TOKEN
+------------------------------------------------------------
+ASIGNACION           | 2
+CADENA               | 1
+COMA                 | 3
+DECLARACION_CORTA    | 6
+ENTERO               | 7
+FLOAT_LITERAL        | 2
+FMT_PRINTLN          | 2
+FOR                  | 2
+FUNC                 | 6
+ID                   | 23
+IMPORT               | 1
+LLAVE_DER            | 8
+LLAVE_IZQ            | 8
+LT                   | 2
+NEWLINE              | 35
+PACKAGE              | 1
+PAREN_DER            | 9
+PAREN_IZQ            | 9
+PLUS                 | 1
+SEMICOLON            | 1
+TIMES                | 1
+VAR                  | 1
+
+ERRORES LEXICOS
+------------------------------------------------------------
+No se encontraron errores lexicos.
+
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 5 ERROR(ES) SINTACTICO(S)
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
+Linea 004 | func main | 4 sentencia(s) en su bloque
+Linea 015 | func varSinTipo | 1 sentencia(s) en su bloque
+Linea 020 | func forIncompleto | 1 sentencia(s) en su bloque
+Linea 027 | func faltaOperando | 1 sentencia(s) en su bloque
+Linea 032 | func faltaArgumento | 1 sentencia(s) en su bloque
+Linea 037 | func condicionFor | 1 sentencia(s) en su bloque
+
+declaraciones cortas (:=)          | 4
+impresiones (fmt.Println)          | 1
+
+ERRORES SINTACTICOS
+------------------------------------------------------------
+Linea 016 | Token: =
+    Error sintáctico en la línea 16. Se encontró el token =. La declaración con var exige un tipo explícito. Ejemplo: var edad int = 20
+    Codigo: var edad = 20
+Linea 021 | Token: {
+    Error sintáctico en la línea 21. Se encontró el token {. El for con contador exige tres partes separadas por ;. Ejemplo: for i := 0; i < 10; i++ {
+    Codigo: for i := 0; i < 10 {
+Linea 028 | Token: salto de línea
+    Error sintáctico en la línea 28. Se encontró el token salto de línea. Falta el operando a la derecha del operador *
+    Codigo: total := 4 *
+Linea 033 | Token: )
+    Error sintáctico en la línea 33. Se encontró el token ). Falta un elemento después de la coma
+    Codigo: resultado := sumar(1, )
+Linea 038 | Token: {
+    Error sintáctico en la línea 38. Se encontró el token {. Falta el operando a la derecha del operador <
+    Codigo: for total < {
+
+Total de errores sintacticos: 5
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 131
+Errores lexicos           | 0
+Errores sintacticos       | 5
+Fase sintactica ejecutada | Si
