@@ -1,6 +1,6 @@
 ANALISIS LEXICO Y SINTACTICO - usuario Git: marandradec
-Archivo: algoritmos/algoritmo1.go
-Fecha: 07-11-2026 00:52:37
+Archivo: algoritmo1.go
+Fecha: 08-11-2026 21:23:16
 
 FASE 1. ANALISIS LEXICO
 ============================================================
@@ -258,7 +258,10 @@ Resultado: ANALISIS SINTACTICO CORRECTO
 
 ESTRUCTURA RECONOCIDA (aciertos)
 ------------------------------------------------------------
-Programa: package y import fmt reconocidos
+
+ESTRUCTURA RECONOCIDA (aciertos)
+------------------------------------------------------------
+Programa: package y estructura de import reconocidos
 Linea 007 | func saludar | 1 sentencia(s) en su bloque
 Linea 011 | func main | 19 sentencia(s) en su bloque
 
@@ -279,3 +282,4 @@ RESUMEN FINAL
 Tokens reconocidos        | 206
 Errores lexicos           | 0
 Errores sintacticos       | 0
+Fase sintactica ejecutada | Si

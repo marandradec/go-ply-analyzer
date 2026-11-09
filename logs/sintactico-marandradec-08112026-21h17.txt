@@ -1,6 +1,6 @@
 ANALISIS LEXICO Y SINTACTICO - usuario Git: marandradec
 Archivo: errores_andrade.go
-Fecha: 07-11-2026 23:56:16
+Fecha: 08-11-2026 21:17:37
 
 FASE 1. ANALISIS LEXICO
 ============================================================
@@ -194,53 +194,21 @@ Total de errores lexicos: 2
 
 FASE 2. ANALISIS SINTACTICO
 ============================================================
-Resultado: SE ENCONTRARON 7 ERROR(ES) SINTACTICO(S)
-Nota: el archivo tiene errores lexicos; los errores sintacticos de esas mismas lineas se omiten (2 omitido(s)).
+Resultado: NO EJECUTADO
+Motivo: Existen errores léxicos en el código fuente.
 
 ESTRUCTURA RECONOCIDA (aciertos)
 ------------------------------------------------------------
-Programa: package y import fmt reconocidos
-Arbol incompleto: solo se listan las funciones completas anteriores al error grave.
-Linea 004 | func main | 3 sentencia(s) en su bloque
-Linea 014 | func faltaValor | 1 sentencia(s) en su bloque
-Linea 019 | func ifSinCondicion | 1 sentencia(s) en su bloque
-Linea 026 | func faltaParentesis | 1 sentencia(s) en su bloque
-Linea 031 | func faltaLlaveArreglo | 1 sentencia(s) en su bloque
-Linea 036 | func reasignacionIncompleta | 2 sentencia(s) en su bloque
-Linea 042 | func elseSuelto | 3 sentencia(s) en su bloque
-
-declaraciones cortas (:=)          | 2
-impresiones (fmt.Println)          | 2
-if                                 | 1
 
 ERRORES SINTACTICOS
 ------------------------------------------------------------
-Linea 015 | Token: salto de línea
-    Error sintáctico en la línea 15. Se encontró el token salto de línea. Falta el valor a la derecha de :=
-    Codigo: total :=
-Linea 020 | Token: {
-    Error sintáctico en la línea 20. Se encontró el token {. El if necesita una condición antes de {
-    Codigo: if {
-Linea 027 | Token: salto de línea
-    Error sintáctico en la línea 27. Se encontró el token salto de línea. Falta cerrar un paréntesis )
-    Codigo: fmt.Println("Hola Mundo"
-Linea 032 | Token: salto de línea
-    Error sintáctico en la línea 32. Se encontró el token salto de línea. Falta cerrar el literal con }
-    Codigo: primos := [3]int{2, 3, 5
-Linea 038 | Token: salto de línea
-    Error sintáctico en la línea 38. Se encontró el token salto de línea. Falta el valor a la derecha de =
-    Codigo: contador =
-Linea 047 | Token: else
-    Error sintáctico en la línea 47. Se encontró el token else. El else debe ir en la misma línea que la llave de cierre. Ejemplo: } else {
-    Codigo: else {
-Linea 055 | Token: fin del archivo
-    Error sintáctico en la línea 55. Se encontró el fin del archivo y se esperaba }. Falta cerrar un bloque abierto con {
-    Codigo: // FIN aporte: ANDRADE (errores sintácticos)
+No se evaluaron errores sintacticos: el analisis se detuvo en la fase lexica.
 
-Total de errores sintacticos: 7
+Total de errores sintacticos: NO EVALUADOS
 
 RESUMEN FINAL
 ============================================================
 Tokens reconocidos        | 154
 Errores lexicos           | 2
-Errores sintacticos       | 7
+Errores sintacticos       | NO EVALUADOS
+Fase sintactica ejecutada | No
