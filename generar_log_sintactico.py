@@ -35,7 +35,7 @@ CARPETA_ALGORITMOS = RAIZ / "algoritmos"
 USUARIOS_GIT = {
     "algoritmo1": "marandradec", "errores_andrade": "marandradec",   # María Andrade
     "algoritmo2": "TheFearLess", "errores_burgos": "TheFearLess",    # Burgos
-    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE", "errores_sintacticos_mora": "JosMoraE"    # Mora
+    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE"  # Mora
 }
 PATRON_USUARIO_GIT = r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
 
@@ -288,6 +288,21 @@ def _imprimir_resumen(resumen):
     print(f"{'Archivo':20s} {'Tokens':>7s} {'Err.lex':>8s} {'Err.sint':>9s}  Log")
     for nombre, tokens, lex, sint, destino in resumen:
         print(f"{nombre:20s} {tokens:7d} {lex:8d} {sint:9d}  {destino.name}")
+
+def generar_log_prueba_sintactica_mora():
+    """Genera un log sintáctico usando una variante en memoria."""
+    ruta = CARPETA_ALGORITMOS / "errores_mora.go"
+    codigo = ruta.read_text(encoding="utf-8")
+
+    codigo = codigo.replace("valor @ 5", "valor = 5")
+    codigo = codigo.replace("valor # 6", "valor = 6")
+    codigo = codigo.replace("valor $ 7", "valor = 7")
+
+    return guardar_log_sintactico(
+        codigo,
+        "algoritmos/errores_mora.go (variante sintactica)",
+        "JosMoraE"
+    )
 
 # FIN aporte: MORA (logs del análisis sintáctico)
 
