@@ -1,0 +1,19 @@
+============================================================
+REPORTE DE ANÁLISIS SEMÁNTICO - AVANCE 3
+Usuario Git : TheFearLess (Joshua Burgos)
+Fecha/Hora  : 2026-11-15 18:12:38
+Reglas      : Operaciones permitidas | Retorno de funciones
+============================================================
+
+[1] Archivo válido: algoritmos/algoritmo2.go
+Resultado   : 0 errores semánticos encontrados.
+
+[2] Archivo de errores: algoritmos/errores_burgos.go
+Total errores semánticos detectados: 5
+------------------------------------------------------------
+- [Línea 18] (Operaciones permitidas) Error semántico (Operaciones permitidas) en la línea 18. No se puede aplicar el operador '+' entre string y int.
+- [Línea 19] (Operaciones permitidas) Error semántico (Operaciones permitidas) en la línea 19. El operador '%' solo se permite entre operandos de tipo int, pero se recibió float64 y int.
+- [Línea 20] (Operaciones permitidas) Error semántico (Operaciones permitidas) en la línea 20. El operador '++' requiere un operando numérico (int o float64), pero se recibió string.
+- [Línea 24] (Retorno de funciones) Error semántico (Retorno de funciones) en la línea 24. Se esperaba retorno de tipo int en 'f', pero se recibió string.
+- [Línea 27] (Retorno de funciones) Error semántico (Retorno de funciones) en la línea 27. La función 'calcular' declara tipo de retorno float64, pero no incluye ninguna sentencia return.
+============================================================
