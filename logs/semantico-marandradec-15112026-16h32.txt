@@ -1,0 +1,38 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: errores_andrade.go
+Fecha: 15-11-2026 16:32:59
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 154
+Error léxico en la línea 5. Cadena sin cerrar "Hola Mundo
+Error léxico en la línea 7. Cadena sin cerrar "Adios
+Total de errores lexicos: 2
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores léxicos en el código fuente.
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores léxicos en el código fuente.
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Tabla no construida porque el analisis semantico no se ejecuto.
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se evaluaron errores semanticos: el analisis se detuvo en una fase anterior.
+
+Total de errores semanticos: NO EVALUADOS
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 154
+Errores lexicos           | 2
+Errores sintacticos       | NO EVALUADOS
+Errores semanticos        | NO EVALUADOS
+Fase semantica ejecutada  | No

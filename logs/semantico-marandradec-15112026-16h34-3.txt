@@ -1,0 +1,38 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: errores_andrade.go
+Fecha: 15-11-2026 16:34:28
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 164
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 1 ERROR(ES) SINTACTICO(S)
+Linea 054 | Token: fin del archivo
+    Error sintáctico en la línea 54. Se encontró el fin del archivo y se esperaba }. Falta cerrar un bloque abierto con {
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores sintácticos en el código fuente.
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Tabla no construida porque el analisis semantico no se ejecuto.
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se evaluaron errores semanticos: el analisis se detuvo en una fase anterior.
+
+Total de errores semanticos: NO EVALUADOS
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 164
+Errores lexicos           | 0
+Errores sintacticos       | 1
+Errores semanticos        | NO EVALUADOS
+Fase semantica ejecutada  | No
