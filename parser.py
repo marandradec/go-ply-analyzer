@@ -423,7 +423,10 @@ def _error_burgos(p, pila, enc):
         return "Falta un elemento después de la coma"
     if 'FOR' in pila and enc == 'LLAVE_IZQ':
         idx = len(pila) - 1 - pila[::-1].index('FOR')
-        if pila[idx:].count('SEMICOLON') < 2:
+        encabezado = pila[idx:]
+        # Solo si todavía se está en el encabezado del for: si ya se abrió un { después del for,
+        # el error está en otra construcción dentro del cuerpo y no en las partes del for.
+        if 'LLAVE_IZQ' not in encabezado and encabezado.count('SEMICOLON') < 2:
             return "El for con contador exige tres partes separadas por ;. Ejemplo: for i := 0; i < 10; i++ {"
     return None
 # FIN aporte: BURGOS (sintáctico)
@@ -621,13 +624,41 @@ def _error_mora(p, pila, enc):
     if pila[-1] in ('AND', 'OR', 'NOT'):
         simbolo = parser.symstack[-1].value
         return f"Falta el operando a la derecha del operador {simbolo}"
+    # Orden de los chequeos, del contexto más interno al más general: un paréntesis abierto es más
+    # interno que el case que lo contiene, así que va antes (case (1 <- falta ), no falta :).
+    if pila.count('PAREN_IZQ') > pila.count('PAREN_DER') and enc == 'NEWLINE':
+        return "Falta cerrar un paréntesis )"
     if 'CASE' in pila and enc == 'NEWLINE' and 'DOSPUNTOS' not in pila[pila.index('CASE'):]:
         return "Falta : después del valor del case"
     if 'MAPA' in pila and enc in ('ENTERO', 'CADENA', 'ID', 'FLOAT_LITERAL', 'BOOL_LITERAL'):
-        return 'Falta : entre la clave y el valor del mapa. Ejemplo: {"Ana": 20}'
-    if pila.count('PAREN_IZQ') > pila.count('PAREN_DER') and enc == 'NEWLINE':
-        return "Falta cerrar un paréntesis )"
+        return _error_en_mapa(pila)
     return None
+
+
+# Dentro de un literal de mapa se mira el par que se está escribiendo (después de la última coma
+# del mismo nivel): si ya tiene : le falta la coma al siguiente par, y si no lo tiene le falta :.
+# Devuelve None si el error no está dentro de los pares del mapa.
+def _error_en_mapa(pila):
+    resto = pila[len(pila) - 1 - pila[::-1].index('MAPA'):]
+    if 'LLAVE_IZQ' not in resto:
+        return None
+    nivel, hay_par, hay_dospuntos = 0, False, False
+    for t in resto[resto.index('LLAVE_IZQ') + 1:]:
+        if t in ('PAREN_IZQ', 'CORCHETE_IZQ', 'LLAVE_IZQ'):
+            nivel += 1
+        elif t in ('PAREN_DER', 'CORCHETE_DER', 'LLAVE_DER'):
+            nivel -= 1
+        elif nivel == 0 and t == 'COMA':
+            hay_par = hay_dospuntos = False
+            continue
+        elif nivel == 0 and t == 'DOSPUNTOS':
+            hay_dospuntos = True
+        hay_par = True
+    if not hay_par:
+        return None
+    if hay_dospuntos:
+        return 'Falta , entre los pares del mapa. Ejemplo: {"Ana": 20, "Luis": 22}'
+    return 'Falta : entre la clave y el valor del mapa. Ejemplo: {"Ana": 20}'
 # FIN aporte: MORA (sintáctico)
 
 
@@ -763,6 +794,13 @@ def _describir(p):
 def p_error(p):
     pila = [s.type for s in parser.symstack]
     if p is None:
+        parentesis = pila.count('PAREN_IZQ') - pila.count('PAREN_DER')
+        bloques = pila.count('LLAVE_IZQ') - pila.count('LLAVE_DER')
+        if parentesis > 0 and bloques <= 0:      # no hay ningún bloque abierto, falta un )
+            registrar_error(fuente.ultima,
+                            "Se encontró el fin del archivo y se esperaba ). "
+                            "Falta cerrar un paréntesis )", token="fin del archivo")
+            return
         registrar_error(fuente.ultima,
                         "Se encontró el fin del archivo y se esperaba }. "
                         "Falta cerrar un bloque abierto con {", token="fin del archivo")
