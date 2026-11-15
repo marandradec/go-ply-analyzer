@@ -7,7 +7,7 @@ func main() {
 	despedida := "Adios
 }
 
-// INICIO aporte: ANDRADE (errores sintácticos)
+// Errores sintácticos:
 // Cada función contiene un error sintáctico distinto de las reglas de Andrade.
 
 // Error 1: falta el valor a la derecha de :=
@@ -52,4 +52,4 @@ func elseSuelto() {
 // Error 7: falta la llave } que cierra la función (fin de archivo inesperado)
 func sinCierre() {
 	contador := 1
-// FIN aporte: ANDRADE (errores sintácticos)
+	

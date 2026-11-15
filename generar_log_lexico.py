@@ -71,6 +71,37 @@ def ejecutar_prueba(ruta_archivo, autor):
     return 0
 
 
+# Dueño de cada archivo de prueba (nombre del log léxico: lexico-NombreApellido-fecha-hora.txt)
+AUTORES_LEXICO = {
+    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade",
+    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos",
+    "algoritmo3": "JoseMora", "errores_mora": "JoseMora",
+}
+
+
+def generar_logs_de_prueba_lexicos():
+    """Genera el log léxico de los seis archivos de prueba. Devuelve (archivo, tokens, errores, log)."""
+    carpeta = Path(__file__).resolve().parent / "algoritmos"
+    resumen, usados = [], set()
+    for base, autor in AUTORES_LEXICO.items():
+        ruta = carpeta / f"{base}.go"
+        if not ruta.is_file():
+            continue
+        codigo = ruta.read_text(encoding="utf-8")
+        tokens, errores = analizar(codigo)
+        ahora = datetime.now()
+        base_destino = _destino_log(autor, ahora)
+        destino, n = base_destino, 2
+        while destino in usados:          # mismo autor y mismo minuto: no sobrescribir
+            destino = base_destino.with_name(f"{base_destino.stem}-{n}.txt")
+            n += 1
+        usados.add(destino)
+        destino.write_text(construir_log(tokens, errores, f"algoritmos/{base}.go", autor, ahora),
+                           encoding="utf-8")
+        resumen.append((f"{base}.go", len(tokens), len(errores), destino))
+    return resumen
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 3 or not re.fullmatch(r"[A-Za-z]+", sys.argv[2]):
         print("Uso: py generar_log.py archivo.go NombreApellido")

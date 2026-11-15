@@ -1,22 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-generar_log_sintactico.py - Logs del análisis léxico + sintáctico (Avance 2)
-
-No modifica generar_log.py (logs léxicos del Avance 1); lo complementa.
-Cada log registra, para un mismo archivo, las dos fases en orden:
-  FASE 1  análisis léxico   -> tokens, resumen y errores léxicos
-  FASE 2  análisis sintáctico -> resultado, estructura reconocida y errores
-                                 (línea, token, mensaje y código de la línea)
-
-Uso (igual que generar_log.py)
-  py generar_log_sintactico.py archivo.go usuarioGit
-  py generar_log_sintactico.py algoritmos/algoritmo1.go marandradec
-En los seis archivos de prueba el usuarioGit es opcional (se asigna solo).
-Los seis logs a la vez se generan desde la interfaz con el botón Logs de prueba.
-Nombre del log  sintactico-usuarioGit-ddmmaaaa-HHhMM.txt   (ej. sintactico-marandradec-20102026-23h32.txt)
-Si ya existe un log del mismo minuto y del mismo usuario se agrega un sufijo (-2, -3 ...).
-Los logs se guardan en la carpeta logs/.
-"""
 import re
 import sys
 from collections import Counter
@@ -24,23 +6,23 @@ from datetime import datetime
 from pathlib import Path
 
 import parser as parser_go
-from generar_log import CARPETA_LOGS, _valor
+from generar_log_lexico import CARPETA_LOGS, _valor
 from lexer import analizar
 
-# INICIO aporte: MORA (logs del análisis sintáctico)
 RAIZ = Path(__file__).resolve().parent
 CARPETA_ALGORITMOS = RAIZ / "algoritmos"
 
 # Usuario de Git responsable de cada archivo de prueba (se usa para nombrar el log)
 USUARIOS_GIT = {
-    "algoritmo1": "marandradec", "errores_andrade": "marandradec",   # María Andrade
-    "algoritmo2": "TheFearLess", "errores_burgos": "TheFearLess",    # Burgos
-    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE"  # Mora
+    "algoritmo1": "marandradec", "errores_andrade": "marandradec", "errores_semantico_andrade": "marandradec",  # Andrade
+    "algoritmo2": "TheFearLess", "errores_burgos": "TheFearLess", "errores_semantico_burgos": "TheFearLess",    # Burgos
+    "algoritmo3": "JosMoraE", "errores_mora": "JosMoraE", "errores_semantico_mora": "JosMoraE"  # Mora
 }
 PATRON_USUARIO_GIT = r"[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?"
 
 # Archivos de prueba del Avance 2 (en el orden en que se generan los logs)
-ARCHIVOS_PRUEBA = [(f"{base}.go", usuario) for base, usuario in USUARIOS_GIT.items()]
+ARCHIVOS_PRUEBA = [(f"{base}.go", usuario) for base, usuario in USUARIOS_GIT.items()
+                   if not base.startswith("errores_semantico_")]
 
 
 def usuario_git_de(archivo):
@@ -303,8 +285,6 @@ def generar_log_prueba_sintactica_mora():
         "algoritmos/errores_mora.go (variante sintactica)",
         "JosMoraE"
     )
-
-# FIN aporte: MORA (logs del análisis sintáctico)
 
 
 if __name__ == "__main__":

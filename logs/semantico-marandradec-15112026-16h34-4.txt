@@ -1,0 +1,55 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: errores_andrade.go
+Fecha: 15-11-2026 16:34:39
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 165
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: SE ENCONTRARON 1 ERROR(ES) SEMANTICO(S)
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | main                 | función    | ()                 | no    | 004
+global               | faltaValor           | función    | ()                 | no    | 014
+global               | ifSinCondicion       | función    | ()                 | no    | 019
+global               | faltaParentesis      | función    | ()                 | no    | 026
+global               | faltaLlaveArreglo    | función    | ()                 | no    | 031
+global               | reasignacionIncompleta | función    | ()                 | no    | 036
+global               | elseSuelto           | función    | ()                 | no    | 042
+global               | sinCierre            | función    | ()                 | no    | 052
+main                 | saludo               | variable   | string             | no    | 005
+main                 | despedida            | variable   | string             | no    | 007
+faltaValor           | total                | variable   | int                | no    | 015
+faltaLlaveArreglo    | primos               | variable   | [3]int             | no    | 032
+reasignacionIncompleta | contador             | variable   | int                | no    | 037
+elseSuelto           | edad                 | variable   | int                | no    | 043
+sinCierre            | contador             | variable   | int                | no    | 053
+Total de simbolos: 15
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+Linea 020 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 20. La variable total no fue declarada
+    Codigo: if (total> 5){
+
+Total de errores semanticos: 1
+  Identificadores            | 1
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 165
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 1
+Fase semantica ejecutada  | Si

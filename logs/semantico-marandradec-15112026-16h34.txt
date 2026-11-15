@@ -1,0 +1,42 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: errores_andrade.go
+Fecha: 15-11-2026 16:34:08
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 164
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 3 ERROR(ES) SINTACTICO(S)
+Linea 038 | Token: salto de línea
+    Error sintáctico en la línea 38. Se encontró el token salto de línea. Falta el valor a la derecha de =
+Linea 047 | Token: else
+    Error sintáctico en la línea 47. Se encontró el token else. El else debe ir en la misma línea que la llave de cierre. Ejemplo: } else {
+Linea 055 | Token: fin del archivo
+    Error sintáctico en la línea 55. Se encontró el fin del archivo y se esperaba }. Falta cerrar un bloque abierto con {
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores sintácticos en el código fuente.
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Tabla no construida porque el analisis semantico no se ejecuto.
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se evaluaron errores semanticos: el analisis se detuvo en una fase anterior.
+
+Total de errores semanticos: NO EVALUADOS
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 164
+Errores lexicos           | 0
+Errores sintacticos       | 3
+Errores semanticos        | NO EVALUADOS
+Fase semantica ejecutada  | No

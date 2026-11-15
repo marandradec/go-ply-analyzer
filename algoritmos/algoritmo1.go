@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-// INICIO lexico
+// Prueba léxica
 // Función sin parámetros ni valor de retorno
 func saludar() {
 	fmt.Println("Hola Mundo")
@@ -45,7 +45,7 @@ func main() {
 	fmt.Println(resta, esIgual, esDistinto)
 	// FIN lexico
 
-	// INICIO sintáctico
+	// Prueba sintáctica
 	// Suma y resta encadenadas, acceso a arreglo dentro de una expresión
 	calculo := edad + contador - 1
 	primero := notas[0] + primos[1]
@@ -58,6 +58,20 @@ func main() {
 		fmt.Println("bajo")
 	}
 	fmt.Println(primero)
-	// FIN sintáctico
+	saludar()
+
+	// Prueba semántica
+	// Ámbitos: visitas y edad se declaran dentro de contarVisitas sin chocar con main
+	contarVisitas()
+}
+
+// Tabla de símbolos con un ámbito por función. El mismo nombre puede declararse en
+// funciones distintas sin que sea una redeclaración, y una función puede llamarse
+// aunque esté declarada más abajo.
+func contarVisitas() {
+	var edad int = 30
+	visitas := 1
+	visitas = visitas + edad
+	fmt.Println(visitas)
 	saludar()
 }

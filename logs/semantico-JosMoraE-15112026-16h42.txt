@@ -1,0 +1,55 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: JosMoraE
+Archivo: algoritmo3.go
+Fecha: 15-11-2026 16:42:52
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 308
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: ANALISIS SEMANTICO CORRECTO
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | mostrarResultado     | función    | (int, bool)        | no    | 005
+global               | main                 | función    | ()                 | no    | 010
+mostrarResultado     | numero               | parámetro  | int                | no    | 005
+mostrarResultado     | activo               | parámetro  | bool               | no    | 005
+main                 | LIMITE               | constante  | int                | sí    | 012
+main                 | activo               | variable   | bool               | no    | 015
+main                 | bloqueado            | variable   | bool               | no    | 016
+main                 | permitido            | variable   | bool               | no    | 019
+main                 | disponible           | variable   | bool               | no    | 020
+main                 | edades               | variable   | map[string]int     | no    | 023
+main                 | contador             | variable   | int                | no    | 027
+main                 | opuesto              | variable   | int                | no    | 034
+main                 | negativo             | variable   | int                | no    | 035
+main                 | doble                | variable   | int                | no    | 036
+main                 | ajustado             | variable   | int                | no    | 037
+main                 | numero               | variable   | int                | no    | 050
+main                 | valido               | variable   | bool               | no    | 069
+main                 | coincide             | variable   | bool               | no    | 070
+Total de simbolos: 18
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se encontraron errores semanticos.
+
+Total de errores semanticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 308
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 0
+Fase semantica ejecutada  | Si

@@ -1,0 +1,39 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: TheFearLess
+Archivo: errores_burgos.go
+Fecha: 15-11-2026 16:42:48
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 128
+Error léxico en la línea 5. Número mal formado 12abc
+Error léxico en la línea 6. Número mal formado 3.
+Error léxico en la línea 7. Número mal formado 3.14xyz
+Total de errores lexicos: 3
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores léxicos en el código fuente.
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores léxicos en el código fuente.
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Tabla no construida porque el analisis semantico no se ejecuto.
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se evaluaron errores semanticos: el analisis se detuvo en una fase anterior.
+
+Total de errores semanticos: NO EVALUADOS
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 128
+Errores lexicos           | 3
+Errores sintacticos       | NO EVALUADOS
+Errores semanticos        | NO EVALUADOS
+Fase semantica ejecutada  | No

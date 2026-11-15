@@ -1,0 +1,82 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: errores_semantico_andrade.go
+Fecha: 15-11-2026 17:03:26
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 214
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: SE ENCONTRARON 9 ERROR(ES) SEMANTICO(S)
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | usoSinDeclarar       | función    | ()                 | no    | 006
+global               | usoEnExpresion       | función    | ()                 | no    | 011
+global               | llamadaSinFuncion    | función    | ()                 | no    | 016
+global               | redeclaracionVar     | función    | ()                 | no    | 021
+global               | redeclaracionCorta   | función    | ()                 | no    | 027
+global               | repetida             | función    | ()                 | no    | 033
+global               | funcionComoVariable  | función    | ()                 | no    | 042
+global               | variableComoFuncion  | función    | ()                 | no    | 047
+global               | fueraDelBloque       | función    | ()                 | no    | 053
+global               | bloquesDistintos     | función    | ()                 | no    | 061
+usoEnExpresion       | total                | variable   | desconocido        | no    | 012
+redeclaracionVar     | x                    | variable   | int                | no    | 022
+redeclaracionCorta   | a                    | variable   | int                | no    | 028
+funcionComoVariable  | resultado            | variable   | desconocido        | no    | 043
+variableComoFuncion  | contador             | variable   | int                | no    | 048
+fueraDelBloque       | interna              | variable   | int                | no    | 055
+bloquesDistintos     | i                    | variable   | int                | no    | 062
+bloquesDistintos     | i                    | variable   | int                | no    | 065
+Total de simbolos: 18
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+Linea 007 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 7. La variable y no fue declarada
+    Codigo: y = 10
+Linea 012 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 12. La variable puntos no fue declarada
+    Codigo: total := puntos + 1
+Linea 017 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 17. La función calcularTotal no fue declarada
+    Codigo: calcularTotal()
+Linea 023 | Categoria: Identificadores | Regla: Duplicidad
+    Error semántico (Identificadores) en la línea 23. El nombre x ya fue declarado en este ámbito (línea 22)
+    Codigo: var x string = "dos"
+Linea 029 | Categoria: Identificadores | Regla: Duplicidad
+    Error semántico (Identificadores) en la línea 29. El nombre a ya fue declarado en este ámbito (línea 28)
+    Codigo: a := 2
+Linea 037 | Categoria: Identificadores | Regla: Duplicidad
+    Error semántico (Identificadores) en la línea 37. La función repetida ya fue declarada (línea 33)
+    Codigo: func repetida() {
+Linea 043 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 43. usoSinDeclarar es una función y no puede usarse como variable
+    Codigo: resultado := usoSinDeclarar
+Linea 049 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 49. contador es una variable y no puede llamarse como función
+    Codigo: contador()
+Linea 057 | Categoria: Identificadores | Regla: Inexistencia
+    Error semántico (Identificadores) en la línea 57. La variable interna no fue declarada
+    Codigo: interna = 2
+
+Total de errores semanticos: 9
+  Identificadores            | 9
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 214
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 9
+Fase semantica ejecutada  | Si

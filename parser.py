@@ -3,15 +3,10 @@
 ANALIZADOR SINTÁCTICO (Avance 2) - subconjunto de Go con PLY (yacc)
 
 REGLAS DE ESTRUCTURA
-- El léxico NO se modifica: se importan los tokens y el lexer de lexer.py.
-- Cada aporte está delimitado con INICIO / FIN por integrante.
-- Los no terminales compartidos (tipo, tipo_var, factor, llamada, funcion...) se
-  completan con una producción por integrante, cada una en su propia función.
 - Los errores se reportan con el formato:
   "Error sintáctico en la línea N. Se encontró el token X y se esperaba Y"
   o con un mensaje personalizado cuando se reconoce un error típico.
 - Un error léxico en una línea suprime los errores sintácticos de esa misma línea
-  (son consecuencia de que el token inválido se descarta).
 """
 
 import sys

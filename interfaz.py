@@ -18,19 +18,21 @@ except ImportError:  # sin ttkbootstrap la aplicación sigue funcionando con Tk 
     tb = None
 
 from consola import ConsolaInteractiva, SimuladorEjecucion
-from generar_log import guardar_log
+from generar_log_lexico import guardar_log, generar_logs_de_prueba_lexicos
 from generar_log_sintactico import (USUARIOS_GIT, analizar_completo, generar_logs_de_prueba,
                                     guardar_log_sintactico, usuario_git_valido)
 from lexer import analizar
+from generar_log_semantico import generar_logs_de_prueba_semanticos, guardar_log_semantico
+from semantic import analizar_completo_semantico
 
 FUENTE_CODIGO = ("Consolas", 11)
 TEXTO_CONFIRMACION_LOGS = "Se ejecutarán todos los archivos de prueba, ¿está seguro/a?"
 
 # Autor de cada archivo de prueba, para nombrar el log sin preguntar
 AUTORES = {
-    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade",
-    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos",
-    "algoritmo3": "JoseMora", "errores_mora": "JoseMora",
+    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade", "errores_semantico_andrade": "MariaAndrade",
+    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos", "errores_semantico_burgos": "JoshuaBurgos",
+    "algoritmo3": "JoseMora", "errores_mora": "JoseMora", "errores_semantico_mora": "JoseMora",
 }
 
 
@@ -185,13 +187,14 @@ class Aplicacion(tb.Window if tb else tk.Tk):
                                      activebackground="#475569", activeforeground="#ffffff",
                                      relief="flat", padx=14, pady=8, cursor="hand2")
 
-        self.btn_analizar.pack(side="left", padx=(0, 10))
-
-        # Avance 2: botones del análisis sintáctico, simulación y logs de prueba
+        # Avance 2 y 3: se crean los botones sintácticos y semánticos (sin empaquetar todavía)
         self._crear_botones_sintacticos(barra)
+        self._crear_botones_semanticos(barra)
 
-        # Limpiar va siempre al final de la barra, después de Logs de prueba
-        self.btn_limpiar.pack(side="left", padx=(0, 10))
+        # Orden de la barra: analizadores por fase, simulación, logs por fase y Limpiar al final
+        for boton in (self.btn_analizar, self.btn_sintaxis, self.btn_semantico, self.btn_simular,
+                      self.btn_logs_lex, self.btn_logs, self.btn_logs_sem, self.btn_limpiar):
+            boton.pack(side="left", padx=(0, 10))
 
     def _crear_cuerpo(self):
         cuerpo = tk.Frame(self, bg="#0f172a", padx=12, pady=4)
@@ -237,6 +240,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         self._crear_panel_tokens(cuerpo)    # Burgos
         self._crear_panel_mensajes(cuerpo)    # Mora
         self._crear_panel_sintactico(cuerpo)  # Avance 2: log sintáctico y consola
+        self._crear_pestanas_semanticas()     # Avance 3: log semántico y tabla de símbolos
 
     def _cargar_lista_algoritmos(self):
         carpeta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), "algoritmos")
@@ -271,6 +275,7 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         self.vaciar_mensajes()        # Mora
         self.vaciar_log_sintactico()  # Avance 2
         self.consola.limpiar()        # Avance 2
+        self.vaciar_semantico()       # Avance 3
         self.ruta_actual = None
         self.codigo_analizado = None
         self.estado.set("Estado: listo")
@@ -393,8 +398,10 @@ class Aplicacion(tb.Window if tb else tk.Tk):
                                           command=self.ejecutar_analisis_sintactico)
             self.btn_simular = tb.Button(barra, text="⌨ Simular ejecución", bootstyle="success",
                                          command=self.simular_ejecucion)
-            self.btn_logs = tb.Button(barra, text="📄 Logs de prueba", bootstyle="info-outline",
+            self.btn_logs = tb.Button(barra, text="📄 Logs sintáctico", bootstyle="info-outline",
                                       command=self.generar_logs_prueba)
+            self.btn_logs_lex = tb.Button(barra, text="📄 Logs léxico", bootstyle="info-outline",
+                                          command=self.generar_logs_prueba_lexicos)
         else:
             estilo = {"font": ("Segoe UI", 10, "bold"), "fg": "#ffffff", "relief": "flat",
                       "padx": 14, "pady": 8, "cursor": "hand2"}
@@ -402,10 +409,10 @@ class Aplicacion(tb.Window if tb else tk.Tk):
                                           command=self.ejecutar_analisis_sintactico, **estilo)
             self.btn_simular = tk.Button(barra, text="⌨ Simular ejecución", bg="#16a34a",
                                          command=self.simular_ejecucion, **estilo)
-            self.btn_logs = tk.Button(barra, text="📄 Logs de prueba", bg="#0e7490",
+            self.btn_logs = tk.Button(barra, text="📄 Logs sintáctico", bg="#0e7490",
                                       command=self.generar_logs_prueba, **estilo)
-        for boton in (self.btn_sintaxis, self.btn_simular, self.btn_logs):
-            boton.pack(side="left", padx=(0, 10))
+            self.btn_logs_lex = tk.Button(barra, text="📄 Logs léxico", bg="#0e7490",
+                                          command=self.generar_logs_prueba_lexicos, **estilo)
 
     def _crear_panel_sintactico(self, cuerpo):
         """Panel inferior con dos pestañas: log sintáctico y consola interactiva."""
@@ -452,6 +459,19 @@ class Aplicacion(tb.Window if tb else tk.Tk):
             return dialogo.result == "Sí"
         return messagebox.askyesno("Confirmar ejecución", TEXTO_CONFIRMACION_LOGS,
                                    icon="warning", parent=self)
+
+    def generar_logs_prueba_lexicos(self):
+        if not self._confirmar_logs_prueba():
+            return
+        resumen = generar_logs_de_prueba_lexicos()
+        self.texto_mensajes.config(state="normal")
+        self.texto_mensajes.delete("1.0", "end")
+        self.texto_mensajes.insert("end", "LOGS DE PRUEBA (solo léxico)\n")
+        for nombre, tokens, errores, destino in resumen:
+            self.texto_mensajes.insert(
+                "end", f"{nombre:20s} tokens {tokens:4d} · errores léxicos {errores} · {destino.name}\n")
+        self.texto_mensajes.config(state="disabled")
+        self.estado.set(f"Estado: {len(resumen)} logs léxicos generados en la carpeta logs")
 
     def generar_logs_prueba(self):
         # Si el usuario responde No, se cancela la operación por completo
@@ -698,6 +718,179 @@ class Aplicacion(tb.Window if tb else tk.Tk):
         SimuladorEjecucion(self.consola, al_terminar=lambda: self.btn_simular.config(state="normal")
                            ).iniciar(resultado["funciones"])
     # ===== FIN aporte: MORA (Avance 2, log sintáctico por usuario de Git y simulación de ejecución) =====
+
+    # ===== INICIO aporte: ANDRADE (Avance 3, botones y pestañas del análisis semántico) =====
+    def _crear_botones_semanticos(self, barra):
+        if tb:
+            self.btn_semantico = tb.Button(barra, text="🧠 Analizar Semántica", bootstyle="primary-outline",
+                                           command=self.ejecutar_analisis_semantico)
+            self.btn_logs_sem = tb.Button(barra, text="📋 Logs semántico", bootstyle="secondary-outline",
+                                          command=self.generar_logs_prueba_semanticos)
+        else:
+            estilo = {"font": ("Segoe UI", 10, "bold"), "fg": "#ffffff", "relief": "flat",
+                      "padx": 14, "pady": 8, "cursor": "hand2"}
+            self.btn_semantico = tk.Button(barra, text="🧠 Analizar Semántica", bg="#7c3aed",
+                                           command=self.ejecutar_analisis_semantico, **estilo)
+            self.btn_logs_sem = tk.Button(barra, text="📋 Logs semántico", bg="#4c1d95",
+                                          command=self.generar_logs_prueba_semanticos, **estilo)
+
+    def _crear_pestanas_semanticas(self):
+        """Agrega al panel inferior la pestaña del log semántico y la de la tabla de símbolos."""
+        marco_log = tk.Frame(self.pestanas, bg="#1e293b", padx=6, pady=6)
+        marco_log.rowconfigure(0, weight=1)
+        marco_log.columnconfigure(0, weight=1)
+        self.texto_semantico = tk.Text(marco_log, height=8, wrap="word", state="disabled",
+                                       background="#0f172a", foreground="#f8fafc",
+                                       font=FUENTE_CODIGO, padx=8, pady=4,
+                                       borderwidth=0, highlightthickness=0)
+        # Azul para los errores semánticos, como en el prototipo de la interfaz
+        for etiqueta, color in (("titulo", "#93c5fd"), ("ok", "#4ade80"), ("lexico", "#f87171"),
+                                ("sintactico", "#facc15"), ("semantico", "#60a5fa"), ("detalle", "#94a3b8")):
+            self.texto_semantico.tag_configure(etiqueta, foreground=color)
+        self.texto_semantico.tag_configure("titulo", font=("Consolas", 11, "bold"))
+        barra = ttk.Scrollbar(marco_log, orient="vertical", command=self.texto_semantico.yview)
+        self.texto_semantico.configure(yscrollcommand=barra.set)
+        self.texto_semantico.grid(row=0, column=0, sticky="nsew")
+        barra.grid(row=0, column=1, sticky="ns")
+        self.pestanas.add(marco_log, text="  Log semántico  ")
+        self._pestana_semantica = marco_log
+
+        marco_tabla = tk.Frame(self.pestanas, bg="#1e293b", padx=6, pady=6)
+        marco_tabla.rowconfigure(0, weight=1)
+        marco_tabla.columnconfigure(0, weight=1)
+        columnas = ("Ámbito", "Nombre", "Clase", "Tipo", "Constante", "Línea")
+        self.tabla_simbolos = ttk.Treeview(marco_tabla, columns=columnas, show="headings", height=6)
+        for columna, ancho in zip(columnas, (110, 140, 90, 160, 80, 60)):
+            self.tabla_simbolos.heading(columna, text=columna)
+            self.tabla_simbolos.column(columna, width=ancho, anchor="w")
+        barra_tabla = ttk.Scrollbar(marco_tabla, orient="vertical", command=self.tabla_simbolos.yview)
+        self.tabla_simbolos.configure(yscrollcommand=barra_tabla.set)
+        self.tabla_simbolos.grid(row=0, column=0, sticky="nsew")
+        barra_tabla.grid(row=0, column=1, sticky="ns")
+        self.pestanas.add(marco_tabla, text="  Tabla de símbolos  ")
+
+    def vaciar_semantico(self):
+        self.texto_semantico.config(state="normal")
+        self.texto_semantico.delete("1.0", "end")
+        self.texto_semantico.config(state="disabled")
+        for item in self.tabla_simbolos.get_children():
+            self.tabla_simbolos.delete(item)
+    # ===== FIN aporte: ANDRADE (Avance 3, botones y pestañas del análisis semántico) =====
+
+    # ===== INICIO aporte: BURGOS (Avance 3, ejecución y visualización del análisis semántico) =====
+    def _escribir_semantico(self, texto, etiqueta=None):
+        self.texto_semantico.insert("end", texto + "\n", etiqueta)
+
+    def ejecutar_analisis_semantico(self):
+        codigo = self.editor.obtener_codigo()
+        if not codigo.strip():
+            messagebox.showwarning("Advertencia", "El editor de código está vacío.")
+            return
+
+        resultado = analizar_completo_semantico(codigo)
+        self.codigo_analizado = codigo
+        self.ultimo_resultado = resultado
+
+        # La tabla de tokens y el panel de mensajes se mantienen al día con la fase léxica
+        self.vaciar_tokens()
+        for tipo, valor, linea in resultado["tokens"]:
+            self.tabla_tokens.insert("", "end", values=(tipo, valor, f"Línea {linea}"))
+        self.mostrar_mensajes(resultado["errores_lexicos"])
+
+        self.mostrar_log_semantico(resultado, codigo)
+        self.mostrar_tabla_simbolos(resultado)
+        self.pestanas.select(self._pestana_semantica)
+
+        if not resultado["semantico_ejecutado"]:
+            estado = "Análisis semántico NO EJECUTADO. " + resultado["motivo"]
+        elif resultado["errores_semanticos"]:
+            estado = f"Análisis semántico finalizado: {len(resultado['errores_semanticos'])} error(es) semántico(s)"
+        else:
+            estado = "Análisis semántico correcto"
+        self.estado.set(f"Estado: {estado} · {len(resultado['tokens'])} tokens")
+
+        self.guardar_log_semantico()
+
+    def mostrar_log_semantico(self, resultado, codigo):
+        lineas_codigo = codigo.splitlines()   # el código original, la numeración de líneas se conserva
+        err_lex = resultado["errores_lexicos"]
+        err_sin = resultado["errores_sintacticos"]
+        err_sem = resultado["errores_semanticos"]
+
+        self.vaciar_semantico()
+        self.texto_semantico.config(state="normal")
+        self._escribir_semantico("FASE 1 · ANÁLISIS LÉXICO", "titulo")
+        if err_lex:
+            for error in err_lex:
+                self._escribir_semantico("✘ " + error["mensaje"], "lexico")
+        else:
+            self._escribir_semantico(f"✔ Sin errores léxicos ({len(resultado['tokens'])} tokens).", "ok")
+
+        self._escribir_semantico("\nFASE 2 · ANÁLISIS SINTÁCTICO", "titulo")
+        if err_lex:
+            self._escribir_semantico("NO EJECUTADO, existen errores léxicos.", "detalle")
+        elif err_sin:
+            for error in err_sin:
+                self._escribir_semantico("✘ " + error["mensaje"], "sintactico")
+        elif resultado["arbol"] is None:
+            self._escribir_semantico("INCOMPLETO, el parser no pudo construir un árbol completo.", "sintactico")
+        else:
+            self._escribir_semantico("✔ Análisis sintáctico correcto.", "ok")
+
+        self._escribir_semantico("\nFASE 3 · ANÁLISIS SEMÁNTICO", "titulo")
+        if not resultado["semantico_ejecutado"]:
+            self._escribir_semantico("NO EJECUTADO. " + resultado["motivo"], "detalle")
+        elif err_sem:
+            self._escribir_semantico(f"✘ Se encontraron {len(err_sem)} error(es) semántico(s).", "semantico")
+            for error in err_sem:
+                self._escribir_semantico(f"✘ Línea {error['linea']} · {error['categoria']} · {error['regla']}",
+                                         "semantico")
+                self._escribir_semantico("    " + error["mensaje"], "semantico")
+                if 1 <= error["linea"] <= len(lineas_codigo):
+                    self._escribir_semantico("    código: " + lineas_codigo[error["linea"] - 1].strip(), "detalle")
+        else:
+            self._escribir_semantico("✔ Análisis semántico correcto.", "ok")
+        self.texto_semantico.config(state="disabled")
+
+    def mostrar_tabla_simbolos(self, resultado):
+        for item in self.tabla_simbolos.get_children():
+            self.tabla_simbolos.delete(item)
+        for fila in resultado["tabla"]:
+            self.tabla_simbolos.insert("", "end", values=fila)
+    # ===== FIN aporte: BURGOS (Avance 3, ejecución y visualización del análisis semántico) =====
+
+    # ===== INICIO aporte: MORA (Avance 3, log semántico por usuario de Git y logs de prueba) =====
+    def guardar_log_semantico(self):
+        if self.codigo_analizado is None:
+            return
+        archivo = os.path.basename(self.ruta_actual) if self.ruta_actual else "editor"
+        usuario = self._obtener_usuario_git(archivo)
+        if not usuario:
+            return
+        destino, _ = guardar_log_semantico(self.codigo_analizado, archivo, usuario)
+        self.estado.set(f"{self.estado.get().split(' · log ')[0]} · log {destino.name}")
+
+    def generar_logs_prueba_semanticos(self):
+        # Si el usuario responde No, se cancela la operación por completo
+        if not self._confirmar_logs_prueba():
+            return
+        resumen = generar_logs_de_prueba_semanticos()
+        self.vaciar_semantico()
+        self.texto_semantico.config(state="normal")
+        self._escribir_semantico("LOGS DE PRUEBA (léxico + sintáctico + semántico)", "titulo")
+        for nombre, tokens, lex, sint, sem, destino in resumen:
+            if sem is None:
+                estado_semantico = "NO EJECUTADO"
+            else:
+                estado_semantico = f"{sem} error(es)"
+            etiqueta = "ok" if not (lex or sint or sem) else "semantico"
+            self._escribir_semantico(
+                f"{nombre:20s} léxicos {lex} · sintácticos {sint} · semántico: {estado_semantico} · {destino.name}",
+                etiqueta)
+        self.texto_semantico.config(state="disabled")
+        self.pestanas.select(self._pestana_semantica)
+        self.estado.set(f"Estado: {len(resumen)} logs semánticos generados en la carpeta logs")
+    # ===== FIN aporte: MORA (Avance 3, log semántico por usuario de Git y logs de prueba) =====
 
 
 if __name__ == "__main__":
