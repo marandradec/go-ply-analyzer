@@ -1,6 +1,6 @@
 ANALISIS LEXICO Y SINTACTICO - usuario Git: JosMoraE
 Archivo: errores_mora.go
-Fecha: 08-11-2026 19:39:41
+Fecha: 15-11-2026 13:20:08
 
 FASE 1. ANALISIS LEXICO
 ============================================================
