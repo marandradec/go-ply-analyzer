@@ -57,7 +57,7 @@ func main() {
 	tablero[0][0] = 1
 	matriz := [2][2]int{{1, 2}, {3, 4}}
 
-		// Sintáctico
+	// Sintáctico
 	// Operaciones * / % encadenadas, llamada con retorno en una declaración,
 	// var sin valor inicial y for con contador distinto (j)
 	mixto := producto * 2 / 4 % 3
