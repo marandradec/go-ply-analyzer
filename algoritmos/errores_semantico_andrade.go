@@ -66,3 +66,33 @@ func bloquesDistintos() {
 		fmt.Println(i)
 	}
 }
+
+// Correcto: el identificador en blanco descarta valores y puede repetirse
+func identificadorEnBlanco() {
+	x := 1
+	_ = x
+	var _ int = 1
+	var _ int = 2
+}
+
+// Inexistencia: una variable local tapa a la funcion y luego se llama como funcion
+func variableTapaFuncion() {
+	repetida := 1
+	repetida()
+}
+
+// Inexistencia: el identificador _ no se puede usar como valor
+func blancoComoValor() {
+	y := _
+}
+
+// Duplicidad: _ := no declara ningun nombre nuevo
+func blancoCortoSinNombres() {
+	_ := 1
+}
+
+// Asignacion estricta: una constante solo admite valores constantes
+func constanteNoConstante() {
+	base := 5
+	const LIMITE int = base
+}
