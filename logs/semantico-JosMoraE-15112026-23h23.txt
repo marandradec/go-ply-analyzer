@@ -1,0 +1,74 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: JosMoraE
+Archivo: algoritmo3.go
+Fecha: 15-11-2026 23:23:01
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 681
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: ANALISIS SEMANTICO CORRECTO
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | mostrarResultado     | función    | (int, bool)        | no    | 005
+global               | describir            | función    | (string, int, bool) | no    | 012
+global               | main                 | función    | ()                 | no    | 017
+mostrarResultado     | numero               | parámetro  | int                | no    | 005
+mostrarResultado     | activo               | parámetro  | bool               | no    | 005
+describir            | nombre               | parámetro  | string             | no    | 012
+describir            | cupos                | parámetro  | int                | no    | 012
+describir            | vigente              | parámetro  | bool               | no    | 012
+main                 | LIMITE               | constante  | int                | sí    | 019
+main                 | activo               | variable   | bool               | no    | 022
+main                 | bloqueado            | variable   | bool               | no    | 023
+main                 | permitido            | variable   | bool               | no    | 026
+main                 | disponible           | variable   | bool               | no    | 027
+main                 | edades               | variable   | map[string]int     | no    | 030
+main                 | contador             | variable   | int                | no    | 034
+main                 | opuesto              | variable   | int                | no    | 041
+main                 | negativo             | variable   | int                | no    | 042
+main                 | doble                | variable   | int                | no    | 043
+main                 | ajustado             | variable   | int                | no    | 044
+main                 | numero               | variable   | int                | no    | 057
+main                 | valido               | variable   | bool               | no    | 076
+main                 | coincide             | variable   | bool               | no    | 077
+main                 | ETIQUETA             | constante  | string             | sí    | 089
+main                 | ESTRICTO             | constante  | bool               | sí    | 090
+main                 | intentos             | variable   | int                | no    | 091
+main                 | nota                 | variable   | float64            | no    | 092
+main                 | mensaje              | variable   | string             | no    | 093
+main                 | habilitado           | variable   | bool               | no    | 094
+main                 | cupo                 | variable   | int                | no    | 095
+main                 | notas                | variable   | [3]int             | no    | 102
+main                 | pesos                | variable   | [2]float64         | no    | 104
+main                 | resumen              | variable   | [3]string          | no    | 106
+main                 | precios              | variable   | map[string]float64 | no    | 107
+main                 | inventario           | variable   | map[string]int     | no    | 109
+main                 | intento              | variable   | int                | no    | 118
+main                 | saldo                | variable   | int                | no    | 125
+main                 | ronda                | variable   | int                | no    | 135
+Total de simbolos: 37
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se encontraron errores semanticos.
+
+Total de errores semanticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 681
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 0
+Fase semantica ejecutada  | Si
