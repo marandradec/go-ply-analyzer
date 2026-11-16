@@ -1,0 +1,105 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: TheFearLess
+Archivo: algoritmo2.go
+Fecha: 15-11-2026 23:20:42
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 723
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: ANALISIS SEMANTICO CORRECTO
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | sumar                | función    | (int, int) int     | no    | 012
+global               | promedio             | función    | (float64, float64) float64 | no    | 016
+global               | nombreCompleto       | función    | (string, string) string | no    | 023
+global               | esPar                | función    | (int) bool         | no    | 027
+global               | mayorDe              | función    | (int, int) int     | no    | 031
+global               | areaTriangulo        | función    | (float64, float64) float64 | no    | 038
+global               | avisar               | función    | (int, int)         | no    | 043
+global               | main                 | función    | ()                 | no    | 051
+sumar                | a                    | parámetro  | int                | no    | 012
+sumar                | b                    | parámetro  | int                | no    | 012
+promedio             | a                    | parámetro  | float64            | no    | 016
+promedio             | b                    | parámetro  | float64            | no    | 016
+nombreCompleto       | nombre               | parámetro  | string             | no    | 023
+nombreCompleto       | apellido             | parámetro  | string             | no    | 023
+esPar                | numero               | parámetro  | int                | no    | 027
+mayorDe              | a                    | parámetro  | int                | no    | 031
+mayorDe              | b                    | parámetro  | int                | no    | 031
+areaTriangulo        | base                 | parámetro  | float64            | no    | 038
+areaTriangulo        | altura               | parámetro  | float64            | no    | 038
+avisar               | limite               | parámetro  | int                | no    | 043
+avisar               | valor                | parámetro  | int                | no    | 043
+main                 | MAX                  | constante  | int                | sí    | 053
+main                 | PI                   | constante  | float64            | sí    | 054
+main                 | total                | variable   | int                | no    | 055
+main                 | precio               | variable   | float64            | no    | 056
+main                 | resto                | variable   | int                | no    | 057
+main                 | producto             | variable   | int                | no    | 060
+main                 | cociente             | variable   | int                | no    | 061
+main                 | diferencia           | variable   | int                | no    | 063
+main                 | area                 | variable   | float64            | no    | 064
+main                 | igual                | variable   | bool               | no    | 067
+main                 | distinto             | variable   | bool               | no    | 068
+main                 | menor                | variable   | bool               | no    | 069
+main                 | menorIgual           | variable   | bool               | no    | 070
+main                 | mayor                | variable   | bool               | no    | 071
+main                 | mayorIgual           | variable   | bool               | no    | 072
+main                 | i                    | variable   | int                | no    | 075
+main                 | tablero              | variable   | [2][2]int          | no    | 088
+main                 | matriz               | variable   | [2][2]int          | no    | 090
+main                 | mixto                | variable   | int                | no    | 095
+main                 | suma                 | variable   | int                | no    | 096
+main                 | vacio                | variable   | float64            | no    | 097
+main                 | j                    | variable   | int                | no    | 098
+main                 | unidades             | variable   | int                | no    | 110
+main                 | lotes                | variable   | int                | no    | 111
+main                 | totalUnidades        | variable   | int                | no    | 112
+main                 | sobrante             | variable   | int                | no    | 113
+main                 | peso                 | variable   | float64            | no    | 114
+main                 | factor               | variable   | float64            | no    | 115
+main                 | pesoTotal            | variable   | float64            | no    | 116
+main                 | pesoMedio            | variable   | float64            | no    | 117
+main                 | negado               | variable   | float64            | no    | 118
+main                 | bonoMax              | variable   | int                | no    | 119
+main                 | mitadPI              | variable   | float64            | no    | 120
+main                 | saludo               | variable   | string             | no    | 126
+main                 | completo             | variable   | string             | no    | 128
+main                 | etiqueta             | variable   | string             | no    | 129
+main                 | mismoTexto           | variable   | bool               | no    | 132
+main                 | antes                | variable   | bool               | no    | 133
+main                 | pesado               | variable   | bool               | no    | 134
+main                 | enRango              | variable   | bool               | no    | 135
+main                 | fueraDeRango         | variable   | bool               | no    | 136
+main                 | pos                  | variable   | int                | no    | 139
+main                 | elemento             | variable   | int                | no    | 140
+main                 | mayorValor           | variable   | int                | no    | 144
+main                 | paridad              | variable   | bool               | no    | 145
+main                 | areaTri              | variable   | float64            | no    | 146
+main                 | sumaMayor            | variable   | int                | no    | 147
+Total de simbolos: 68
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se encontraron errores semanticos.
+
+Total de errores semanticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 723
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 0
+Fase semantica ejecutada  | Si

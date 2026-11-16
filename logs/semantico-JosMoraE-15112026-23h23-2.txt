@@ -1,0 +1,133 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: JosMoraE
+Archivo: errores_semantico_mora.go
+Fecha: 15-11-2026 23:23:10
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 499
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: SE ENCONTRARON 18 ERROR(ES) SEMANTICO(S)
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | varTipoDistinto      | función    | ()                 | no    | 006
+global               | flotanteEnEntero     | función    | ()                 | no    | 011
+global               | constanteTipoDistinto | función    | ()                 | no    | 016
+global               | reasignacionTipo     | función    | ()                 | no    | 021
+global               | modificarConstante   | función    | ()                 | no    | 027
+global               | compuestaEnConstante | función    | ()                 | no    | 033
+global               | incrementoEnConstante | función    | ()                 | no    | 039
+global               | lecturaEnConstante   | función    | ()                 | no    | 045
+global               | mostrar              | función    | (int, int)         | no    | 050
+global               | argumentoTipoDistinto | función    | ()                 | no    | 055
+global               | cantidadDeArgumentos | función    | ()                 | no    | 060
+global               | literalArregloTipo   | función    | ()                 | no    | 065
+global               | literalArregloExceso | función    | ()                 | no    | 070
+global               | literalMapaTipo      | función    | ()                 | no    | 075
+global               | breakSuelto          | función    | ()                 | no    | 080
+global               | breakEnIf            | función    | ()                 | no    | 085
+global               | condicionEntera      | función    | ()                 | no    | 093
+global               | caseTipoDistinto     | función    | ()                 | no    | 101
+global               | caseRepetido         | función    | ()                 | no    | 112
+global               | usoValido            | función    | ()                 | no    | 125
+varTipoDistinto      | x                    | variable   | int                | no    | 007
+flotanteEnEntero     | y                    | variable   | int                | no    | 012
+constanteTipoDistinto | LIMITE               | constante  | int                | sí    | 017
+reasignacionTipo     | edad                 | variable   | int                | no    | 022
+modificarConstante   | MAX                  | constante  | int                | sí    | 028
+compuestaEnConstante | BASE                 | constante  | int                | sí    | 034
+incrementoEnConstante | N                    | constante  | int                | sí    | 040
+lecturaEnConstante   | K                    | constante  | int                | sí    | 046
+mostrar              | a                    | parámetro  | int                | no    | 050
+mostrar              | b                    | parámetro  | int                | no    | 050
+literalArregloTipo   | notas                | variable   | [3]int             | no    | 066
+literalArregloExceso | pares                | variable   | [2]int             | no    | 071
+literalMapaTipo      | edades               | variable   | map[string]int     | no    | 076
+breakEnIf            | x                    | variable   | int                | no    | 086
+condicionEntera      | x                    | variable   | int                | no    | 094
+caseTipoDistinto     | n                    | variable   | int                | no    | 102
+caseRepetido         | n                    | variable   | int                | no    | 113
+usoValido            | TOPE                 | constante  | int                | sí    | 126
+usoValido            | total                | variable   | int                | no    | 127
+usoValido            | edades               | variable   | map[string]int     | no    | 129
+usoValido            | i                    | variable   | int                | no    | 130
+Total de simbolos: 41
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+Linea 007 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 7. No se puede asignar un valor string a la variable x de tipo int
+    Codigo: var x int = "hola"
+Linea 012 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 12. No se puede asignar un valor float64 a la variable y de tipo int
+    Codigo: var y int = 3.5
+Linea 017 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 17. No se puede asignar un valor string a la constante LIMITE de tipo int
+    Codigo: const LIMITE int = "diez"
+Linea 023 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 23. No se puede asignar un valor string a la variable edad de tipo int
+    Codigo: edad = "veinte"
+Linea 029 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 29. La constante MAX no puede modificarse
+    Codigo: MAX = 5
+Linea 035 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 35. La constante BASE no puede modificarse
+    Codigo: BASE += 2
+Linea 041 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 41. La constante N no puede modificarse
+    Codigo: N++
+Linea 047 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 47. La constante K no puede modificarse
+    Codigo: fmt.Scanln(&K)
+Linea 056 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 56. El argumento 1 de la llamada a mostrar debe ser int (parámetro a) y se encontró string
+    Codigo: mostrar("hola", 2)
+Linea 061 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 61. La función mostrar espera 2 argumento(s) y se recibieron 1
+    Codigo: mostrar(1)
+Linea 066 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 66. No se puede asignar un valor string a un elemento del literal de tipo int
+    Codigo: notas := [3]int{1, "dos", 3}
+Linea 071 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 71. El literal [2]int admite 2 elemento(s) por fila y se escribieron 3
+    Codigo: pares := [2]int{2, 4, 6}
+Linea 076 | Categoria: Asignación de tipo | Regla: Asignación estricta
+    Error semántico (Asignación de tipo) en la línea 76. No se puede asignar un valor string a un valor del mapa de tipo int
+    Codigo: edades := map[string]int{"ana": "veinte"}
+Linea 081 | Categoria: Estructuras de control | Regla: Control con sentido lógico
+    Error semántico (Estructuras de control) en la línea 81. El break solo puede usarse dentro de un for o un switch
+    Codigo: break
+Linea 088 | Categoria: Estructuras de control | Regla: Control con sentido lógico
+    Error semántico (Estructuras de control) en la línea 88. El break solo puede usarse dentro de un for o un switch
+    Codigo: break
+Linea 095 | Categoria: Estructuras de control | Regla: Control con sentido lógico
+    Error semántico (Estructuras de control) en la línea 95. La condición del if debe ser bool, se encontró int
+    Codigo: if x {
+Linea 104 | Categoria: Estructuras de control | Regla: Control con sentido lógico
+    Error semántico (Estructuras de control) en la línea 104. El valor del case es string pero el switch evalúa una expresión int
+    Codigo: case "uno":
+Linea 117 | Categoria: Estructuras de control | Regla: Control con sentido lógico
+    Error semántico (Estructuras de control) en la línea 117. El valor 1 ya aparece en otro case de este switch (línea 115)
+    Codigo: case 1:
+
+Total de errores semanticos: 18
+  Asignación de tipo         | 13
+  Estructuras de control     | 5
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 499
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 18
+Fase semantica ejecutada  | Si
