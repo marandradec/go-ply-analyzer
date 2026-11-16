@@ -11,6 +11,7 @@ from pathlib import Path
 from parser import analizar_sintactico
 from semantico_mora import validar_break
 from semantico_mora import validar_break, validar_asignacion_mora
+from semantic import analizar_completo_semantico
 
 
 RAIZ = Path(__file__).resolve().parents[1]
@@ -386,6 +387,77 @@ class TestIntegracionASTAsignacionMora(unittest.TestCase):
 
 
     # FIN aporte: MORA (pruebas semánticas)
+
+
+
+# INICIO aporte: MORA (integración semántica del equipo)
+
+class TestIntegracionSemanticaMora(unittest.TestCase):
+    """Verifica las reglas de Mora en el motor compartido."""
+
+    def analizar_archivo(self, nombre):
+        ruta = RAIZ / "algoritmos" / nombre
+        codigo = ruta.read_text(encoding="utf-8")
+
+        resultado = analizar_completo_semantico(codigo)
+
+        self.assertEqual(resultado["errores_lexicos"], [])
+        self.assertEqual(resultado["errores_sintacticos"], [])
+        self.assertTrue(resultado["semantico_ejecutado"])
+
+        return resultado
+
+    def test_algoritmo3_semanticamente_valido(self):
+        resultado = self.analizar_archivo("algoritmo3.go")
+
+        self.assertEqual(resultado["errores_semanticos"], [])
+
+    def test_errores_semanticos_mora(self):
+        resultado = self.analizar_archivo(
+            "errores_semantico_mora.go"
+        )
+
+        self.assertEqual(
+            len(resultado["errores_semanticos"]), 18
+        )
+
+    def test_asignaciones_y_constantes_mora(self):
+        resultado = self.analizar_archivo(
+            "errores_semantico_mora.go"
+        )
+
+        errores = resultado["errores_semanticos"]
+
+        lineas_asignacion = {
+            e["linea"]
+            for e in errores
+            if e["categoria"] == "Asignación de tipo"
+        }
+
+        esperadas = {
+            7, 12, 17, 23, 29, 35, 41, 47
+        }
+
+        self.assertTrue(
+            esperadas.issubset(lineas_asignacion)
+        )
+
+    def test_break_invalido_mora(self):
+        resultado = self.analizar_archivo(
+            "errores_semantico_mora.go"
+        )
+
+        lineas_break = {
+            e["linea"]
+            for e in resultado["errores_semanticos"]
+            if e["categoria"] == "Estructuras de control"
+            and "break" in e["mensaje"].lower()
+        }
+
+        self.assertEqual(lineas_break, {81, 88})
+
+
+# FIN aporte: MORA (integración semántica del equipo)
 
 
 if __name__ == "__main__":
