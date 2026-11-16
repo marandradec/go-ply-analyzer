@@ -166,6 +166,10 @@ class AnalizadorSemantico:
     # Toda variable o función utilizada debe existir en un ámbito visible de la tabla.
     # Ejemplo de error a detectar   y = 10   (sin haber declarado y)
     def buscar_variable(self, nombre, linea):
+        if nombre == "_":                     # el identificador en blanco solo recibe valores
+            self.error("Identificadores", "Inexistencia", linea,
+                       "El identificador _ no puede usarse como valor")
+            return None
         simbolo = self.tabla.buscar(nombre)
         if simbolo is None:
             self.error("Identificadores", "Inexistencia", linea,
@@ -177,14 +181,17 @@ class AnalizadorSemantico:
         return simbolo
 
     def buscar_funcion(self, nombre, linea):
-        simbolo = self.tabla.buscar_funcion(nombre)
-        if simbolo is None:
-            if self.tabla.buscar(nombre) is not None:   # existe, pero no es una función
-                detalle = f"{nombre} es una variable y no puede llamarse como función"
-            else:
-                detalle = f"La función {nombre} no fue declarada"
-            self.error("Identificadores", "Inexistencia", linea, detalle)
-        return simbolo
+        simbolo = self.tabla.buscar(nombre)   # el símbolo visible más cercano, como en Go
+        if simbolo is not None and simbolo.clase == "función":
+            return simbolo
+        if simbolo is not None:               # existe, pero no es una función
+            detalle = f"{nombre} es una variable y no puede llamarse como función"
+            if self.tabla.buscar_funcion(nombre) is not None:
+                detalle += f" (tapa a la función {nombre} declarada en el ámbito global)"
+        else:
+            detalle = f"La función {nombre} no fue declarada"
+        self.error("Identificadores", "Inexistencia", linea, detalle)
+        return None
 
     # REGLA SEMÁNTICA 2 (Andrade). Identificadores, Duplicidad.
     # Al declarar con var, const o := (también parámetros y funciones) el nombre no debe
@@ -193,6 +200,8 @@ class AnalizadorSemantico:
     #   var x string = "dos"
     def declarar(self, nombre, tipo, linea, clase="variable", constante=False):
         simbolo = Simbolo(nombre, tipo, linea, clase=clase, constante=constante)
+        if nombre == "_":                     # identificador en blanco: no se guarda y puede repetirse
+            return simbolo
         if not self.tabla.declarar(simbolo):
             previo = self.tabla.buscar_local(nombre)
             self.error("Identificadores", "Duplicidad", linea,
@@ -202,6 +211,8 @@ class AnalizadorSemantico:
     def declarar_funcion(self, nodo):
         _, nombre, params, retorno, _, linea = nodo
         simbolo = Simbolo(nombre, retorno, linea, clase="función", parametros=params, retorno=retorno)
+        if nombre == "_":                     # func _() puede aparecer varias veces
+            return
         if not self.tabla.declarar(simbolo):
             previo = self.tabla.buscar_local(nombre)
             self.error("Identificadores", "Duplicidad", linea,
@@ -247,6 +258,10 @@ class AnalizadorSemantico:
     def _s_decl_corta(self, n):
         _, nombre, valor, linea = n
         tipo = self.tipo_de(valor)                 # el valor se evalúa antes de declarar el nombre
+        if nombre == "_":                          # _ := valor no declara nada nuevo (error en Go)
+            self.error("Identificadores", "Duplicidad", linea,
+                       "No hay variables nuevas a la izquierda de :=, el identificador _ no declara ningún nombre")
+            return
         self.declarar(nombre, tipo, linea)
 
     def _s_var(self, n):
@@ -258,11 +273,14 @@ class AnalizadorSemantico:
     def _s_const(self, n):
         _, nombre, tipo, valor, linea = n
         verificar_asignacion(self, tipo, self.tipo_de(valor), linea, f"la constante {nombre}")      # Mora
+        self.verificar_valor_constante(nombre, valor, linea)
         self.declarar(nombre, tipo, linea, clase="constante", constante=True)
 
     def _s_asignacion(self, n):
         _, destino, valor, linea = n
         tipo_valor = self.tipo_de(valor)
+        if destino[0] == "id" and destino[1] == "_":   # _ = valor descarta el valor, es válido
+            return
         simbolo, tipo_destino, etiqueta = self.destino(destino)
         if verificar_constante(self, simbolo, linea):                                               # Mora
             return
@@ -341,6 +359,35 @@ class AnalizadorSemantico:
         self.tabla.abrir_bloque()
         self.visitar_bloque(sentencias)
         self.tabla.cerrar_bloque()
+
+    # Una constante solo puede inicializarse con literales u otras constantes
+    def verificar_valor_constante(self, nombre, valor, linea):
+        culpable = self._no_constante(valor)
+        if culpable:
+            self.error("Asignación de tipo", "Asignación estricta", linea,
+                       f"La constante {nombre} solo puede inicializarse con valores constantes, y {culpable} no lo es")
+
+    def _no_constante(self, e):
+        """Texto de la primera parte no constante de la expresión, o None si es constante."""
+        if not isinstance(e, tuple) or not e:
+            return None
+        clase = e[0]
+        if clase == "id":
+            simbolo = self.tabla.buscar(e[1])
+            if simbolo is None or simbolo.constante:
+                return None
+            return f"la función {e[1]}" if simbolo.clase == "función" else f"la variable {e[1]}"
+        if clase == "llamada":
+            return f"la llamada a {e[1]}"
+        if clase == "acceso":
+            return f"el acceso a un elemento de {self._raiz(e)}"
+        if clase in ("arreglo", "matriz", "mapa"):
+            return f"el literal de {clase}"
+        if clase in ("neg", "not"):
+            return self._no_constante(e[1])
+        if clase == "binop":
+            return self._no_constante(e[2]) or self._no_constante(e[3])
+        return None
 
     # Destinos de una asignación (variable o elemento de arreglo, matriz o mapa)
 
