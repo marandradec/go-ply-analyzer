@@ -40,7 +40,7 @@ Barra superior:
 | Logs léxico, Logs sintáctico, Logs semántico | Generan de una vez los logs de los seis archivos de prueba de cada fase |
 | Limpiar | Reinicia el análisis sin cerrar la aplicación |
 
-El panel inferior tiene las pestañas de mensajes, log sintáctico, log semántico, tabla de símbolos y consola interactiva.
+El panel inferior tiene las pestañas Log léxico, Log sintáctico, Log semántico, Consola y Tabla de símbolos.
 
 ### Línea de comandos
 
@@ -80,7 +80,7 @@ py -m unittest discover -s tests -v
 | Sintáctica | Estructura gramatical, con mensajes de error personalizados y recuperación de errores | `sintactico-usuarioGit-ddmmaaaa-HHhMM.txt` |
 | Semántica | Coherencia lógica con una tabla de símbolos por ámbitos; seis reglas, dos por integrante | `semantico-usuarioGit-ddmmaaaa-HHhMM.txt` |
 
-Si el mismo usuario genera dos logs en el mismo minuto, se agrega un sufijo (-2, -3). Cada log incluye las fases anteriores. El log semántico agrega la tabla de símbolos (ámbito, nombre, clase, tipo, constante y línea), los errores con su categoría, regla, línea y código, y un resumen final con el conteo por fase.
+Si el mismo usuario genera dos logs sintácticos o semánticos en el mismo minuto, se agrega un sufijo (-2, -3). El log léxico individual se sobrescribe si se repite en el mismo minuto; el sufijo solo se agrega cuando Logs léxico crea dos logs del mismo autor a la vez. Cada log incluye las fases anteriores. El log semántico agrega la tabla de símbolos (ámbito, nombre, clase, tipo, constante y línea), los errores con su categoría, regla, línea y código, y un resumen final con el conteo por fase.
 
 Si un archivo tiene errores léxicos, el análisis sintáctico no se ejecuta; si tiene errores sintácticos, no se ejecuta el semántico. Para obtener el log con los errores sintácticos de un archivo `errores_*.go`, corrige primero sus errores léxicos en el editor de la interfaz y presiona Analizar Sintaxis.
 
@@ -110,7 +110,6 @@ Si un archivo tiene errores léxicos, el análisis sintáctico no se ejecuta; si
 | `lexer.py` | Analizador léxico (cada aporte está marcado con INICIO/FIN por integrante) |
 | `parser.py` | Analizador sintáctico con yacc (aportes marcados con INICIO/FIN) |
 | `semantic.py` | Analizador semántico unificado: tabla de símbolos, recorrido del árbol y las seis reglas (aportes marcados con INICIO/FIN) |
-| `semantico_mora.py` | Reglas semánticas de Mora desarrolladas y probadas de forma independiente; el motor unificado es `semantic.py` |
 | `interfaz.py` | Interfaz gráfica en Tkinter con ttkbootstrap (aportes marcados con INICIO/FIN) |
 | `consola.py` | Consola interactiva y simulación de entrada y salida |
 | `generar_log_lexico.py` | Ejecuta el analizador léxico sobre un `.go` y guarda el log léxico |
