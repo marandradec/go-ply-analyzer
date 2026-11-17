@@ -1,0 +1,46 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: TheFearLess
+Archivo: errores_burgos.go
+Fecha: 17-11-2026 13:44:56
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 131
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: SE ENCONTRARON 5 ERROR(ES) SINTACTICO(S)
+Linea 016 | Token: =
+    Error sintáctico en la línea 16. Se encontró el token =. La declaración con var exige un tipo explícito. Ejemplo: var edad int = 20
+Linea 021 | Token: {
+    Error sintáctico en la línea 21. Se encontró el token {. El for con contador exige tres partes separadas por ;. Ejemplo: for i := 0; i < 10; i++ {
+Linea 028 | Token: salto de línea
+    Error sintáctico en la línea 28. Se encontró el token salto de línea. Falta el operando a la derecha del operador *
+Linea 033 | Token: )
+    Error sintáctico en la línea 33. Se encontró el token ). Falta un elemento después de la coma
+Linea 038 | Token: {
+    Error sintáctico en la línea 38. Se encontró el token {. Falta el operando a la derecha del operador <
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: NO EJECUTADO
+Motivo: Existen errores sintácticos en el código fuente.
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Tabla no construida porque el analisis semantico no se ejecuto.
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se evaluaron errores semanticos: el analisis se detuvo en una fase anterior.
+
+Total de errores semanticos: NO EVALUADOS
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 131
+Errores lexicos           | 0
+Errores sintacticos       | 5
+Errores semanticos        | NO EVALUADOS
+Fase semantica ejecutada  | No
