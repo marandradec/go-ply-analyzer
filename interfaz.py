@@ -18,7 +18,7 @@ except ImportError:  # sin ttkbootstrap la aplicación sigue funcionando con Tk 
     tb = None
 
 from consola import ConsolaInteractiva, SimuladorEjecucion
-from generar_log_lexico import guardar_log, generar_logs_de_prueba_lexicos
+from generar_log_lexico import AUTORES_LEXICO, guardar_log, generar_logs_de_prueba_lexicos
 from generar_log_sintactico import (USUARIOS_GIT, analizar_completo, generar_logs_de_prueba,
                                     guardar_log_sintactico, usuario_git_valido)
 from lexer import analizar
@@ -28,11 +28,13 @@ from semantic import analizar_completo_semantico
 FUENTE_CODIGO = ("Consolas", 11)
 TEXTO_CONFIRMACION_LOGS = "Se ejecutarán todos los archivos de prueba, ¿está seguro/a?"
 
-# Autor de cada archivo de prueba, para nombrar el log sin preguntar
+# Autor de cada archivo de prueba, para nombrar el log sin preguntar. Los seis archivos léxicos y
+# sintácticos salen de generar_log_lexico.py; aquí solo se agregan los tres semánticos.
 AUTORES = {
-    "algoritmo1": "MariaAndrade", "errores_andrade": "MariaAndrade", "errores_semantico_andrade": "MariaAndrade",
-    "algoritmo2": "JoshuaBurgos", "errores_burgos": "JoshuaBurgos", "errores_semantico_burgos": "JoshuaBurgos",
-    "algoritmo3": "JoseMora", "errores_mora": "JoseMora", "errores_semantico_mora": "JoseMora",
+    **AUTORES_LEXICO,
+    "errores_semantico_andrade": "MariaAndrade",
+    "errores_semantico_burgos": "JoshuaBurgos",
+    "errores_semantico_mora": "JoseMora",
 }
 
 

@@ -1,0 +1,54 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: marandradec
+Archivo: algoritmo1.go
+Fecha: 17-11-2026 09:03:08
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 247
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: ANALISIS SEMANTICO CORRECTO
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | saludar              | función    | ()                 | no    | 007
+global               | main                 | función    | ()                 | no    | 011
+global               | contarVisitas        | función    | ()                 | no    | 071
+main                 | contador             | variable   | int                | no    | 013
+main                 | mensaje              | variable   | string             | no    | 015
+main                 | edad                 | variable   | int                | no    | 022
+main                 | nombre               | variable   | string             | no    | 023
+main                 | suma                 | variable   | int                | no    | 026
+main                 | resta                | variable   | int                | no    | 027
+main                 | esIgual              | variable   | bool               | no    | 030
+main                 | esDistinto           | variable   | bool               | no    | 031
+main                 | notas                | variable   | [3]int             | no    | 034
+main                 | primos               | variable   | [3]int             | no    | 036
+main                 | calculo              | variable   | int                | no    | 050
+main                 | primero              | variable   | int                | no    | 051
+contarVisitas        | edad                 | variable   | int                | no    | 072
+contarVisitas        | visitas              | variable   | int                | no    | 073
+Total de simbolos: 17
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+No se encontraron errores semanticos.
+
+Total de errores semanticos: 0
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 247
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 0
+Fase semantica ejecutada  | Si
