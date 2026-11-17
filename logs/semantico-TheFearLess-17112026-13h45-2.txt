@@ -1,0 +1,133 @@
+ANALISIS LEXICO, SINTACTICO Y SEMANTICO - usuario Git: TheFearLess
+Archivo: errores_semantico_burgos.go
+Fecha: 17-11-2026 13:45:48
+
+FASE 1. ANALISIS LEXICO
+============================================================
+Tokens reconocidos: 356
+No se encontraron errores lexicos.
+Total de errores lexicos: 0
+
+FASE 2. ANALISIS SINTACTICO
+============================================================
+Resultado: ANALISIS SINTACTICO CORRECTO
+Total de errores sintacticos: 0
+
+FASE 3. ANALISIS SEMANTICO
+============================================================
+Resultado: SE ENCONTRARON 16 ERROR(ES) SEMANTICO(S)
+
+TABLA DE SIMBOLOS
+------------------------------------------------------------
+Ambito               | Nombre               | Clase      | Tipo               | Const | Linea
+global               | cadenaMasNumero      | función    | ()                 | no    | 006
+global               | enteroConFlotante    | función    | ()                 | no    | 011
+global               | restaDeCadenas       | función    | ()                 | no    | 018
+global               | residuoFlotante      | función    | ()                 | no    | 023
+global               | compuestaMixta       | función    | ()                 | no    | 028
+global               | comparacionMixta     | función    | ()                 | no    | 034
+global               | logicoConNumeros     | función    | ()                 | no    | 040
+global               | negacionDeNumero     | función    | ()                 | no    | 047
+global               | signoEnCadena        | función    | ()                 | no    | 053
+global               | incrementoEnCadena   | función    | ()                 | no    | 059
+global               | indiceFueraDeRango   | función    | ()                 | no    | 065
+global               | retornoTipoDistinto  | función    | () int             | no    | 071
+global               | sinReturn            | función    | () int             | no    | 076
+global               | retornaSinDeclarar   | función    | ()                 | no    | 081
+global               | retornoVacio         | función    | () int             | no    | 086
+global               | saludar              | función    | ()                 | no    | 090
+global               | usarValorSinRetorno  | función    | ()                 | no    | 095
+global               | sumar                | función    | (int, int) int     | no    | 100
+global               | operacionesValidas   | función    | ()                 | no    | 104
+cadenaMasNumero      | total                | variable   | desconocido        | no    | 007
+enteroConFlotante    | a                    | variable   | int                | no    | 012
+enteroConFlotante    | b                    | variable   | float64            | no    | 013
+enteroConFlotante    | c                    | variable   | desconocido        | no    | 014
+restaDeCadenas       | d                    | variable   | desconocido        | no    | 019
+residuoFlotante      | r                    | variable   | desconocido        | no    | 024
+compuestaMixta       | total                | variable   | int                | no    | 029
+comparacionMixta     | edad                 | variable   | int                | no    | 035
+comparacionMixta     | igual                | variable   | bool               | no    | 036
+logicoConNumeros     | a                    | variable   | int                | no    | 041
+logicoConNumeros     | b                    | variable   | int                | no    | 042
+logicoConNumeros     | ok                   | variable   | bool               | no    | 043
+negacionDeNumero     | n                    | variable   | int                | no    | 048
+negacionDeNumero     | m                    | variable   | bool               | no    | 049
+signoEnCadena        | t                    | variable   | string             | no    | 054
+signoEnCadena        | u                    | variable   | desconocido        | no    | 055
+incrementoEnCadena   | t                    | variable   | string             | no    | 060
+indiceFueraDeRango   | notas                | variable   | [3]int             | no    | 066
+indiceFueraDeRango   | x                    | variable   | int                | no    | 067
+sinReturn            | x                    | variable   | int                | no    | 077
+usarValorSinRetorno  | x                    | variable   | desconocido        | no    | 096
+sumar                | a                    | parámetro  | int                | no    | 100
+sumar                | b                    | parámetro  | int                | no    | 100
+operacionesValidas   | texto                | variable   | string             | no    | 105
+operacionesValidas   | entero               | variable   | int                | no    | 106
+operacionesValidas   | real                 | variable   | float64            | no    | 107
+operacionesValidas   | mayor                | variable   | bool               | no    | 108
+operacionesValidas   | r                    | variable   | int                | no    | 109
+Total de simbolos: 47
+
+ERRORES SEMANTICOS
+------------------------------------------------------------
+Linea 007 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 7. No se puede operar string con int usando el operador *
+    Codigo: total := "hola" * 5
+Linea 014 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 14. No se puede operar int con float64 usando el operador *
+    Codigo: c := a * b
+Linea 019 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 19. El operador - no se permite entre cadenas, solo + para concatenar
+    Codigo: d := "a" - "b"
+Linea 024 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 24. El operador % solo se permite entre enteros, se encontró float64 y float64
+    Codigo: r := 7.5 % 2.5
+Linea 030 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 30. No se puede operar int con string usando el operador +
+    Codigo: total += "cinco"
+Linea 036 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 36. No se puede comparar int con string usando el operador ==
+    Codigo: igual := edad == "veinte"
+Linea 043 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 43. El operador && solo se permite entre booleanos, se encontró int y int
+    Codigo: ok := a && b
+Linea 049 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 49. El operador ! solo se puede aplicar a booleanos, se encontró int
+    Codigo: m := !n
+Linea 055 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 55. El signo - solo se puede aplicar a números, se encontró string
+    Codigo: u := -t
+Linea 061 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 61. El operador ++ solo se puede aplicar a números, se encontró string
+    Codigo: t++
+Linea 067 | Categoria: Operaciones permitidas | Regla: Operandos compatibles
+    Error semántico (Operaciones permitidas) en la línea 67. El índice 5 está fuera del rango de [3]int (tamaño 3)
+    Codigo: x := notas[5]
+Linea 072 | Categoria: Retorno de funciones | Regla: Retorno coherente
+    Error semántico (Retorno de funciones) en la línea 72. El return devuelve string pero la función retornoTipoDistinto declara int
+    Codigo: return "a"
+Linea 076 | Categoria: Retorno de funciones | Regla: Retorno coherente
+    Error semántico (Retorno de funciones) en la línea 76. La función sinReturn declara retorno int pero no incluye un return
+    Codigo: func sinReturn() int {
+Linea 082 | Categoria: Retorno de funciones | Regla: Retorno coherente
+    Error semántico (Retorno de funciones) en la línea 82. La función retornaSinDeclarar no declara un tipo de retorno y no puede devolver un valor
+    Codigo: return 1
+Linea 087 | Categoria: Retorno de funciones | Regla: Retorno coherente
+    Error semántico (Retorno de funciones) en la línea 87. La función retornoVacio debe devolver un valor de tipo int
+    Codigo: return
+Linea 096 | Categoria: Retorno de funciones | Regla: Retorno coherente
+    Error semántico (Retorno de funciones) en la línea 96. La función saludar no devuelve ningún valor y no puede usarse en una expresión
+    Codigo: x := saludar()
+
+Total de errores semanticos: 16
+  Operaciones permitidas     | 11
+  Retorno de funciones       | 5
+
+RESUMEN FINAL
+============================================================
+Tokens reconocidos        | 356
+Errores lexicos           | 0
+Errores sintacticos       | 0
+Errores semanticos        | 16
+Fase semantica ejecutada  | Si
