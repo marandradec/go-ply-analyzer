@@ -104,7 +104,7 @@ def generar_logs_de_prueba_lexicos():
 
 if __name__ == "__main__":
     if len(sys.argv) != 3 or not re.fullmatch(r"[A-Za-z]+", sys.argv[2]):
-        print("Uso: py generar_log.py archivo.go NombreApellido")
-        print("Ejemplo: py generar_log.py algoritmos/algoritmo1.go MariaAndrade")
+        print("Uso: py generar_log_lexico.py archivo.go NombreApellido")
+        print("Ejemplo: py generar_log_lexico.py algoritmos/algoritmo1.go MariaAndrade")
         sys.exit(1)
     sys.exit(ejecutar_prueba(sys.argv[1], sys.argv[2]))
