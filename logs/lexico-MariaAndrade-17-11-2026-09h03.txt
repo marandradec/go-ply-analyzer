@@ -1,0 +1,347 @@
+ANALISIS LEXICO - MariaAndrade
+Archivo: errores_semantico_andrade.go
+Fecha: 17-11-2026 09:03:28
+
+TOKENS RECONOCIDOS
+============================================================
+Linea 001 | PACKAGE              | 'package'
+Linea 001 | ID                   | 'main'
+Linea 001 | NEWLINE              | \n
+Linea 003 | IMPORT               | 'import'
+Linea 003 | CADENA               | '"fmt"'
+Linea 003 | NEWLINE              | \n
+Linea 005 | NEWLINE              | \n
+Linea 006 | FUNC                 | 'func'
+Linea 006 | ID                   | 'usoSinDeclarar'
+Linea 006 | PAREN_IZQ            | '('
+Linea 006 | PAREN_DER            | ')'
+Linea 006 | LLAVE_IZQ            | '{'
+Linea 006 | NEWLINE              | \n
+Linea 007 | ID                   | 'y'
+Linea 007 | ASIGNACION           | '='
+Linea 007 | ENTERO               | 10
+Linea 007 | NEWLINE              | \n
+Linea 008 | LLAVE_DER            | '}'
+Linea 008 | NEWLINE              | \n
+Linea 010 | NEWLINE              | \n
+Linea 011 | FUNC                 | 'func'
+Linea 011 | ID                   | 'usoEnExpresion'
+Linea 011 | PAREN_IZQ            | '('
+Linea 011 | PAREN_DER            | ')'
+Linea 011 | LLAVE_IZQ            | '{'
+Linea 011 | NEWLINE              | \n
+Linea 012 | ID                   | 'total'
+Linea 012 | DECLARACION_CORTA    | ':='
+Linea 012 | ID                   | 'puntos'
+Linea 012 | PLUS                 | '+'
+Linea 012 | ENTERO               | 1
+Linea 012 | NEWLINE              | \n
+Linea 013 | LLAVE_DER            | '}'
+Linea 013 | NEWLINE              | \n
+Linea 015 | NEWLINE              | \n
+Linea 016 | FUNC                 | 'func'
+Linea 016 | ID                   | 'llamadaSinFuncion'
+Linea 016 | PAREN_IZQ            | '('
+Linea 016 | PAREN_DER            | ')'
+Linea 016 | LLAVE_IZQ            | '{'
+Linea 016 | NEWLINE              | \n
+Linea 017 | ID                   | 'calcularTotal'
+Linea 017 | PAREN_IZQ            | '('
+Linea 017 | PAREN_DER            | ')'
+Linea 017 | NEWLINE              | \n
+Linea 018 | LLAVE_DER            | '}'
+Linea 018 | NEWLINE              | \n
+Linea 020 | NEWLINE              | \n
+Linea 021 | FUNC                 | 'func'
+Linea 021 | ID                   | 'redeclaracionVar'
+Linea 021 | PAREN_IZQ            | '('
+Linea 021 | PAREN_DER            | ')'
+Linea 021 | LLAVE_IZQ            | '{'
+Linea 021 | NEWLINE              | \n
+Linea 022 | VAR                  | 'var'
+Linea 022 | ID                   | 'x'
+Linea 022 | T_INT                | 'int'
+Linea 022 | ASIGNACION           | '='
+Linea 022 | ENTERO               | 1
+Linea 022 | NEWLINE              | \n
+Linea 023 | VAR                  | 'var'
+Linea 023 | ID                   | 'x'
+Linea 023 | T_STRING             | 'string'
+Linea 023 | ASIGNACION           | '='
+Linea 023 | CADENA               | '"dos"'
+Linea 023 | NEWLINE              | \n
+Linea 024 | LLAVE_DER            | '}'
+Linea 024 | NEWLINE              | \n
+Linea 026 | NEWLINE              | \n
+Linea 027 | FUNC                 | 'func'
+Linea 027 | ID                   | 'redeclaracionCorta'
+Linea 027 | PAREN_IZQ            | '('
+Linea 027 | PAREN_DER            | ')'
+Linea 027 | LLAVE_IZQ            | '{'
+Linea 027 | NEWLINE              | \n
+Linea 028 | ID                   | 'a'
+Linea 028 | DECLARACION_CORTA    | ':='
+Linea 028 | ENTERO               | 1
+Linea 028 | NEWLINE              | \n
+Linea 029 | ID                   | 'a'
+Linea 029 | DECLARACION_CORTA    | ':='
+Linea 029 | ENTERO               | 2
+Linea 029 | NEWLINE              | \n
+Linea 030 | LLAVE_DER            | '}'
+Linea 030 | NEWLINE              | \n
+Linea 032 | NEWLINE              | \n
+Linea 033 | FUNC                 | 'func'
+Linea 033 | ID                   | 'repetida'
+Linea 033 | PAREN_IZQ            | '('
+Linea 033 | PAREN_DER            | ')'
+Linea 033 | LLAVE_IZQ            | '{'
+Linea 033 | NEWLINE              | \n
+Linea 034 | FMT_PRINTLN          | 'fmt.Println'
+Linea 034 | PAREN_IZQ            | '('
+Linea 034 | CADENA               | '"uno"'
+Linea 034 | PAREN_DER            | ')'
+Linea 034 | NEWLINE              | \n
+Linea 035 | LLAVE_DER            | '}'
+Linea 035 | NEWLINE              | \n
+Linea 037 | FUNC                 | 'func'
+Linea 037 | ID                   | 'repetida'
+Linea 037 | PAREN_IZQ            | '('
+Linea 037 | PAREN_DER            | ')'
+Linea 037 | LLAVE_IZQ            | '{'
+Linea 037 | NEWLINE              | \n
+Linea 038 | FMT_PRINTLN          | 'fmt.Println'
+Linea 038 | PAREN_IZQ            | '('
+Linea 038 | CADENA               | '"dos"'
+Linea 038 | PAREN_DER            | ')'
+Linea 038 | NEWLINE              | \n
+Linea 039 | LLAVE_DER            | '}'
+Linea 039 | NEWLINE              | \n
+Linea 041 | NEWLINE              | \n
+Linea 042 | FUNC                 | 'func'
+Linea 042 | ID                   | 'funcionComoVariable'
+Linea 042 | PAREN_IZQ            | '('
+Linea 042 | PAREN_DER            | ')'
+Linea 042 | LLAVE_IZQ            | '{'
+Linea 042 | NEWLINE              | \n
+Linea 043 | ID                   | 'resultado'
+Linea 043 | DECLARACION_CORTA    | ':='
+Linea 043 | ID                   | 'usoSinDeclarar'
+Linea 043 | NEWLINE              | \n
+Linea 044 | LLAVE_DER            | '}'
+Linea 044 | NEWLINE              | \n
+Linea 046 | NEWLINE              | \n
+Linea 047 | FUNC                 | 'func'
+Linea 047 | ID                   | 'variableComoFuncion'
+Linea 047 | PAREN_IZQ            | '('
+Linea 047 | PAREN_DER            | ')'
+Linea 047 | LLAVE_IZQ            | '{'
+Linea 047 | NEWLINE              | \n
+Linea 048 | ID                   | 'contador'
+Linea 048 | DECLARACION_CORTA    | ':='
+Linea 048 | ENTERO               | 1
+Linea 048 | NEWLINE              | \n
+Linea 049 | ID                   | 'contador'
+Linea 049 | PAREN_IZQ            | '('
+Linea 049 | PAREN_DER            | ')'
+Linea 049 | NEWLINE              | \n
+Linea 050 | LLAVE_DER            | '}'
+Linea 050 | NEWLINE              | \n
+Linea 052 | NEWLINE              | \n
+Linea 053 | FUNC                 | 'func'
+Linea 053 | ID                   | 'fueraDelBloque'
+Linea 053 | PAREN_IZQ            | '('
+Linea 053 | PAREN_DER            | ')'
+Linea 053 | LLAVE_IZQ            | '{'
+Linea 053 | NEWLINE              | \n
+Linea 054 | IF                   | 'if'
+Linea 054 | BOOL_LITERAL         | 'true'
+Linea 054 | LLAVE_IZQ            | '{'
+Linea 054 | NEWLINE              | \n
+Linea 055 | ID                   | 'interna'
+Linea 055 | DECLARACION_CORTA    | ':='
+Linea 055 | ENTERO               | 1
+Linea 055 | NEWLINE              | \n
+Linea 056 | LLAVE_DER            | '}'
+Linea 056 | NEWLINE              | \n
+Linea 057 | ID                   | 'interna'
+Linea 057 | ASIGNACION           | '='
+Linea 057 | ENTERO               | 2
+Linea 057 | NEWLINE              | \n
+Linea 058 | LLAVE_DER            | '}'
+Linea 058 | NEWLINE              | \n
+Linea 060 | NEWLINE              | \n
+Linea 061 | FUNC                 | 'func'
+Linea 061 | ID                   | 'bloquesDistintos'
+Linea 061 | PAREN_IZQ            | '('
+Linea 061 | PAREN_DER            | ')'
+Linea 061 | LLAVE_IZQ            | '{'
+Linea 061 | NEWLINE              | \n
+Linea 062 | FOR                  | 'for'
+Linea 062 | ID                   | 'i'
+Linea 062 | DECLARACION_CORTA    | ':='
+Linea 062 | ENTERO               | 0
+Linea 062 | SEMICOLON            | ';'
+Linea 062 | ID                   | 'i'
+Linea 062 | LT                   | '<'
+Linea 062 | ENTERO               | 3
+Linea 062 | SEMICOLON            | ';'
+Linea 062 | ID                   | 'i'
+Linea 062 | INCREMENT            | '++'
+Linea 062 | LLAVE_IZQ            | '{'
+Linea 062 | NEWLINE              | \n
+Linea 063 | FMT_PRINTLN          | 'fmt.Println'
+Linea 063 | PAREN_IZQ            | '('
+Linea 063 | ID                   | 'i'
+Linea 063 | PAREN_DER            | ')'
+Linea 063 | NEWLINE              | \n
+Linea 064 | LLAVE_DER            | '}'
+Linea 064 | NEWLINE              | \n
+Linea 065 | FOR                  | 'for'
+Linea 065 | ID                   | 'i'
+Linea 065 | DECLARACION_CORTA    | ':='
+Linea 065 | ENTERO               | 0
+Linea 065 | SEMICOLON            | ';'
+Linea 065 | ID                   | 'i'
+Linea 065 | LT                   | '<'
+Linea 065 | ENTERO               | 3
+Linea 065 | SEMICOLON            | ';'
+Linea 065 | ID                   | 'i'
+Linea 065 | INCREMENT            | '++'
+Linea 065 | LLAVE_IZQ            | '{'
+Linea 065 | NEWLINE              | \n
+Linea 066 | FMT_PRINTLN          | 'fmt.Println'
+Linea 066 | PAREN_IZQ            | '('
+Linea 066 | ID                   | 'i'
+Linea 066 | PAREN_DER            | ')'
+Linea 066 | NEWLINE              | \n
+Linea 067 | LLAVE_DER            | '}'
+Linea 067 | NEWLINE              | \n
+Linea 068 | LLAVE_DER            | '}'
+Linea 068 | NEWLINE              | \n
+Linea 070 | NEWLINE              | \n
+Linea 071 | FUNC                 | 'func'
+Linea 071 | ID                   | 'identificadorEnBlanco'
+Linea 071 | PAREN_IZQ            | '('
+Linea 071 | PAREN_DER            | ')'
+Linea 071 | LLAVE_IZQ            | '{'
+Linea 071 | NEWLINE              | \n
+Linea 072 | ID                   | 'x'
+Linea 072 | DECLARACION_CORTA    | ':='
+Linea 072 | ENTERO               | 1
+Linea 072 | NEWLINE              | \n
+Linea 073 | ID                   | '_'
+Linea 073 | ASIGNACION           | '='
+Linea 073 | ID                   | 'x'
+Linea 073 | NEWLINE              | \n
+Linea 074 | VAR                  | 'var'
+Linea 074 | ID                   | '_'
+Linea 074 | T_INT                | 'int'
+Linea 074 | ASIGNACION           | '='
+Linea 074 | ENTERO               | 1
+Linea 074 | NEWLINE              | \n
+Linea 075 | VAR                  | 'var'
+Linea 075 | ID                   | '_'
+Linea 075 | T_INT                | 'int'
+Linea 075 | ASIGNACION           | '='
+Linea 075 | ENTERO               | 2
+Linea 075 | NEWLINE              | \n
+Linea 076 | LLAVE_DER            | '}'
+Linea 076 | NEWLINE              | \n
+Linea 078 | NEWLINE              | \n
+Linea 079 | FUNC                 | 'func'
+Linea 079 | ID                   | 'variableTapaFuncion'
+Linea 079 | PAREN_IZQ            | '('
+Linea 079 | PAREN_DER            | ')'
+Linea 079 | LLAVE_IZQ            | '{'
+Linea 079 | NEWLINE              | \n
+Linea 080 | ID                   | 'repetida'
+Linea 080 | DECLARACION_CORTA    | ':='
+Linea 080 | ENTERO               | 1
+Linea 080 | NEWLINE              | \n
+Linea 081 | ID                   | 'repetida'
+Linea 081 | PAREN_IZQ            | '('
+Linea 081 | PAREN_DER            | ')'
+Linea 081 | NEWLINE              | \n
+Linea 082 | LLAVE_DER            | '}'
+Linea 082 | NEWLINE              | \n
+Linea 084 | NEWLINE              | \n
+Linea 085 | FUNC                 | 'func'
+Linea 085 | ID                   | 'blancoComoValor'
+Linea 085 | PAREN_IZQ            | '('
+Linea 085 | PAREN_DER            | ')'
+Linea 085 | LLAVE_IZQ            | '{'
+Linea 085 | NEWLINE              | \n
+Linea 086 | ID                   | 'y'
+Linea 086 | DECLARACION_CORTA    | ':='
+Linea 086 | ID                   | '_'
+Linea 086 | NEWLINE              | \n
+Linea 087 | LLAVE_DER            | '}'
+Linea 087 | NEWLINE              | \n
+Linea 089 | NEWLINE              | \n
+Linea 090 | FUNC                 | 'func'
+Linea 090 | ID                   | 'blancoCortoSinNombres'
+Linea 090 | PAREN_IZQ            | '('
+Linea 090 | PAREN_DER            | ')'
+Linea 090 | LLAVE_IZQ            | '{'
+Linea 090 | NEWLINE              | \n
+Linea 091 | ID                   | '_'
+Linea 091 | DECLARACION_CORTA    | ':='
+Linea 091 | ENTERO               | 1
+Linea 091 | NEWLINE              | \n
+Linea 092 | LLAVE_DER            | '}'
+Linea 092 | NEWLINE              | \n
+Linea 094 | NEWLINE              | \n
+Linea 095 | FUNC                 | 'func'
+Linea 095 | ID                   | 'constanteNoConstante'
+Linea 095 | PAREN_IZQ            | '('
+Linea 095 | PAREN_DER            | ')'
+Linea 095 | LLAVE_IZQ            | '{'
+Linea 095 | NEWLINE              | \n
+Linea 096 | ID                   | 'base'
+Linea 096 | DECLARACION_CORTA    | ':='
+Linea 096 | ENTERO               | 5
+Linea 096 | NEWLINE              | \n
+Linea 097 | CONST                | 'const'
+Linea 097 | ID                   | 'LIMITE'
+Linea 097 | T_INT                | 'int'
+Linea 097 | ASIGNACION           | '='
+Linea 097 | ID                   | 'base'
+Linea 097 | NEWLINE              | \n
+Linea 098 | LLAVE_DER            | '}'
+Linea 098 | NEWLINE              | \n
+
+Total de tokens: 305
+
+RESUMEN POR TIPO DE TOKEN
+============================================================
+ASIGNACION           | 8
+BOOL_LITERAL         | 1
+CADENA               | 4
+CONST                | 1
+DECLARACION_CORTA    | 13
+ENTERO               | 18
+FMT_PRINTLN          | 4
+FOR                  | 2
+FUNC                 | 16
+ID                   | 52
+IF                   | 1
+IMPORT               | 1
+INCREMENT            | 2
+LLAVE_DER            | 19
+LLAVE_IZQ            | 19
+LT                   | 2
+NEWLINE              | 81
+PACKAGE              | 1
+PAREN_DER            | 23
+PAREN_IZQ            | 23
+PLUS                 | 1
+SEMICOLON            | 4
+T_INT                | 4
+T_STRING             | 1
+VAR                  | 4
+
+ERRORES LEXICOS
+============================================================
+No se encontraron errores lexicos.
+
+Total de errores: 0

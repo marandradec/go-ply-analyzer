@@ -148,43 +148,20 @@ def construir_log_sintactico(resultado, codigo, archivo, autor, ahora):
 
     funciones, cuenta = resumir_arbol(resultado["funciones"])
     lineas += ["", "ESTRUCTURA RECONOCIDA (aciertos)", "-" * 60]
-    if funciones:
-        # ESTRUCTURA RECONOCIDA
-        funciones, cuenta = resumir_arbol(resultado["funciones"])
-        lineas += [
-            "",
-            "ESTRUCTURA RECONOCIDA (aciertos)",
-            "-" * 60
-        ]
-        if not resultado["sintactico_ejecutado"]:
-            lineas.append(
-                "Estructura no evaluada porque existen errores lexicos."
-            )
-        elif funciones:
-            lineas.append(
-                "Programa: package y estructura de import reconocidos"
-            )
-            if resultado["arbol"] is None:
-                lineas.append(
-                    "Arbol incompleto: solo se listan "
-                    "las funciones completas reconocidas."
-                )
-            for nombre, linea, n in funciones:
-                lineas.append(
-                    f"Linea {linea:03d} | func {nombre} | "
-                    f"{n} sentencia(s) en su bloque"
-                )
-            lineas.append("")
-            for clave, etiqueta in _SENTENCIAS.items():
-                if cuenta[clave]:
-                    lineas.append(
-                        f"{etiqueta:34s} | {cuenta[clave]}"
-                    )
-        else:
-            lineas.append(
-                "No se reconocio ninguna funcion completa."
-            )
-
+    if not resultado["sintactico_ejecutado"]:
+        lineas.append("Estructura no evaluada porque existen errores lexicos.")
+    elif funciones:
+        lineas.append("Programa: package y estructura de import reconocidos")
+        if resultado["arbol"] is None:
+            lineas.append("Arbol incompleto: solo se listan las funciones completas reconocidas.")
+        for nombre, linea, n in funciones:
+            lineas.append(f"Linea {linea:03d} | func {nombre} | {n} sentencia(s) en su bloque")
+        lineas.append("")
+        for clave, etiqueta in _SENTENCIAS.items():
+            if cuenta[clave]:
+                lineas.append(f"{etiqueta:34s} | {cuenta[clave]}")
+    else:
+        lineas.append("No se reconocio ninguna funcion completa.")
 
     lineas += ["", "ERRORES SINTACTICOS", "-" * 60]
     if err_sin:
@@ -270,21 +247,6 @@ def _imprimir_resumen(resumen):
     print(f"{'Archivo':20s} {'Tokens':>7s} {'Err.lex':>8s} {'Err.sint':>9s}  Log")
     for nombre, tokens, lex, sint, destino in resumen:
         print(f"{nombre:20s} {tokens:7d} {lex:8d} {sint:9d}  {destino.name}")
-
-def generar_log_prueba_sintactica_mora():
-    """Genera un log sintáctico usando una variante en memoria."""
-    ruta = CARPETA_ALGORITMOS / "errores_mora.go"
-    codigo = ruta.read_text(encoding="utf-8")
-
-    codigo = codigo.replace("valor @ 5", "valor = 5")
-    codigo = codigo.replace("valor # 6", "valor = 6")
-    codigo = codigo.replace("valor $ 7", "valor = 7")
-
-    return guardar_log_sintactico(
-        codigo,
-        "algoritmos/errores_mora.go (variante sintactica)",
-        "JosMoraE"
-    )
 
 
 if __name__ == "__main__":
